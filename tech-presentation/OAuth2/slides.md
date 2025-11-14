@@ -183,6 +183,27 @@ sequenceDiagram
 ```
 
 ---
+
+# Client Credentials Flow
+
+適用於服務對服務 (Machine-to-Machine) 的授權流程
+
+```mermaid {scale: 0.55}
+sequenceDiagram
+    participant Client as 🔧 客戶端應用<br/>(服務)
+    participant Auth as 🔐 授權伺服器
+    participant API as 💾 資源伺服器
+
+    Note over Client: 擁有 client_id<br/>與 client_secret
+    Client->>Auth: 1. 請求 Token<br/>(client_id + client_secret)
+    Note over Auth: 驗證憑證
+    Auth->>Client: 2. 回傳 Access Token
+    Client->>API: 3. 使用 Token 存取資源
+    Note over API: 驗證 Token
+    API->>Client: 4. 回傳資料
+```
+
+---
 layout: center
 class: text-center
 ---
