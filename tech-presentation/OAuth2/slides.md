@@ -1,7 +1,7 @@
 ---
 theme: seriph
 background: https://cover.sli.dev
-title: OAuth 2.0 深入淺出
+title: OAuth 2.0 技術分享
 info: |
   ## OAuth 2.0 技術分享
   認證與授權的現代解決方案
@@ -190,9 +190,9 @@ sequenceDiagram
 
 ```mermaid {scale: 0.55}
 sequenceDiagram
-    participant Client as 🔧 客戶端應用<br/>(服務)
-    participant Auth as 🔐 授權伺服器
-    participant API as 💾 資源伺服器
+    participant Client as  客戶端應用<br/>(服務)
+    participant Auth as  授權伺服器
+    participant API as  資源伺服器
 
     Note over Client: 擁有 client_id<br/>與 client_secret
     Client->>Auth: 1. 請求 Token<br/>(client_id + client_secret)
