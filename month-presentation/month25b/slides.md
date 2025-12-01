@@ -11,14 +11,8 @@ transition: slide-left
 mdc: true
 ---
 
-# 2025年12月
-## 月度工作報告
-
-<div class="pt-12">
-  <span class="px-2 py-1">
-    工作成果總覽
-  </span>
-</div>
+# 2025-12
+## 月報
 
 <div class="abs-br m-6 flex gap-2">
   <a href="https://github.com/slidevjs/slidev" target="_blank" alt="GitHub" title="Open in GitHub"
