@@ -1,336 +1,347 @@
 ---
-# try also 'default' to start simple
 theme: seriph
-# random image from a curated Unsplash collection by Anthony
-# like them? see https://unsplash.com/collections/94734566/slidev
-background: https://cover.sli.dev
-# some information about your slides (markdown enabled)
-title: Welcome to Slidev
+background: https://images.unsplash.com/photo-1555066931-4365d14bab8c?w=1920
+title: Understanding Debounce
 info: |
-  ## Slidev Starter Template
-  Presentation slides for developers.
+  ## Debounce in JavaScript
+  A performance optimization technique for handling frequent events
 
-  Learn more at [Sli.dev](https://sli.dev)
-# apply UnoCSS classes to the current slide
 class: text-center
-# https://sli.dev/features/drawing
 drawings:
   persist: false
-# slide transition: https://sli.dev/guide/animations.html#slide-transitions
 transition: slide-left
-# enable MDC Syntax: https://sli.dev/features/mdc
 mdc: true
-# duration of the presentation
-duration: 35min
+duration: 20min
 ---
 
-# Welcome to Slidev
+# Understanding Debounce
 
-Presentation slides for developers
+A Performance Optimization Technique
 
-<div @click="$slidev.nav.next" class="mt-12 py-1" hover:bg="white op-10">
-  Press Space for next page <carbon:arrow-right />
+<div class="pt-12">
+  <span @click="$slidev.nav.next" class="px-2 py-1 rounded cursor-pointer" hover:bg="white op-10">
+    Press Space for next page <carbon:arrow-right class="inline"/>
+  </span>
 </div>
-
-<div class="abs-br m-6 text-xl">
-  <button @click="$slidev.nav.openInEditor()" title="Open in Editor" class="slidev-icon-btn">
-    <carbon:edit />
-  </button>
-  <a href="https://github.com/slidevjs/slidev" target="_blank" class="slidev-icon-btn">
-    <carbon:logo-github />
-  </a>
-</div>
-
-<!--
-The last comment block of each slide will be treated as slide notes. It will be visible and editable in Presenter Mode along with the slide. [Read more in the docs](https://sli.dev/guide/syntax.html#notes)
--->
 
 ---
 transition: fade-out
 ---
 
-# What is Slidev?
+# The Problem
 
-Slidev is a slides maker and presenter designed for developers, consist of the following features
+When events fire too frequently, performance suffers
 
-- 📝 **Text-based** - focus on the content with Markdown, and then style them later
-- 🎨 **Themable** - themes can be shared and re-used as npm packages
-- 🧑‍💻 **Developer Friendly** - code highlighting, live coding with autocompletion
-- 🤹 **Interactive** - embed Vue components to enhance your expressions
-- 🎥 **Recording** - built-in recording and camera view
-- 📤 **Portable** - export to PDF, PPTX, PNGs, or even a hostable SPA
-- 🛠 **Hackable** - virtually anything that's possible on a webpage is possible in Slidev
-<br>
-<br>
+<v-clicks>
 
-Read more about [Why Slidev?](https://sli.dev/guide/why)
+- 🔍 **Search Input**: Every keystroke triggers an API call
+- 📝 **Form Validation**: Validating on each character change
+- 📏 **Window Resize**: Hundreds of events per second
+- 🖱️ **Mouse Movement**: Continuous tracking floods handlers
 
-<!--
-You can have `style` tag in markdown to override the style for the current page.
-Learn more: https://sli.dev/features/slide-scope-style
--->
+</v-clicks>
 
-<style>
-h1 {
-  background-color: #2B90B6;
-  background-image: linear-gradient(45deg, #4EC5D4 10%, #146b8c 20%);
-  background-size: 100%;
-  -webkit-background-clip: text;
-  -moz-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  -moz-text-fill-color: transparent;
-}
-</style>
+<v-click>
 
-<!--
-Here is another comment.
--->
+<div class="mt-8 p-4 bg-orange-500/20 rounded">
+
+**Result**: Excessive function calls, wasted resources, degraded UX
+
+</div>
+
+</v-click>
 
 ---
+
 transition: slide-up
-level: 2
 ---
 
-# Navigation
+# What is Debounce?
 
-Hover on the bottom-left corner to see the navigation's controls panel, [learn more](https://sli.dev/guide/ui#navigation-bar)
+<div class="text-xl leading-relaxed">
 
-## Keyboard Shortcuts
+**Debounce** groups multiple sequential function calls into a single execution.
 
-|                                                     |                             |
-| --------------------------------------------------- | --------------------------- |
-| <kbd>right</kbd> / <kbd>space</kbd>                 | next animation or slide     |
-| <kbd>left</kbd>  / <kbd>shift</kbd><kbd>space</kbd> | previous animation or slide |
-| <kbd>up</kbd>                                       | previous slide              |
-| <kbd>down</kbd>                                     | next slide                  |
+</div>
 
-<!-- https://sli.dev/guide/animations.html#click-animation -->
-<img
-  v-click
-  class="absolute -bottom-9 -left-7 w-80 opacity-50"
-  src="https://sli.dev/assets/arrow-bottom-left.svg"
-  alt=""
-/>
-<p v-after class="absolute bottom-23 left-45 opacity-30 transform -rotate-10">Here!</p>
+<v-click>
 
----
+<div class="mt-8">
+
+## Key Concept
+
+The function executes only after a specified delay from the **last trigger**
+
+</div>
+
+</v-click>
+
+<v-click>
+
+````md magic-move {lines: true}
+```js
+// Without debounce: 5 calls
+input.addEventListener('keyup', search)
+// typing "hello" → search(), search(), search(), search(), search()
+```
+
+```js
+// With debounce: 1 call
+input.addEventListener('keyup', debounce(search, 500))
+// typing "hello" → ... → search() (after 500ms of silence)
+```
+````
+
+</v-click>
+
 layout: two-cols
 layoutClass: gap-16
 ---
 
-# Table of contents
+# Common Use Cases
 
-You can use the `Toc` component to generate a table of contents for your slides:
+When should you use debounce?
 
-```html
-<Toc minDepth="1" maxDepth="1" />
+::left::
+
+<v-clicks>
+
+## 🔍 Search Autocomplete
+
+```js
+searchInput.addEventListener('input',
+  debounce(fetchSuggestions, 300)
+)
 ```
 
-The title will be inferred from your slide content, or you can override it with `title` and `level` in your frontmatter.
+Wait for user to finish typing before querying
+
+## 📝 Form Validation
+
+```js
+emailInput.addEventListener('input',
+  debounce(validateEmail, 500)
+)
+```
+
+Validate after user pauses
+
+</v-clicks>
 
 ::right::
 
-<Toc text-sm minDepth="1" maxDepth="2" />
+<v-clicks>
 
----
-layout: image-right
-image: https://cover.sli.dev
----
+## 📏 Window Resize
 
-# Code
-
-Use code snippets and get the highlighting directly, and even types hover!
-
-```ts [filename-example.ts] {all|4|6|6-7|9|all} twoslash
-// TwoSlash enables TypeScript hover information
-// and errors in markdown code blocks
-// More at https://shiki.style/packages/twoslash
-import { computed, ref } from 'vue'
-
-const count = ref(0)
-const doubled = computed(() => count.value * 2)
-
-doubled.value = 2
+```js
+window.addEventListener('resize',
+  debounce(recalculateLayout, 200)
+)
 ```
 
-<arrow v-click="[4, 5]" x1="350" y1="310" x2="195" y2="342" color="#953" width="2" arrowSize="1" />
+Recalculate only after resizing stops
 
-<!-- This allow you to embed external code blocks -->
-<<< @/snippets/external.ts#snippet
+## 💾 Auto-save
 
-<!-- Footer -->
+```js
+editor.addEventListener('input',
+  debounce(saveDraft, 1000)
+)
+```
 
-[Learn more](https://sli.dev/features/line-highlighting)
+Save changes after user stops editing
 
-<!-- Inline style -->
-<style>
-.footnotes-sep {
-  @apply mt-5 opacity-10;
-}
-.footnotes {
-  @apply text-sm opacity-75;
-}
-.footnote-backref {
-  display: none;
-}
-</style>
-
-<!--
-Notes can also sync with clicks
-
-[click] This will be highlighted after the first click
-
-[click] Highlighted with `count = ref(0)`
-
-[click:3] Last click (skip two clicks)
--->
+</v-clicks>
 
 ---
-level: 2
----
 
-# Shiki Magic Move
+# Implementation
 
-Powered by [shiki-magic-move](https://shiki-magic-move.netlify.app/), Slidev supports animations across multiple code snippets.
-
-Add multiple code blocks and wrap them with <code>````md magic-move</code> (four backticks) to enable the magic move. For example:
+Let's build debounce from scratch
 
 ````md magic-move {lines: true}
-```ts {*|2|*}
-// step 1
-const author = reactive({
-  name: 'John Doe',
-  books: [
-    'Vue 2 - Advanced Guide',
-    'Vue 3 - Basic Guide',
-    'Vue 4 - The Mystery'
-  ]
-})
+```js
+// Step 1: Basic structure
+function debounce(callback, delay) {
+  // We'll implement this
+}
 ```
 
-```ts {*|1-2|3-4|3-4,8}
-// step 2
-export default {
-  data() {
-    return {
-      author: {
-        name: 'John Doe',
-        books: [
-          'Vue 2 - Advanced Guide',
-          'Vue 3 - Basic Guide',
-          'Vue 4 - The Mystery'
-        ]
-      }
-    }
+```js {2-3}
+// Step 2: Store timer ID
+function debounce(callback, delay) {
+  let timerID;
+
+}
+```
+
+```js {4-6}
+// Step 3: Return a new function
+function debounce(callback, delay) {
+  let timerID;
+  return function(...args) {
+    // Handle the call
   }
 }
 ```
 
-```ts
-// step 3
-export default {
-  data: () => ({
-    author: {
-      name: 'John Doe',
-      books: [
-        'Vue 2 - Advanced Guide',
-        'Vue 3 - Basic Guide',
-        'Vue 4 - The Mystery'
-      ]
-    }
-  })
+```js {5}
+// Step 4: Clear previous timer
+function debounce(callback, delay) {
+  let timerID;
+  return function(...args) {
+    clearTimeout(timerID);
+
+  }
 }
 ```
 
-Non-code blocks are ignored.
-
-```vue
-<!-- step 4 -->
-<script setup>
-const author = {
-  name: 'John Doe',
-  books: [
-    'Vue 2 - Advanced Guide',
-    'Vue 3 - Basic Guide',
-    'Vue 4 - The Mystery'
-  ]
+```js {6-8}
+// Step 5: Set new timer
+function debounce(callback, delay) {
+  let timerID;
+  return function(...args) {
+    clearTimeout(timerID);
+    timerID = setTimeout(() => {
+      callback.apply(this, args);
+    }, delay);
+  }
 }
-</script>
+```
+
+```js
+// Final implementation
+function debounce(callback, delay) {
+  let timerID;
+  return function(...args) {
+    clearTimeout(timerID);
+    timerID = setTimeout(() => {
+      callback.apply(this, args);
+    }, delay);
+  }
+}
 ```
 ````
 
+level: 2
 ---
 
-# Components
+# How It Works
 
-<div grid="~ cols-2 gap-4">
-<div>
+Visual timeline of debounce execution
 
-You can use Vue components directly inside your slides.
+<div class="mt-8">
 
-We have provided a few built-in components like `<Tweet/>` and `<Youtube/>` that you can use directly. And adding your custom components is also super easy.
+```mermaid {scale: 0.85}
+sequenceDiagram
+    participant User
+    participant EventHandler
+    participant Timer
+    participant Callback
 
-```html
-<Counter :count="10" />
+    User->>EventHandler: Trigger 1
+    EventHandler->>Timer: Start 500ms timer
+    User->>EventHandler: Trigger 2 (300ms later)
+    EventHandler->>Timer: Clear & restart timer
+    User->>EventHandler: Trigger 3 (200ms later)
+    EventHandler->>Timer: Clear & restart timer
+    Note over Timer: Wait 500ms...
+    Timer->>Callback: Execute callback
 ```
 
-<!-- ./components/Counter.vue -->
-<Counter :count="10" m="t-4" />
+</div>
 
-Check out [the guides](https://sli.dev/builtin/components.html) for more.
+<v-click>
+
+<div class="mt-4 p-4 bg-blue-500/20 rounded">
+
+**Key**: Each new trigger resets the countdown. Callback runs only after silence.
 
 </div>
-<div>
 
-```html
-<Tweet id="1390115482657726468" />
+</v-click>
+
+---
+
+# Leading Option
+
+Execute immediately on first call, then debounce
+
+<v-clicks>
+
+```js {all|2|5-8|9-11|all}
+function debounce(callback, delay, leading = false) {
+  let timerID;
+  return function(...args) {
+    const callNow = leading && !timerID;
+
+    clearTimeout(timerID);
+    timerID = setTimeout(() => {
+      timerID = null;
+      if (!leading) callback.apply(this, args);
+    }, delay);
+
+    if (callNow) callback.apply(this, args);
+  }
+}
 ```
 
-<Tweet id="1390115482657726468" scale="0.65" />
+<div class="mt-4">
+
+- **Use case**: Submit button that should respond immediately but prevent spam clicks
+- First click executes instantly
+- Subsequent clicks within delay window are ignored
 
 </div>
-</div>
 
-<!--
-Presenter note with **bold**, *italic*, and ~~striked~~ text.
+</v-clicks>
 
-Also, HTML elements are valid:
-<div class="flex w-full">
-  <span style="flex-grow: 1;">Left content</span>
-  <span>Right content</span>
-</div>
--->
-
----
-class: px-20
+layout: two-cols
+layoutClass: gap-8
 ---
 
-# Themes
+# Debounce vs Throttle
 
-Slidev comes with powerful theming support. Themes can provide styles, layouts, components, or even configurations for tools. Switching between themes by just **one edit** in your frontmatter:
+Two different rate-limiting techniques
 
-<div grid="~ cols-2 gap-2" m="t-2">
+::left::
 
-```yaml
----
-theme: default
----
+## Debounce
+
+<v-clicks>
+
+- Waits for **silence**
+- Executes **after** events stop
+- Resets timer on each trigger
+- Good for: search, validation, auto-save
+
+```js
+// Last call wins
+Events: ||||||||___
+Execute:         ⬆
 ```
 
-```yaml
----
-theme: seriph
----
+</v-clicks>
+
+::right::
+
+## Throttle
+
+<v-clicks>
+
+- Maintains **fixed rate**
+- Executes **during** events
+- Ignores calls while timer active
+- Good for: scroll, resize, tracking
+
+```js
+// Fixed intervals
+Events: ||||||||||||
+Execute: ⬆   ⬆   ⬆
 ```
 
-<img border="rounded" src="https://github.com/slidevjs/themes/blob/main/screenshots/theme-default/01.png?raw=true" alt="">
-
-<img border="rounded" src="https://github.com/slidevjs/themes/blob/main/screenshots/theme-seriph/01.png?raw=true" alt="">
-
-</div>
-
-Read more about [How to use a theme](https://sli.dev/guide/theme-addon#use-theme) and
-check out the [Awesome Themes Gallery](https://sli.dev/resources/theme-gallery).
+</v-clicks>
 
 ---
 
