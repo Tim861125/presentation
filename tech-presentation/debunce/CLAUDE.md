@@ -4,17 +4,15 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Project Overview
 
-This is a **Slidev** presentation project. Slidev is a slides maker and presenter designed for developers that uses Markdown for content and Vue components for interactivity.
+This is a **Slidev** presentation project focused on debounce/throttle concepts. Slidev is a slides maker and presenter designed for developers that uses Markdown for content and Vue components for interactivity.
 
 ## Development Commands
 
 ### Start development server
 ```bash
 npm run dev
-# or
-pnpm dev
 ```
-This starts the Slidev dev server and opens the presentation at http://localhost:3030
+Starts the Slidev dev server and opens the presentation at http://localhost:3030
 
 ### Build for production
 ```bash
@@ -31,15 +29,15 @@ Exports slides to PDF, PPTX, or PNG formats
 ## Project Structure
 
 ### Core Files
-- **`slides.md`** - Main presentation content file containing all slide definitions in Markdown with YAML frontmatter
-- **`components/`** - Vue components that can be used within slides (e.g., `Counter.vue`)
-- **`pages/`** - Additional slide files that can be imported into `slides.md` using `src:` attribute
-- **`snippets/`** - External code snippets that can be embedded in slides using `<<< @/snippets/filename.ts`
+- **`slides.md`** - Main presentation content file (currently empty - this is where slide content goes)
+- **`components/Counter.vue`** - Example Vue component demonstrating UnoCSS utility usage
+- **`pages/imported-slides.md`** - Example of how to split slides into multiple files
+- **`snippets/external.ts`** - Example TypeScript snippets that can be embedded in slides using `<<< @/snippets/external.ts#snippet`
 
 ### Configuration
 - **`package.json`** - Uses `@slidev/cli` with themes: `default` and `seriph`
-- **`netlify.toml`** / **`vercel.json`** - Deployment configurations for hosting platforms
-- Node version required: 20 (specified in `netlify.toml`)
+- **`netlify.toml`** / **`vercel.json`** - Deployment configurations (Node 20 required)
+- **`bun.lock`** - Project uses Bun as package manager
 
 ## Slidev Architecture
 
@@ -49,22 +47,29 @@ Slides are defined in `slides.md` with:
 - Slides separated by `---` delimiters
 - Per-slide frontmatter for individual slide settings (layout, transition, class, etc.)
 
-### Key Features Used
-- **Vue Components**: Place `.vue` files in `components/` and use them directly in Markdown
-- **Code Snippets**: External snippets in `snippets/` can be referenced with region markers (`#region snippet`)
-- **Slide Imports**: Split presentations across files using `src: ./pages/filename.md`
-- **Layouts**: Various built-in layouts (e.g., `image-right`, `two-cols`, `center`)
-- **Animations**: `v-click`, `v-motion`, `v-mark` directives for interactive elements
-- **Monaco Editor**: Code blocks with `{monaco}` or `{monaco-run}` for live editing/execution
-- **Diagrams**: Mermaid and PlantUML support for inline diagrams
+### Code Snippets with Region Markers
+External code files can use region markers for embedding specific portions:
+```typescript
+// #region snippet
+export function example() { }
+// #endregion snippet
+```
+Reference in slides: `<<< @/snippets/external.ts#snippet`
 
 ### Component Development
-Custom Vue components in `components/`:
+Vue components in `components/`:
 - Use Vue 3 Composition API with `<script setup lang="ts">`
-- Support TypeScript
-- Can use UnoCSS utility classes inline (e.g., `flex="~"`, `border="~ main"`)
-- Are automatically available in all slides without imports
+- UnoCSS utility classes are used as attributes (e.g., `flex="~"`, `border="~ main rounded-md"`)
+- Components are automatically available in all slides without imports
+
+### Slide Imports
+Split presentations using the `src` attribute:
+```markdown
+---
+src: ./pages/imported-slides.md
+---
+```
 
 ## Package Manager
 
-The project uses **npm** based on the scripts in `package.json`, though `pnpm` is mentioned in the README. Either can be used, but `bun.lock` is present, suggesting Bun may also be used. Stick with the package manager already in use or ask which to use.
+This project uses **Bun** (evidenced by `bun.lock`). The README mentions `pnpm`, but npm scripts are also available.

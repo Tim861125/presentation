@@ -1,648 +1,537 @@
 ---
 theme: seriph
-background: https://images.unsplash.com/photo-1555066931-4365d14bab8c?w=1920
-title: Understanding Debounce
+background: https://images.unsplash.com/photo-1451187580459-43490279c0fa?w=1920&h=1080&fit=crop
+title: JavaScript Debounce & Throttle
 info: |
-  ## Debounce in JavaScript
-  A performance optimization technique for handling frequent events
-
+  ## JavaScript Performance Optimization
+  A Complete Guide to Debounce and Throttle
 class: text-center
 drawings:
   persist: false
 transition: slide-left
 mdc: true
-duration: 20min
 ---
 
-# Understanding Debounce
+# Debounce & Throttle
 
-A Performance Optimization Technique
-
-<div class="pt-12">
-  <span @click="$slidev.nav.next" class="px-2 py-1 rounded cursor-pointer" hover:bg="white op-10">
-    Press Space for next page <carbon:arrow-right class="inline"/>
-  </span>
-</div>
+A Complete Guide to Event Optimization
 
 ---
-transition: fade-out
+layout: default
 ---
 
-# The Problem
+# Why Do We Need Optimization?
 
-When events fire too frequently, performance suffers
+In real-world development, certain events are **triggered frequently**:
 
 <v-clicks>
 
-- 🔍 **Search Input**: Every keystroke triggers an API call
-- 📝 **Form Validation**: Validating on each character change
-- 📏 **Window Resize**: Hundreds of events per second
-- 🖱️ **Mouse Movement**: Continuous tracking floods handlers
+- **scroll** - Scroll events (can trigger dozens of times per second)
+- **resize** - Window size changes
+- **input** - Input field content changes
+- **mousemove** - Mouse movement
 
 </v-clicks>
 
 <v-click>
 
-<div class="mt-8 p-4 bg-orange-500/20 rounded">
+## The Problem
 
-**Result**: Excessive function calls, wasted resources, degraded UX
+If we execute complex operations on every event trigger:
+- Sending API requests
+- DOM operations and rendering
+- Complex calculations
 
-</div>
+This leads to **performance issues** and **resource waste**!
 
 </v-click>
 
 ---
-
-transition: slide-up
----
-
-# What is Debounce?
-
-<div class="text-xl leading-relaxed">
-
-**Debounce** groups multiple sequential function calls into a single execution.
-
-</div>
-
-<v-click>
-
-<div class="mt-8">
-
-## Key Concept
-
-The function executes only after a specified delay from the **last trigger**
-
-</div>
-
-</v-click>
-
-<v-click>
-
-````md magic-move {lines: true}
-```js
-// Without debounce: 5 calls
-input.addEventListener('keyup', search)
-// typing "hello" → search(), search(), search(), search(), search()
-```
-
-```js
-// With debounce: 1 call
-input.addEventListener('keyup', debounce(search, 500))
-// typing "hello" → ... → search() (after 500ms of silence)
-```
-````
-
-</v-click>
-
 layout: two-cols
-layoutClass: gap-16
 ---
 
-# Common Use Cases
+# Debounce
 
-When should you use debounce?
+## Core Concept
 
-::left::
+<div class="text-lg">
 
-<v-clicks>
+> Combines multiple function calls into **one**, executing with a **delay** after the last trigger
 
-## 🔍 Search Autocomplete
+</div>
 
-```js
-searchInput.addEventListener('input',
-  debounce(fetchSuggestions, 300)
-)
-```
+<v-click>
 
-Wait for user to finish typing before querying
+## Analogy
 
-## 📝 Form Validation
+Like an elevator door:
+- Someone enters → restart timer
+- Wait for a period with no one entering
+- Then actually close the door
 
-```js
-emailInput.addEventListener('input',
-  debounce(validateEmail, 500)
-)
-```
-
-Validate after user pauses
-
-</v-clicks>
+</v-click>
 
 ::right::
 
-<v-clicks>
-
-## 📏 Window Resize
-
-```js
-window.addEventListener('resize',
-  debounce(recalculateLayout, 200)
-)
-```
-
-Recalculate only after resizing stops
-
-## 💾 Auto-save
-
-```js
-editor.addEventListener('input',
-  debounce(saveDraft, 1000)
-)
-```
-
-Save changes after user stops editing
-
-</v-clicks>
-
----
-
-# Implementation
-
-Let's build debounce from scratch
-
-````md magic-move {lines: true}
-```js
-// Step 1: Basic structure
-function debounce(callback, delay) {
-  // We'll implement this
-}
-```
-
-```js {2-3}
-// Step 2: Store timer ID
-function debounce(callback, delay) {
-  let timerID;
-
-}
-```
-
-```js {4-6}
-// Step 3: Return a new function
-function debounce(callback, delay) {
-  let timerID;
-  return function(...args) {
-    // Handle the call
-  }
-}
-```
-
-```js {5}
-// Step 4: Clear previous timer
-function debounce(callback, delay) {
-  let timerID;
-  return function(...args) {
-    clearTimeout(timerID);
-
-  }
-}
-```
-
-```js {6-8}
-// Step 5: Set new timer
-function debounce(callback, delay) {
-  let timerID;
-  return function(...args) {
-    clearTimeout(timerID);
-    timerID = setTimeout(() => {
-      callback.apply(this, args);
-    }, delay);
-  }
-}
-```
-
-```js
-// Final implementation
-function debounce(callback, delay) {
-  let timerID;
-  return function(...args) {
-    clearTimeout(timerID);
-    timerID = setTimeout(() => {
-      callback.apply(this, args);
-    }, delay);
-  }
-}
-```
-````
-
-level: 2
----
-
-# How It Works
-
-Visual timeline of debounce execution
-
-<div class="mt-8">
-
-```mermaid {scale: 0.85}
-sequenceDiagram
-    participant User
-    participant EventHandler
-    participant Timer
-    participant Callback
-
-    User->>EventHandler: Trigger 1
-    EventHandler->>Timer: Start 500ms timer
-    User->>EventHandler: Trigger 2 (300ms later)
-    EventHandler->>Timer: Clear & restart timer
-    User->>EventHandler: Trigger 3 (200ms later)
-    EventHandler->>Timer: Clear & restart timer
-    Note over Timer: Wait 500ms...
-    Timer->>Callback: Execute callback
-```
-
-</div>
-
 <v-click>
 
-<div class="mt-4 p-4 bg-blue-500/20 rounded">
+## Timeline Visualization
 
-**Key**: Each new trigger resets the countdown. Callback runs only after silence.
+```
+Trigger: ▼ ▼ ▼ ▼ ▼     ▼
+Time:    ━━━━━━━━━━━━━━━━━━━━
+Execute:              ✓     ✓
+         └─delay─┘      └─delay─┘
+```
+
+<div class="mt-8 p-4 bg-blue-500 bg-opacity-10 rounded">
+
+**Key Characteristics**:
+- Only executes the last call
+- Has delay
+- Suited for "wait until complete" scenarios
 
 </div>
 
 </v-click>
 
 ---
+layout: default
+---
 
-# Leading Option
+# Debounce Use Cases
 
-Execute immediately on first call, then debounce
+<div class="grid grid-cols-2 gap-4">
 
-<v-clicks>
+<v-click>
 
-```js {all|2|5-8|9-11|all}
-function debounce(callback, delay, leading = false) {
+<div class="p-4 border border-blue-500 rounded">
+
+## Search Autocomplete
+
+```javascript
+// User types "hello"
+// h -> no request
+// he -> no request
+// hel -> no request
+// hell -> no request
+// hello -> wait 300ms → send request ✓
+```
+
+**Avoid**: Sending API request for each character
+
+</div>
+
+</v-click>
+
+<v-click>
+
+<div class="p-4 border border-green-500 rounded">
+
+## Form Validation
+
+```javascript
+// Email input field
+// user@ -> no validation
+// user@gm -> no validation
+// user@gmail -> no validation
+// user@gmail.com -> wait 500ms → validate ✓
+```
+
+**Benefit**: Wait for user to finish typing before validating
+
+</div>
+
+</v-click>
+
+</div>
+
+<v-click>
+
+<div class="mt-6 p-4 bg-yellow-500 bg-opacity-10 rounded">
+
+**Usage Principle**: Scenarios where you need to wait for user to "complete action"
+
+</div>
+
+</v-click>
+
+---
+layout: default
+---
+
+# Debounce Implementation
+
+<div class="grid grid-cols-2 gap-8">
+
+<div>
+
+## Core Logic
+
+```javascript {all|2|4-5|6-9|all}
+function debounce(callback, delay) {
   let timerID;
-  return function(...args) {
-    const callNow = leading && !timerID;
 
+  return function debouncedCallback(...args) {
+    // Clear previous timer
     clearTimeout(timerID);
+    // Set new timer
     timerID = setTimeout(() => {
-      timerID = null;
-      if (!leading) callback.apply(this, args);
+      callback.apply(this, args)
     }, delay);
-
-    if (callNow) callback.apply(this, args);
   }
 }
 ```
 
-<div class="mt-4">
+</div>
 
-- **Use case**: Submit button that should respond immediately but prevent spam clicks
-- First click executes instantly
-- Subsequent clicks within delay window are ignored
+<div>
+
+<v-click at="1">
+
+## Usage Example
+
+```javascript
+const searchAPI = (keyword) => {
+  console.log('Search:', keyword);
+  // Call API...
+};
+
+const debouncedSearch = debounce(searchAPI, 300);
+
+// User types rapidly
+debouncedSearch('h');    // Timer 1
+debouncedSearch('he');   // Cancel 1, Timer 2
+debouncedSearch('hel');  // Cancel 2, Timer 3
+debouncedSearch('hell'); // Cancel 3, Timer 4
+
+// After 300ms, execute last call
+// Output: Search: hell
+```
+
+</v-click>
 
 </div>
 
-</v-clicks>
+</div>
 
+---
 layout: two-cols
-layoutClass: gap-8
+---
+
+# Throttle
+
+## Core Concept
+
+<div class="text-lg">
+
+> Ensures function executes at a **fixed rate**. Within a set interval, executes at most once.
+
+</div>
+
+<v-click>
+
+## Analogy
+
+Like a water faucet limiter:
+- No matter how much water flows
+- The throughput is fixed
+- Drips at a fixed rhythm
+
+</v-click>
+
+::right::
+
+<v-click>
+
+## Timeline Visualization
+
+```
+Trigger: ▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼
+Time:    ━━━━━━━━━━━━━━━━━━━━
+Execute: ✓   ✓   ✓   ✓   ✓
+         └─interval─┘
+```
+
+<div class="mt-8 p-4 bg-green-500 bg-opacity-10 rounded">
+
+**Key Characteristics**:
+- Executes multiple times at fixed rate
+- Immediate response to first trigger
+- Suited for "continuous monitoring" scenarios
+
+</div>
+
+</v-click>
+
+---
+layout: default
+---
+
+# Throttle Use Cases
+
+<div class="grid grid-cols-2 gap-4">
+
+<v-click>
+
+<div class="p-4 border border-purple-500 rounded">
+
+## Infinite Scroll
+
+```javascript
+// User scrolls page
+window.addEventListener('scroll',
+  throttle(() => {
+    // Check if at bottom every 200ms
+    if (isBottom()) {
+      loadMoreData();
+    }
+  }, 200)
+);
+```
+
+**Benefit**: Periodic checking without excessive frequency
+
+</div>
+
+</v-click>
+
+<v-click>
+
+<div class="p-4 border border-pink-500 rounded">
+
+## Real-time Data Updates
+
+```javascript
+// Stock price updates
+socket.on('price-update',
+  throttle((data) => {
+    // Update UI every 1000ms
+    updateChart(data);
+  }, 1000)
+);
+```
+
+**Benefit**: Avoid excessive rendering, maintain smoothness
+
+</div>
+
+</v-click>
+
+</div>
+
+<v-click>
+
+<div class="mt-6 p-4 bg-yellow-500 bg-opacity-10 rounded">
+
+**Usage Principle**: Scenarios requiring continuous monitoring with periodic response
+
+</div>
+
+</v-click>
+
+---
+layout: default
+---
+
+# Throttle Implementation
+
+<div class="grid grid-cols-2 gap-8">
+
+<div>
+
+## Core Logic
+
+```javascript {all|2|5|7-11|all}
+function throttle(callback, delay) {
+  let timerID = null;
+
+  return function throttledFunction(...args) {
+    // If timer exists, still in cooldown
+    if (timerID) return;
+
+    // Set timer, clear after execution
+    timerID = setTimeout(() => {
+      callback.apply(this, args);
+      timerID = null;  // Cooldown ends
+    }, delay);
+  }
+}
+```
+
+</div>
+
+<div>
+
+<v-click at="1">
+
+## Usage Example
+
+```javascript
+let count = 0;
+const logScroll = () => {
+  count++;
+  console.log('Scroll count:', count);
+};
+
+const throttledLog = throttle(logScroll, 1000);
+
+// User scrolls rapidly (assume every 100ms)
+// 0ms   - Execute ✓ (1st time)
+// 100ms - Ignore (in cooldown)
+// 200ms - Ignore (in cooldown)
+// ...
+// 1000ms - Execute ✓ (2nd time)
+// 1100ms - Ignore (in cooldown)
+// ...
+```
+
+</v-click>
+
+</div>
+
+</div>
+
+---
+layout: two-cols
 ---
 
 # Debounce vs Throttle
 
-Two different rate-limiting techniques
-
-::left::
-
-## Debounce
-
-<v-clicks>
-
-- Waits for **silence**
-- Executes **after** events stop
-- Resets timer on each trigger
-- Good for: search, validation, auto-save
-
-```js
-// Last call wins
-Events: ||||||||___
-Execute:         ⬆
-```
-
-</v-clicks>
-
-::right::
-
-## Throttle
-
-<v-clicks>
-
-- Maintains **fixed rate**
-- Executes **during** events
-- Ignores calls while timer active
-- Good for: scroll, resize, tracking
-
-```js
-// Fixed intervals
-Events: ||||||||||||
-Execute: ⬆   ⬆   ⬆
-```
-
-</v-clicks>
-
----
-
-# Clicks Animations
-
-You can add `v-click` to elements to add a click animation.
-
-<div v-click>
-
-This shows up when you click the slide:
-
-```html
-<div v-click>This shows up when you click the slide.</div>
-```
-
-</div>
-
-<br>
+## Core Differences
 
 <v-click>
 
-The <span v-mark.red="3"><code>v-mark</code> directive</span>
-also allows you to add
-<span v-mark.circle.orange="4">inline marks</span>
-, powered by [Rough Notation](https://roughnotation.com/):
+| Feature | Debounce | Throttle |
+|---------|----------|----------|
+| **Execution Timing** | Delayed after last trigger | Fixed intervals |
+| **Execution Count** | Once | Multiple (rate-limited) |
+| **Delay** | Has delay | Immediate response |
+| **Use Case** | Wait for completion | Continuous monitoring |
 
-```html
-<span v-mark.underline.orange>inline markers</span>
+</v-click>
+
+::right::
+
+<v-click>
+
+## Visual Comparison
+
+**Debounce**
+```
+Input:   ████████░░░░░██░░░░
+Execute:         ✓      ✓
+```
+
+**Throttle**
+```
+Input:   ████████████████████
+Execute: ✓   ✓   ✓   ✓   ✓
 ```
 
 </v-click>
 
-<div mt-20 v-click>
+<v-click>
 
-[Learn more](https://sli.dev/guide/animations#click-animation)
+<div class="mt-4 p-4 bg-blue-500 bg-opacity-10 rounded text-sm">
 
-</div>
-
----
-
-# Motions
-
-Motion animations are powered by [@vueuse/motion](https://motion.vueuse.org/), triggered by `v-motion` directive.
-
-```html
-<div
-  v-motion
-  :initial="{ x: -80 }"
-  :enter="{ x: 0 }"
-  :click-3="{ x: 80 }"
-  :leave="{ x: 1000 }"
->
-  Slidev
-</div>
-```
-
-<div class="w-60 relative">
-  <div class="relative w-40 h-40">
-    <img
-      v-motion
-      :initial="{ x: 800, y: -100, scale: 1.5, rotate: -50 }"
-      :enter="final"
-      class="absolute inset-0"
-      src="https://sli.dev/logo-square.png"
-      alt=""
-    />
-    <img
-      v-motion
-      :initial="{ y: 500, x: -100, scale: 2 }"
-      :enter="final"
-      class="absolute inset-0"
-      src="https://sli.dev/logo-circle.png"
-      alt=""
-    />
-    <img
-      v-motion
-      :initial="{ x: 600, y: 400, scale: 2, rotate: 100 }"
-      :enter="final"
-      class="absolute inset-0"
-      src="https://sli.dev/logo-triangle.png"
-      alt=""
-    />
-  </div>
-
-  <div
-    class="text-5xl absolute top-14 left-40 text-[#2B90B6] -z-1"
-    v-motion
-    :initial="{ x: -80, opacity: 0}"
-    :enter="{ x: 0, opacity: 1, transition: { delay: 2000, duration: 1000 } }">
-    Slidev
-  </div>
-</div>
-
-<!-- vue script setup scripts can be directly used in markdown, and will only affects current page -->
-<script setup lang="ts">
-const final = {
-  x: 0,
-  y: 0,
-  rotate: 0,
-  scale: 1,
-  transition: {
-    type: 'spring',
-    damping: 10,
-    stiffness: 20,
-    mass: 2
-  }
-}
-</script>
-
-<div
-  v-motion
-  :initial="{ x:35, y: 30, opacity: 0}"
-  :enter="{ y: 0, opacity: 1, transition: { delay: 3500 } }">
-
-[Learn more](https://sli.dev/guide/animations.html#motion)
+**Memory Tips**:
+- Debounce = **De**lay until the end
+- Throttle = Flow control valve, fixed rate
 
 </div>
 
----
-
-# $\LaTeX$
-
-$\LaTeX$ is supported out-of-box. Powered by [$\KaTeX$](https://katex.org/).
-
-<div h-3 />
-
-Inline $\sqrt{3x-1}+(1+x)^2$
-
-Block
-$$ {1|3|all}
-\begin{aligned}
-\nabla \cdot \vec{E} &= \frac{\rho}{\varepsilon_0} \\
-\nabla \cdot \vec{B} &= 0 \\
-\nabla \times \vec{E} &= -\frac{\partial\vec{B}}{\partial t} \\
-\nabla \times \vec{B} &= \mu_0\vec{J} + \mu_0\varepsilon_0\frac{\partial\vec{E}}{\partial t}
-\end{aligned}
-$$
-
-[Learn more](https://sli.dev/features/latex)
+</v-click>
 
 ---
-
-# Diagrams
-
-You can create diagrams / graphs from textual descriptions, directly in your Markdown.
-
-<div class="grid grid-cols-4 gap-5 pt-4 -mb-6">
-
-```mermaid {scale: 0.5, alt: 'A simple sequence diagram'}
-sequenceDiagram
-    Alice->John: Hello John, how are you?
-    Note over Alice,John: A typical interaction
-```
-
-```mermaid {theme: 'neutral', scale: 0.8}
-graph TD
-B[Text] --> C{Decision}
-C -->|One| D[Result 1]
-C -->|Two| E[Result 2]
-```
-
-```mermaid
-mindmap
-  root((mindmap))
-    Origins
-      Long history
-      ::icon(fa fa-book)
-      Popularisation
-        British popular psychology author Tony Buzan
-    Research
-      On effectiveness<br/>and features
-      On Automatic creation
-        Uses
-            Creative techniques
-            Strategic planning
-            Argument mapping
-    Tools
-      Pen and paper
-      Mermaid
-```
-
-```plantuml {scale: 0.7}
-@startuml
-
-package "Some Group" {
-  HTTP - [First Component]
-  [Another Component]
-}
-
-node "Other Groups" {
-  FTP - [Second Component]
-  [First Component] --> FTP
-}
-
-cloud {
-  [Example 1]
-}
-
-database "MySql" {
-  folder "This is my folder" {
-    [Folder 3]
-  }
-  frame "Foo" {
-    [Frame 4]
-  }
-}
-
-[Another Component] --> [Example 1]
-[Example 1] --> [Folder 3]
-[Folder 3] --> [Frame 4]
-
-@enduml
-```
-
-</div>
-
-Learn more: [Mermaid Diagrams](https://sli.dev/features/mermaid) and [PlantUML Diagrams](https://sli.dev/features/plantuml)
-
----
-foo: bar
-dragPos:
-  square: 691,32,167,_,-16
+layout: center
 ---
 
-# Draggable Elements
+# Interactive Demo
 
-Double-click on the draggable elements to edit their positions.
-
-<br>
-
-###### Directive Usage
-
-```md
-<img v-drag="'square'" src="https://sli.dev/logo.png">
-```
-
-<br>
-
-###### Component Usage
-
-```md
-<v-drag text-3xl>
-  <div class="i-carbon:arrow-up" />
-  Use the `v-drag` component to have a draggable container!
-</v-drag>
-```
-
-<v-drag pos="663,206,261,_,-15">
-  <div text-center text-3xl border border-main rounded>
-    Double-click me!
-  </div>
-</v-drag>
-
-<img v-drag="'square'" src="https://sli.dev/logo.png">
-
-###### Draggable Arrow
-
-```md
-<v-drag-arrow two-way />
-```
-
-<v-drag-arrow pos="67,452,253,46" two-way op70 />
-
----
-src: ./pages/imported-slides.md
-hide: false
----
-
----
-
-# Monaco Editor
-
-Slidev provides built-in Monaco Editor support.
-
-Add `{monaco}` to the code block to turn it into an editor:
-
-```ts {monaco}
-import { ref } from 'vue'
-import { emptyArray } from './external'
-
-const arr = ref(emptyArray(10))
-```
-
-Use `{monaco-run}` to create an editor that can execute the code directly in the slide:
-
-```ts {monaco-run}
-import { version } from 'vue'
-import { emptyArray, sayHello } from './external'
-
-sayHello()
-console.log(`vue ${version}`)
-console.log(emptyArray<number>(10).reduce(fib => [...fib, fib.at(-1)! + fib.at(-2)!], [1, 1]))
-```
+<DebounceThrottleDemo />
 
 ---
 layout: center
 class: text-center
 ---
 
-# Learn More
+# Practical Guidelines
 
-[Documentation](https://sli.dev) · [GitHub](https://github.com/slidevjs/slidev) · [Showcases](https://sli.dev/resources/showcases)
+<div class="grid grid-cols-2 gap-8 mt-8 text-left">
 
-<PoweredBySlidev mt-10 />
+<v-click>
+
+<div class="p-6 bg-blue-500 bg-opacity-10 rounded">
+
+## Choose Debounce
+
+- Search input fields
+- Form validation
+- Auto-save drafts
+- Layout adjustments after resize
+
+**Core**: Wait for action completion
+
+</div>
+
+</v-click>
+
+<v-click>
+
+<div class="p-6 bg-green-500 bg-opacity-10 rounded">
+
+## Choose Throttle
+
+- Infinite scroll loading
+- Real-time data visualization
+- Drag position updates
+- Scroll animations
+
+**Core**: Continuous monitoring with response
+
+</div>
+
+</v-click>
+
+</div>
+
+<v-click>
+
+<div class="mt-8 p-6 bg-yellow-500 bg-opacity-10 rounded">
+
+**Production Recommendation**: Use mature libraries (e.g., Lodash) instead of custom implementations
+
+```javascript
+import { debounce, throttle } from 'lodash';
+```
+
+</div>
+
+</v-click>
+
+---
+layout: end
+class: text-center
+---
+
+# Thank You!
+
+<div class="mt-8">
+
+## Key Takeaways
+
+<v-clicks>
+
+- **Debounce**: Wait for completion, execute once with delay
+- **Throttle**: Continuous monitoring, execute at fixed rate
+- Choose the right optimization based on scenario
+- Use mature libraries in production
+
+</v-clicks>
+
+</div>
+
+<div class="mt-12 text-sm opacity-50">
+Reference: https://www.shubo.io/javascript-debounce-throttle/
+</div>
