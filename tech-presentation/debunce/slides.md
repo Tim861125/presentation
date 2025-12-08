@@ -14,8 +14,6 @@ mdc: true
 
 # Debounce & Throttle
 
-A Complete Guide to Event Optimization
-
 ---
 layout: default
 ---
@@ -59,17 +57,6 @@ layout: two-cols
 > Combines multiple function calls into **one**, executing with a **delay** after the last trigger
 
 </div>
-
-<v-click>
-
-## Analogy
-
-Like an elevator door:
-- Someone enters → restart timer
-- Wait for a period with no one entering
-- Then actually close the door
-
-</v-click>
 
 ::right::
 
@@ -168,7 +155,7 @@ layout: default
 
 ## Core Logic
 
-```javascript {all|2|4-5|6-9|all}
+```javascript
 function debounce(callback, delay) {
   let timerID;
 
@@ -342,7 +329,7 @@ layout: default
 
 ## Core Logic
 
-```javascript {all|2|5|7-11|all}
+```javascript
 function throttle(callback, delay) {
   let timerID = null;
 
@@ -519,19 +506,15 @@ class: text-center
 
 <div class="mt-8">
 
-## Key Takeaways
-
 <v-clicks>
 
 - **Debounce**: Wait for completion, execute once with delay
 - **Throttle**: Continuous monitoring, execute at fixed rate
-- Choose the right optimization based on scenario
-- Use mature libraries in production
 
 </v-clicks>
 
 </div>
 
 <div class="mt-12 text-sm opacity-50">
-Reference: https://www.shubo.io/javascript-debounce-throttle/
+Ref: https://www.shubo.io/javascript-debounce-throttle/
 </div>

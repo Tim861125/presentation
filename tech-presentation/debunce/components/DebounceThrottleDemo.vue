@@ -1,64 +1,64 @@
 <script setup lang="ts">
-import { ref } from 'vue'
+import { ref } from "vue";
 
-// Debounce implementation
+// debounce
 function debounce<T extends (...args: any[]) => any>(
   callback: T,
   delay: number
 ): (...args: Parameters<T>) => void {
-  let timerID: ReturnType<typeof setTimeout> | null = null
+  let timerID: ReturnType<typeof setTimeout> | null = null;
 
-  return function(this: any, ...args: Parameters<T>) {
-    if (timerID) clearTimeout(timerID)
+  return function (this: any, ...args: Parameters<T>) {
+    if (timerID) clearTimeout(timerID);
     timerID = setTimeout(() => {
-      callback.apply(this, args)
-    }, delay)
-  }
+      callback.apply(this, args);
+    }, delay);
+  };
 }
 
-// Throttle implementation
+// Throttle
 function throttle<T extends (...args: any[]) => any>(
   callback: T,
   delay: number
 ): (...args: Parameters<T>) => void {
-  let timerID: ReturnType<typeof setTimeout> | null = null
+  let timerID: ReturnType<typeof setTimeout> | null = null;
 
-  return function(this: any, ...args: Parameters<T>) {
-    if (timerID) return
+  return function (this: any, ...args: Parameters<T>) {
+    if (timerID) return;
     timerID = setTimeout(() => {
-      callback.apply(this, args)
-      timerID = null
-    }, delay)
-  }
+      callback.apply(this, args);
+      timerID = null;
+    }, delay);
+  };
 }
 
 // Counter states
-const clickCount = ref(0)
-const debounceCount = ref(0)
-const throttleCount = ref(0)
+const clickCount = ref(0);
+const debounceCount = ref(0);
+const throttleCount = ref(0);
 
 // Callback functions
 const debouncedCallback = debounce(() => {
-  debounceCount.value++
-}, 500)
+  debounceCount.value++;
+}, 500);
 
 const throttledCallback = throttle(() => {
-  throttleCount.value++
-}, 500)
+  throttleCount.value++;
+}, 500);
 
 // Handle button click
 const handleClick = () => {
-  clickCount.value++
-  debouncedCallback()
-  throttledCallback()
-}
+  clickCount.value++;
+  debouncedCallback();
+  throttledCallback();
+};
 
 // Reset function
 const reset = () => {
-  clickCount.value = 0
-  debounceCount.value = 0
-  throttleCount.value = 0
-}
+  clickCount.value = 0;
+  debounceCount.value = 0;
+  throttleCount.value = 0;
+};
 </script>
 
 <template>
@@ -75,21 +75,16 @@ const reset = () => {
 
     <!-- Main Button -->
     <div class="button-area">
-      <button
-        @click="handleClick"
-        class="main-button"
-      >
+      <button @click="handleClick" class="main-button">
         Click Me Rapidly!
       </button>
-      <button
-        @click="reset"
-        class="reset-button"
-      >
-        Reset
-      </button>
+      <button @click="reset" class="reset-button">Reset</button>
     </div>
 
-    <p class="instruction">Click the button rapidly to see the difference between debounce and throttle</p>
+    <p class="instruction">
+      Click the button rapidly to see the difference between debounce and
+      throttle
+    </p>
 
     <!-- Results Grid -->
     <div class="demo-grid">
@@ -124,9 +119,7 @@ const reset = () => {
           </div>
         </div>
 
-        <div class="card-footer">
-          Executes at most once every 500ms
-        </div>
+        <div class="card-footer">Executes at most once every 500ms</div>
       </div>
     </div>
   </div>
@@ -142,7 +135,11 @@ const reset = () => {
 
 .click-counter-card {
   margin-bottom: 0.5rem;
-  background: linear-gradient(135deg, rgba(103, 194, 58, 0.1), rgba(64, 158, 255, 0.1));
+  background: linear-gradient(
+    135deg,
+    rgba(103, 194, 58, 0.1),
+    rgba(64, 158, 255, 0.1)
+  );
   border: 2px solid #409eff;
   border-radius: 6px;
   padding: 0.5rem;
