@@ -1,10 +1,10 @@
 ---
 theme: seriph
-background: https://images.unsplash.com/photo-1557683316-973673baf926
+background: https://cover.sli.dev
 title: IntersectionObserver API
 info: |
   ## IntersectionObserver API
-  深入探討現代視窗觀察技術
+  Deep Dive into Modern Viewport Observation Techniques
 class: text-center
 highlighter: shiki
 drawings:
@@ -15,23 +15,23 @@ mdc: true
 
 # IntersectionObserver API
 
-輕鬆實現現代視窗觀察
+Modern Viewport Observation
 
 ---
 layout: default
 ---
 
-# 什麼是 IntersectionObserver？
+# What is IntersectionObserver?
 
-- 一個 **Web API**，可非同步觀察目標元素與祖先元素或視窗交集的變化
+- A **Web API** that asynchronously observes changes in the intersection of a target element with an ancestor element or viewport
 
-- 提供偵測元素進入或離開可見區域的方式
+- Provides a way to detect when elements enter or leave the visible area
 
-- **不需要** 滾動事件監聽器或複雜計算
+- **No need** for scroll event listeners or complex calculations
 
 <div class="mt-8 p-4 bg-blue-500 bg-opacity-10 rounded">
 
-**核心優勢**：高效能且不會阻塞主執行緒
+**Core Advantage**: High performance without blocking the main thread
 
 </div>
 
@@ -39,53 +39,53 @@ layout: default
 layout: default
 ---
 
-# 為什麼需要它？
+# Why Do We Need It?
 
-### 傳統方法的問題
+### Problems with Traditional Approaches
 
 ```javascript
-// L 舊方法 - 效能問題
+// Old approach - Performance issues
 window.addEventListener('scroll', () => {
   const rect = element.getBoundingClientRect();
   if (rect.top >= 0 && rect.bottom <= window.innerHeight) {
-    // 元素可見
+    // Element is visible
     loadImage();
   }
 });
 ```
 
-**問題：**
-- 每次滾動事件都會觸發（頻率過高）
-- 同步版面計算（導致重排）
-- 需要手動計算視窗位置
-- 難以優化
+**Problems:**
+- Triggers on every scroll event (too frequent)
+- Synchronous layout calculations (causes reflow)
+- Manual viewport position calculations required
+- Difficult to optimize
 
 ---
 layout: default
 ---
 
-# 常見使用情境
+# Common Use Cases
 
-## 1. 圖片延遲載入
-- 減少初始頁面載入時間
+## 1. Lazy Loading Images
+- Reduce initial page load time
 
-## 2. 無限滾動
-- 當使用者向下滾動時載入更多內容
+## 2. Infinite Scroll
+- Load more content as users scroll down
 
-## 3. 動畫觸發
-- 提升使用者互動體驗
+## 3. Animation Triggers
+- Enhance user interaction experience
 
-## 4. 分析與可見度追蹤
-- 廣告曝光追蹤
+## 4. Analytics & Visibility Tracking
+- Ad impression tracking
 
 ---
 layout: default
 ---
 
-# 基本語法
+# Basic Syntax
 
 ```javascript
-// 1. 建立觀察器
+// 1. Create observer
 const observer = new IntersectionObserver((entries, observer) => {
   entries.forEach(entry => {
     console.log('Is intersecting:', entry.isIntersecting);
@@ -93,10 +93,10 @@ const observer = new IntersectionObserver((entries, observer) => {
   });
 });
 
-// 2. 開始觀察元素
+// 2. Start observing element
 observer.observe(document.querySelector('.target'));
 
-// 3. 完成後停止觀察
+// 3. Stop observing when done
 observer.disconnect();
 ```
 ---
@@ -105,18 +105,18 @@ layout: default
 
 # IntersectionObserverEntry
 
-函式中可用的關鍵屬性：
+Key properties available in the callback:
 
 ```javascript
 const observer = new IntersectionObserver((entries) => {
   entries.forEach(entry => {
-    entry.isIntersecting      // Boolean: 元素是否可見？
-    entry.intersectionRatio   // Number: 0-1，可見部分的比例
-    entry.target              // 被觀察的 DOM 元素
-    entry.time                // 觀察的時間戳記
-    entry.boundingClientRect  // 目標元素的邊界框
-    entry.intersectionRect    // 可見部分的矩形
-    entry.rootBounds          // 根元素的邊界框
+    entry.isIntersecting      // Boolean: Is element visible?
+    entry.intersectionRatio   // Number: 0-1, ratio of visible portion
+    entry.target              // The observed DOM element
+    entry.time                // Timestamp of observation
+    entry.boundingClientRect  // Bounding box of target element
+    entry.intersectionRect    // Rectangle of visible portion
+    entry.rootBounds          // Bounding box of root element
   });
 });
 ```
@@ -125,7 +125,7 @@ const observer = new IntersectionObserver((entries) => {
 layout: two-cols
 ---
 
-# 配置選項
+# Configuration Options
 
 ```javascript
 const options = {
@@ -145,18 +145,18 @@ const observer = new IntersectionObserver(
 <div class="ml-4">
 
 **`root`**
-- 作為視窗使用的元素
-- 預設：`null`（瀏覽器視窗）
+- Element to use as viewport
+- Default: `null` (browser viewport)
 
 **`rootMargin`**
-- 偏移根元素的邊界框
-- CSS 語法：`"10px 20px 30px 40px"`
-- 適合用於預載入
+- Offset the root element's bounding box
+- CSS syntax: `"10px 20px 30px 40px"`
+- Useful for preloading
 
 **`threshold`**
-- 何時觸發回呼函式
-- `0.5` = 50% 可見時觸發
-- 可以是陣列：`[0, 0.25, 0.5, 0.75, 1]`
+- When to trigger the callback
+- `0.5` = trigger at 50% visible
+- Can be an array: `[0, 0.25, 0.5, 0.75, 1]`
 
 </div>
 
@@ -164,14 +164,14 @@ const observer = new IntersectionObserver(
 layout: default
 ---
 
-# Threshold 範例
+# Threshold Examples
 
 <div class="grid grid-cols-2 gap-4">
 
 <div>
 
 ```javascript
-// 任何像素可見時立即觸發
+// Trigger immediately when any pixel is visible
 const observer1 = new IntersectionObserver(
   callback,
   { threshold: 0 }
@@ -183,7 +183,7 @@ const observer1 = new IntersectionObserver(
 <div>
 
 ```javascript
-// 僅在完全可見時觸發
+// Trigger only when fully visible
 const observer2 = new IntersectionObserver(
   callback,
   { threshold: 1.0 }
@@ -195,7 +195,7 @@ const observer2 = new IntersectionObserver(
 <div>
 
 ```javascript
-// 多個閾值 - 追蹤進度
+// Multiple thresholds - track progress
 const observer3 = new IntersectionObserver(
   callback,
   { threshold: [0, 0.25, 0.5, 0.75, 1] }
@@ -207,7 +207,7 @@ const observer3 = new IntersectionObserver(
 <div>
 
 ```javascript
-// 在可見前 200px 預載入
+// Preload 200px before visible
 const observer4 = new IntersectionObserver(
   callback,
   { rootMargin: '200px' }
@@ -228,117 +228,81 @@ layout: full
 layout: default
 ---
 
-# 瀏覽器支援
-
-<div class="flex justify-center items-center h-full">
-
-<div class="text-center">
-
-✅ **優秀的瀏覽器支援**
+# Browser Support
 
 - Chrome 51+ (2016)
 - Firefox 55+ (2017)
 - Safari 12.1+ (2019)
 - Edge 15+ (2017)
 
-<div class="mt-8 p-4 bg-green-500 bg-opacity-10 rounded">
-
-**覆蓋率**：>95% 全球使用者
-
-</div>
-
-<div class="mt-4 text-sm text-gray-500">
-
-舊版瀏覽器：使用 [polyfill](https://github.com/w3c/IntersectionObserver/tree/main/polyfill)
-
-</div>
-
-</div>
-
-</div>
-
 ---
 layout: default
 ---
 
-# 最佳實踐
+# Practices
 
-**1. 完成後取消觀察**
+### 1. Unobserve when done
 ```javascript
 if (entry.isIntersecting) {
   loadContent();
-  observer.unobserve(entry.target); // 不要持續觀察
+  observer.unobserve(entry.target); // Don't keep observing
 }
 ```
 
-**2. 使用適當的閾值**
-- 不要使用過多閾值
-- 考慮使用者體驗
+### 2. Disconnect on component unmount
 
-**3. 組件卸載時中斷連接**
 ```javascript
 onUnmounted(() => observer.disconnect());
 ```
 
-**4. 考慮使用 rootMargin 提升 UX**
-- 在可見前預載入內容
-- 更流暢的使用者體驗
+### 3. Use rootMargin to improve UX
+- Preload content before it's visible
+- Smoother user experience
 
 ---
 layout: default
 ---
 
-# 常見陷阱須避免
+# Common Pitfalls to Avoid
 
-❌ **不要觀察太多元素**
-- 為不同目的建立獨立的觀察器
-- 或有效率地使用單一觀察器
+ **Don't observe too many elements**
+- Create separate observers for different purposes
+- Or use a single observer efficiently
 
-❌ **不要忘記中斷連接**
-- 在 SPA 中會造成記憶體洩漏
-- 務必在組件生命週期中清理
+ **Don't forget to disconnect**
+- Can cause memory leaks in SPAs
+- Always clean up in component lifecycle
 
-❌ **不要用於所有滾動效果**
-- 固定標題使用 CSS `position: sticky`
-- 盡可能使用 CSS 滾動動畫
-
-❌ **不要過度使用 debounce/throttle**
-- IntersectionObserver 本身已經優化
-- 只在回呼函式執行昂貴操作時才加入
+ **Don't use for all scroll effects**
+- Use CSS `position: sticky` for fixed headers
+- Use CSS scroll animations when possible
 
 ---
 layout: center
 class: text-center
 ---
 
-# 總結
+# Summary
 
-**IntersectionObserver** 是一個強大且高效的元素可見性偵測 API
+**IntersectionObserver** is a powerful and efficient API for element visibility detection
 
-✅ 比滾動事件有更好的效能
+✅ Better performance than scroll events
 
-✅ 簡潔、宣告式的 API
+✅ Clean, declarative API
 
-✅ 多種使用情境：延遲載入、無限滾動、動畫
+✅ Multiple use cases: lazy loading, infinite scroll, animations
 
-✅ 優秀的瀏覽器支援
+✅ Excellent browser support
 
-✅ 僅在需要時才結合 debounce/throttle
-
-<div class="mt-8">
-
-## 感謝聆聽！
-
-有任何問題嗎？
-
-</div>
+✅ Can combine with debounce/throttle when needed
 
 ---
 layout: end
 ---
 
-# 參考資料
+# Thanks
+References
 
 - [MDN - IntersectionObserver API](https://developer.mozilla.org/en-US/docs/Web/API/IntersectionObserver)
-- [W3C 規範](https://w3c.github.io/IntersectionObserver/)
-- [Can I Use - 瀏覽器支援](https://caniuse.com/intersectionobserver)
+- [W3C Specification](https://w3c.github.io/IntersectionObserver/)
+- [Can I Use - Browser Support](https://caniuse.com/intersectionobserver)
