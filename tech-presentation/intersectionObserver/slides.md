@@ -4,7 +4,7 @@ background: https://images.unsplash.com/photo-1557683316-973673baf926
 title: IntersectionObserver API
 info: |
   ## IntersectionObserver API
-  A technical deep dive into modern viewport observation
+  深入探討現代視窗觀察技術
 class: text-center
 highlighter: shiki
 drawings:
@@ -15,35 +15,23 @@ mdc: true
 
 # IntersectionObserver API
 
-Modern Viewport Observation Made Easy
-
-<div class="pt-12">
-  <span @click="$slidev.nav.next" class="px-2 py-1 rounded cursor-pointer" hover="bg-white bg-opacity-10">
-    Press Space for next page <carbon:arrow-right class="inline"/>
-  </span>
-</div>
+輕鬆實現現代視窗觀察
 
 ---
 layout: default
 ---
 
-# What is IntersectionObserver?
+# 什麼是 IntersectionObserver？
 
-<v-clicks>
+- 一個 **Web API**，可非同步觀察目標元素與祖先元素或視窗交集的變化
 
-- A **Web API** that asynchronously observes changes in the intersection of a target element with an ancestor element or the viewport
+- 提供偵測元素進入或離開可見區域的方式
 
-- Provides a way to detect when elements enter or leave the visible area
+- **不需要** 滾動事件監聽器或複雜計算
 
-- **No need** for scroll event listeners or complex calculations
+<div class="mt-8 p-4 bg-blue-500 bg-opacity-10 rounded">
 
-- Available in all modern browsers since 2019
-
-</v-clicks>
-
-<div v-click class="mt-8 p-4 bg-blue-500 bg-opacity-10 rounded">
-
-**Key Benefit**: Efficient performance without blocking the main thread
+**核心優勢**：高效能且不會阻塞主執行緒
 
 </div>
 
@@ -51,65 +39,53 @@ layout: default
 layout: default
 ---
 
-# Why Do We Need It?
+# 為什麼需要它？
 
-### Traditional Approach Problems
-
-<v-clicks>
+### 傳統方法的問題
 
 ```javascript
-// L Old way - Performance issues
+// L 舊方法 - 效能問題
 window.addEventListener('scroll', () => {
   const rect = element.getBoundingClientRect();
   if (rect.top >= 0 && rect.bottom <= window.innerHeight) {
-    // Element is visible
+    // 元素可見
     loadImage();
   }
 });
 ```
 
-**Issues:**
-- Fires on every scroll event (too frequent)
-- Synchronous layout calculations (causes reflow)
-- Manual viewport math
-- Hard to optimize
-
-</v-clicks>
+**問題：**
+- 每次滾動事件都會觸發（頻率過高）
+- 同步版面計算（導致重排）
+- 需要手動計算視窗位置
+- 難以優化
 
 ---
 layout: default
 ---
 
-# Common Use Cases
+# 常見使用情境
 
-<v-clicks>
+## 1. 圖片延遲載入
+- 減少初始頁面載入時間
 
-**1. Lazy Loading Images**
-- Load images only when they're about to enter viewport
-- Reduce initial page load time
+## 2. 無限滾動
+- 當使用者向下滾動時載入更多內容
 
-**2. Infinite Scroll**
-- Load more content as user scrolls down
-- Better UX than pagination
+## 3. 動畫觸發
+- 提升使用者互動體驗
 
-**3. Animation Triggers**
-- Trigger animations when elements become visible
-- Engaging user experience
-
-**4. Analytics & Visibility Tracking**
-- Track which content users actually see
-- Ad impression tracking
-
-</v-clicks>
+## 4. 分析與可見度追蹤
+- 廣告曝光追蹤
 
 ---
 layout: default
 ---
 
-# Basic Syntax
+# 基本語法
 
-```javascript {all|1-7|9-10|12-13|all}
-// 1. Create observer with callback
+```javascript
+// 1. 建立觀察器
 const observer = new IntersectionObserver((entries, observer) => {
   entries.forEach(entry => {
     console.log('Is intersecting:', entry.isIntersecting);
@@ -117,41 +93,30 @@ const observer = new IntersectionObserver((entries, observer) => {
   });
 });
 
-// 2. Start observing elements
+// 2. 開始觀察元素
 observer.observe(document.querySelector('.target'));
 
-// 3. Stop observing when done
+// 3. 完成後停止觀察
 observer.disconnect();
 ```
-
-<v-click>
-
-<div class="mt-4 p-4 bg-green-500 bg-opacity-10 rounded">
-
-**That's it!** Just 3 simple steps.
-
-</div>
-
-</v-click>
-
 ---
 layout: default
 ---
 
 # IntersectionObserverEntry
 
-Key properties available in callback:
+函式中可用的關鍵屬性：
 
 ```javascript
 const observer = new IntersectionObserver((entries) => {
   entries.forEach(entry => {
-    entry.isIntersecting      // Boolean: is element visible?
-    entry.intersectionRatio   // Number: 0-1, how much is visible
-    entry.target              // The observed DOM element
-    entry.time                // Timestamp of observation
-    entry.boundingClientRect  // Target's bounding box
-    entry.intersectionRect    // Visible portion rectangle
-    entry.rootBounds          // Root's bounding box
+    entry.isIntersecting      // Boolean: 元素是否可見？
+    entry.intersectionRatio   // Number: 0-1，可見部分的比例
+    entry.target              // 被觀察的 DOM 元素
+    entry.time                // 觀察的時間戳記
+    entry.boundingClientRect  // 目標元素的邊界框
+    entry.intersectionRect    // 可見部分的矩形
+    entry.rootBounds          // 根元素的邊界框
   });
 });
 ```
@@ -160,7 +125,7 @@ const observer = new IntersectionObserver((entries) => {
 layout: two-cols
 ---
 
-# Configuration Options
+# 配置選項
 
 ```javascript
 const options = {
@@ -179,23 +144,19 @@ const observer = new IntersectionObserver(
 
 <div class="ml-4">
 
-<v-clicks>
-
 **`root`**
-- The element used as viewport
-- Default: `null` (browser viewport)
+- 作為視窗使用的元素
+- 預設：`null`（瀏覽器視窗）
 
 **`rootMargin`**
-- Offset the root's bounding box
-- CSS-like syntax: `"10px 20px 30px 40px"`
-- Useful for pre-loading
+- 偏移根元素的邊界框
+- CSS 語法：`"10px 20px 30px 40px"`
+- 適合用於預載入
 
 **`threshold`**
-- When to trigger callback
-- `0.5` = trigger at 50% visible
-- Can be array: `[0, 0.25, 0.5, 0.75, 1]`
-
-</v-clicks>
+- 何時觸發回呼函式
+- `0.5` = 50% 可見時觸發
+- 可以是陣列：`[0, 0.25, 0.5, 0.75, 1]`
 
 </div>
 
@@ -203,14 +164,14 @@ const observer = new IntersectionObserver(
 layout: default
 ---
 
-# Threshold Examples
+# Threshold 範例
 
 <div class="grid grid-cols-2 gap-4">
 
 <div>
 
 ```javascript
-// Trigger immediately when any pixel visible
+// 任何像素可見時立即觸發
 const observer1 = new IntersectionObserver(
   callback,
   { threshold: 0 }
@@ -222,7 +183,7 @@ const observer1 = new IntersectionObserver(
 <div>
 
 ```javascript
-// Trigger only when fully visible
+// 僅在完全可見時觸發
 const observer2 = new IntersectionObserver(
   callback,
   { threshold: 1.0 }
@@ -234,7 +195,7 @@ const observer2 = new IntersectionObserver(
 <div>
 
 ```javascript
-// Multiple thresholds - track progress
+// 多個閾值 - 追蹤進度
 const observer3 = new IntersectionObserver(
   callback,
   { threshold: [0, 0.25, 0.5, 0.75, 1] }
@@ -246,7 +207,7 @@ const observer3 = new IntersectionObserver(
 <div>
 
 ```javascript
-// Pre-load 200px before visible
+// 在可見前 200px 預載入
 const observer4 = new IntersectionObserver(
   callback,
   { rootMargin: '200px' }
@@ -258,66 +219,6 @@ const observer4 = new IntersectionObserver(
 </div>
 
 ---
-layout: default
----
-
-# Practical Example: Lazy Loading
-
-```javascript {all|1-3|5-14|16-20|all}
-// Mark images with data-src instead of src
-<img data-src="image.jpg" class="lazy-image" alt="Description">
-
-
-const imageObserver = new IntersectionObserver((entries, observer) => {
-  entries.forEach(entry => {
-    if (entry.isIntersecting) {
-      const img = entry.target;
-      img.src = img.dataset.src; // Load the image
-      img.classList.add('loaded');
-      observer.unobserve(img);   // Stop observing this image
-    }
-  });
-}, { rootMargin: '50px' }); // Start loading 50px before visible
-
-// Observe all lazy images
-document.querySelectorAll('.lazy-image').forEach(img => {
-  imageObserver.observe(img);
-});
-```
-
----
-layout: default
----
-
-# Performance Optimization
-
-## Debounce vs Throttle with IntersectionObserver
-
-While IntersectionObserver is already optimized, combining it with debounce/throttle can help when:
-
-<v-clicks>
-
-- **Debounce**: Execute action only after observation settles
-  - Useful for expensive operations (API calls, heavy DOM updates)
-  - Waits for "quiet period" before executing
-
-- **Throttle**: Limit execution rate during continuous observations
-  - Useful for analytics tracking, animations
-  - Ensures consistent execution intervals
-
-</v-clicks>
-
-<v-click>
-
-<div class="mt-4 p-4 bg-yellow-500 bg-opacity-10 rounded">
-
-**Note**: IntersectionObserver itself is already async and efficient. Use debounce/throttle only when your callback does expensive work.
-
-</div>
-
-</v-click>
-
----
 layout: full
 ---
 
@@ -327,13 +228,13 @@ layout: full
 layout: default
 ---
 
-# Browser Support
+# 瀏覽器支援
 
 <div class="flex justify-center items-center h-full">
 
 <div class="text-center">
 
- **Excellent Browser Support**
+✅ **優秀的瀏覽器支援**
 
 - Chrome 51+ (2016)
 - Firefox 55+ (2017)
@@ -342,13 +243,13 @@ layout: default
 
 <div class="mt-8 p-4 bg-green-500 bg-opacity-10 rounded">
 
-**Coverage**: >95% of global users
+**覆蓋率**：>95% 全球使用者
 
 </div>
 
 <div class="mt-4 text-sm text-gray-500">
 
-For older browsers: Use [polyfill](https://github.com/w3c/IntersectionObserver/tree/main/polyfill)
+舊版瀏覽器：使用 [polyfill](https://github.com/w3c/IntersectionObserver/tree/main/polyfill)
 
 </div>
 
@@ -360,87 +261,75 @@ For older browsers: Use [polyfill](https://github.com/w3c/IntersectionObserver/t
 layout: default
 ---
 
-# Best Practices
+# 最佳實踐
 
-<v-clicks>
-
-**1. Unobserve when done**
+**1. 完成後取消觀察**
 ```javascript
 if (entry.isIntersecting) {
   loadContent();
-  observer.unobserve(entry.target); // Don't keep observing
+  observer.unobserve(entry.target); // 不要持續觀察
 }
 ```
 
-**2. Use appropriate thresholds**
-- Don't use too many threshold values
-- Consider user experience
+**2. 使用適當的閾值**
+- 不要使用過多閾值
+- 考慮使用者體驗
 
-**3. Disconnect when component unmounts**
+**3. 組件卸載時中斷連接**
 ```javascript
 onUnmounted(() => observer.disconnect());
 ```
 
-**4. Consider rootMargin for better UX**
-- Pre-load content before visible
-- Smoother user experience
-
-</v-clicks>
+**4. 考慮使用 rootMargin 提升 UX**
+- 在可見前預載入內容
+- 更流暢的使用者體驗
 
 ---
 layout: default
 ---
 
-# Common Pitfalls to Avoid
+# 常見陷阱須避免
 
-<v-clicks>
+❌ **不要觀察太多元素**
+- 為不同目的建立獨立的觀察器
+- 或有效率地使用單一觀察器
 
-L **Don't observe too many elements**
-- Create separate observers for different purposes
-- Or use a single observer efficiently
+❌ **不要忘記中斷連接**
+- 在 SPA 中會造成記憶體洩漏
+- 務必在組件生命週期中清理
 
-L **Don't forget to disconnect**
-- Memory leaks in SPAs
-- Always cleanup in component lifecycle
+❌ **不要用於所有滾動效果**
+- 固定標題使用 CSS `position: sticky`
+- 盡可能使用 CSS 滾動動畫
 
-L **Don't use for every scroll effect**
-- CSS `position: sticky` for sticky headers
-- CSS scroll animations where possible
-
-L **Don't over-complicate with debounce/throttle**
-- IntersectionObserver is already optimized
-- Only add if callback does expensive work
-
-</v-clicks>
+❌ **不要過度使用 debounce/throttle**
+- IntersectionObserver 本身已經優化
+- 只在回呼函式執行昂貴操作時才加入
 
 ---
 layout: center
 class: text-center
 ---
 
-# Summary
+# 總結
 
-<v-clicks>
+**IntersectionObserver** 是一個強大且高效的元素可見性偵測 API
 
-**IntersectionObserver** is a powerful, efficient API for detecting element visibility
+✅ 比滾動事件有更好的效能
 
- Better performance than scroll events
+✅ 簡潔、宣告式的 API
 
- Clean, declarative API
+✅ 多種使用情境：延遲載入、無限滾動、動畫
 
- Multiple use cases: lazy loading, infinite scroll, animations
+✅ 優秀的瀏覽器支援
 
- Excellent browser support
+✅ 僅在需要時才結合 debounce/throttle
 
- Combine with debounce/throttle only when needed
+<div class="mt-8">
 
-</v-clicks>
+## 感謝聆聽！
 
-<div v-click class="mt-8">
-
-## Thank You!
-
-Questions?
+有任何問題嗎？
 
 </div>
 
@@ -448,8 +337,8 @@ Questions?
 layout: end
 ---
 
-# References
+# 參考資料
 
 - [MDN - IntersectionObserver API](https://developer.mozilla.org/en-US/docs/Web/API/IntersectionObserver)
-- [W3C Specification](https://w3c.github.io/IntersectionObserver/)
-- [Can I Use - Browser Support](https://caniuse.com/intersectionobserver)
+- [W3C 規範](https://w3c.github.io/IntersectionObserver/)
+- [Can I Use - 瀏覽器支援](https://caniuse.com/intersectionobserver)

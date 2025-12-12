@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Intersection Observer API 練習</title>
+    <style>
+        body {
+            font-family: sans-serif;
+            margin: 0;
+            padding: 20px;
+            background-color: #f4f4f4;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+        .box-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 30px;
+            /* 間距 */
+        }
+
+        .box {
+            width: 80%;
+            height: 300px;
+            background-color: #4CAF50;
+            color: white;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 2em;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            transition: background-color 0.3s ease-in-out;
+        }
+
+        .box:nth-child(even) {
+            background-color: #2196F3;
+        }
+
+        .box.visible {
+            background-color: #FFC107;
+            /* 當元素可見時改變顏色 */
+        }
+
+        .spacer {
+            height: 100vh;
+            /* 創造足夠的滾動空間 */
+            background-color: #e0e0e0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 1.5em;
+            color: #555;
+            border-radius: 8px;
+            margin-bottom: 30px;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="header">
+        <h1>Intersection Observer API 練習</h1>
+        <p>向下滾動以觀察方塊的進入和離開視窗。</p>
+    </div>
+
+    <div class="spacer">滾動到這裡</div>
+
+    <div class="box-container">
+        <div id="box1" class="box">方塊 1</div>
+        <div id="box2" class="box">方塊 2</div>
+        <div id="box3" class="box">方塊 3</div>
+        <div id="box4" class="box">方塊 4</div>
+        <div id="box5" class="box">方塊 5</div>
+    </div>
+
+    <div class="spacer">繼續滾動</div>
+
+    <div class="box-container">
+        <div id="box6" class="box">方塊 6</div>
+        <div id="box7" class="box">方塊 7</div>
+        <div id="box8" class="box">方塊 8</div>
+        <div id="box9" class="box">方塊 9</div>
+        <div id="box10" class="box">方塊 10</div>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/lodash.js/4.17.21/lodash.min.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const boxes = document.querySelectorAll('.box');
+
+            // 建立一個 Map 來即時追蹤所有元素的最新可見狀態
+            const elementStateMap = new Map();
+
+            // 這個函式會根據 Map 中的最新狀態來更新 UI (執行 "API 呼叫")
+            const applyDebouncedStateChange = async () => {
+                console.log("(Debounced) 根據最新狀態批次更新 UI...");
+                // 遍歷 Map 中的所有元素
+                for (const [element, isIntersecting] of elementStateMap.entries()) {
+                    if (isIntersecting) {
+                        // 檢查元素是否已經變色，如果已經變色則不再重複呼叫 API
+                        if (element.classList.contains('visible')) {
+                            console.log(`  -> ${element.id} 已變色，跳過 API 呼叫。`);
+                            continue;
+                        }
+
+                        // 模擬 API 呼叫
+                        console.log(`  -> 準備為 ${element.id} 呼叫模擬 API...`);
+                        await new Promise(resolve => setTimeout(resolve, 0)); // 模擬 500ms 的 API 延遲
+
+                        // API 呼叫成功後，變色
+                        console.log(`  -> 模擬 API for ${element.id} 回傳，變色！`);
+                        element.classList.add('visible');
+                    }
+                    // 離開視窗的不用變回去，所以這裡沒有 else 區塊
+                }
+            };
+
+            // 使用 lodash 的 _.debounce 來包裝 UI 更新函式
+            const debouncedUIUpdater = _.debounce(applyDebouncedStateChange, 300);
+
+            const options = {
+                root: null,
+                rootMargin: '100px 0px 100px 0px',
+                threshold: 0
+            };
+
+            const observer = new IntersectionObserver((entries, observer) => {
+                // 1. 即時更新 Map 中的狀態
+                entries.forEach(entry => {
+                    elementStateMap.set(entry.target, entry.isIntersecting);
+                });
+
+                // 2. 觸發 (或重置) debounced 更新器
+                debouncedUIUpdater();
+            }, options);
+
+            // 觀察所有方塊，並初始化它們在 Map 中的狀態
+            boxes.forEach(box => {
+                elementStateMap.set(box, false);
+                observer.observe(box);
+            });
+        });
+    </script>
+</body>
+
+</html>
