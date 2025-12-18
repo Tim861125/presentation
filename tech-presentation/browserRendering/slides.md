@@ -193,8 +193,6 @@ requestAnimationFrame(animate);
 layout: default
 ---
 
-# 互動 Demo：基礎動畫
-
 <div class="flex justify-center items-center">
   <AnimationDemo />
 </div>
