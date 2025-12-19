@@ -131,68 +131,6 @@ graph LR
 layout: default
 ---
 
-# 基本用法範例
-
-<div class="grid grid-cols-2 gap-4">
-
-<div>
-
-## 簡單移動動畫
-
-```js
-let position = 0;
-
-function moveBox() {
-  position += 2;
-
-  const box = document.getElementById('box');
-  box.style.transform =
-    `translateX(${position}px)`;
-
-  if (position < 500) {
-    requestAnimationFrame(moveBox);
-  }
-}
-
-requestAnimationFrame(moveBox);
-```
-
-</div>
-
-<div>
-
-## 使用時間戳控制速度
-
-```js
-let startTime = null;
-
-function animate(timestamp) {
-  if (!startTime) startTime = timestamp;
-  const elapsed = timestamp - startTime;
-
-  // 每秒移動 100px
-  const position = (elapsed / 1000) * 100;
-
-  const box = document.getElementById('box');
-  box.style.transform =
-    `translateX(${position}px)`;
-
-  if (position < 500) {
-    requestAnimationFrame(animate);
-  }
-}
-
-requestAnimationFrame(animate);
-```
-
-</div>
-
-</div>
-
----
-layout: default
----
-
 <div class="flex justify-center items-center">
   <AnimationDemo />
 </div>
@@ -204,19 +142,7 @@ layout: default
 # 最佳實踐
 
 
-
-## 1. 使用 transform 和 opacity（只觸發 Composite）
-
-```js
-// 不好：觸發 Layout 和 Paint - 慢
-element.style.left = x + 'px';
-element.style.top = y + 'px';
-
-// 好：只觸發 Composite - 快
-element.style.transform = `translate(${x}px, ${y}px)`;
-```
-
-## 2. 避免在回調中進行大量計算
+## 避免在回調中進行大量計算
 
 ```js
 // 不好：計算可能超過 16ms，造成掉幀
@@ -237,27 +163,7 @@ function animate() {
 layout: default
 ---
 
-# 最佳實踐（續）
-
-
-
-## 3. 批量讀取與寫入 DOM（避免 Layout Thrashing）
-
-```js
-// 不好：造成多次 reflow
-elements.forEach(el => {
-  const height = el.offsetHeight; // 讀取
-  el.style.height = height + 10 + 'px'; // 寫入，觸發 reflow
-});
-
-// 好：分離讀取與寫入
-const heights = elements.map(el => el.offsetHeight); // 批量讀取
-elements.forEach((el, i) => {
-  el.style.height = heights[i] + 10 + 'px'; // 批量寫入
-});
-```
-
-## 4. 記得取消動畫（避免記憶體洩漏）
+## 記得取消動畫（避免記憶體洩漏）
 
 ```js
 let animationId;
