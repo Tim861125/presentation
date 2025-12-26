@@ -5,17 +5,17 @@ class: text-center
 highlighter: shiki
 lineNumbers: true
 info: |
-  CSP 遇到問題之知識分享
+  CSP 知識分享
 drawings:
   persist: false
 transition: slide-left
-title: CSP 遇到問題之知識分享
+title: CSP 知識分享
 mdc: true
 ---
 
-# CSP 遇到問題之知識分享
+# CSP 知識分享
 
-Content Security Policy 實戰經驗分享
+Content Security Policy 知識分享
 
 <div class="pt-12">
   <span class="px-2 py-1">
@@ -49,7 +49,7 @@ Content-Security-Policy:
 
 ---
 
-# 我遇到的問題
+# 遇到問題
 
 移除 'unsafe-inline' 後發生錯誤
 
@@ -68,7 +68,7 @@ The action has been blocked.
 ```
 
 **問題核心**
-- 移除了 `'unsafe-inline'` 後，所有 inline script 都被阻擋
+- 移除了 `'unsafe-inline'` 後 inline script 被阻擋
 - 需要找到更安全的替代方案
 
 ---
@@ -137,13 +137,9 @@ The action has been blocked.
 | Nonce（推薦） | 高 | 低 | 多個 inline script / 每頁生成 |
 | 外部 Script | 高 | 低 | 可將所有 JS 外掛文件化 |
 
-<div class="mt-12 text-center text-gray-500">
-接下來將逐一介紹每種方案的實作方式
-</div>
-
 ---
 
-# 方案一：使用 Script Hash
+# 使用 Script Hash
 
 透過內容雜湊值授權特定腳本
 
@@ -192,7 +188,7 @@ script-src 'self'
 
 ---
 
-# 方案二：使用 Nonce（推薦）
+# 使用 Nonce
 
 每次請求產生唯一隨機值
 
