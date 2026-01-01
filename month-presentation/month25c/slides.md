@@ -98,11 +98,7 @@ layout: default
 
 # IPTECH AI 通架構流程
 
-<div class="mt-8">
-
 ### 資料流向說明
-
-<div class="mt-6 space-y-4">
 
 1. **前端層** → IPTECH 前端送出請求到 IPTECH Server
 
@@ -112,11 +108,8 @@ layout: default
 
 4. **回傳** → 沿原路透過 SSE 串流返回資料
 
-</div>
-
-<div class="mt-8 text-sm opacity-75">
 前端 ← SSE → IPTECH Server ← SSE → PatentPilotService ← SSE → AIagent
-</div>
+
 
 ---
 layout: default
@@ -141,11 +134,7 @@ layout: default
 
 # TipoMusic 弱點掃描處理
 
-<div class="mt-8">
-
 ### Content Security Policy (CSP) 相關問題修復
-
-<div class="mt-6 space-y-3">
 
 - CSP: Failure to Define Directive with No Fallback
 - CSP: script-src unsafe-eval
@@ -153,22 +142,13 @@ layout: default
 - CSP: style-src unsafe-inline
 - Content Security Policy (CSP) Header Not Set
 
-</div>
-
-<div class="mt-8 text-sm opacity-75">
 透過設定完善的 CSP 標頭，提升網站安全性
-</div>
 
----
-layout: center
-class: text-center
----
 
 # 資料轉置問題處理
 
-<div class="mt-8 text-lg">
+
 解決資料結構轉換與處理相關議題
-</div>
 
 ---
 layout: center
