@@ -23,11 +23,13 @@ layout: two-cols
 
 <br>
 
-#### Docker Compose
-容器編排
+### Docker Compose
+- 容器編排
 
-#### OpenSearch
-分散式搜尋與分析引擎
+<br>
+
+### OpenSearch
+- 分散式搜尋與分析引擎
 
 ---
 layout: default
