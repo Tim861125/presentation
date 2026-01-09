@@ -15,18 +15,7 @@ title: Event Delegation 知識分享
 
 # Event Delegation
 
-事件委派：更有效率的事件處理模式
-
----
-
-# 今天的內容
-
-- 什麼是 Event Delegation
-- 為什麼需要它
-- Event Bubbling 機制
-- 實作方式與範例
-- 優勢與限制
-- 實際應用場景
+知識分享
 
 ---
 
@@ -65,25 +54,11 @@ buttons.forEach(button => {
 })
 ```
 
-問題：3 個按鈕 = 3 個監聽器
+3 個按鈕 = 3 個監聽器
 
 ---
 
-# Event Bubbling 機制
-
-當事件在 DOM 元素上觸發時，會經歷三個階段：
-
-1. **捕獲階段**：從根元素往下傳遞到目標元素
-2. **目標階段**：到達目標元素
-3. **冒泡階段**：從目標元素往上傳遞回根元素
-
-Event Delegation 利用的就是冒泡階段
-
-事件會從子元素「冒泡」到父元素
-
----
-
-# Event Delegation 解決方案
+# Event Delegation
 
 使用 Event Delegation：只需一個監聽器
 
@@ -141,25 +116,54 @@ container.addEventListener('click', (event) => {
 - 減少事件綁定的開銷
 
 ---
+layout: two-cols
+---
 
-# 實際應用場景
 
-**1. 動態列表**
-```javascript
-const list = document.getElementById('item-list')
-list.addEventListener('click', (event) => {
-  if (event.target.tagName === 'LI') {
-    console.log(`點擊了：${event.target.textContent}`)
-  }
-})
+### 沒有使用 Event Delegation
+<div class="mr-2">
+```html
+<div id="container">
+  <button>按鈕 1</button>
+  <button>按鈕 2</button>
+  <button>按鈕 3</button>
+</div>
 ```
 
-**2. 表單輸入處理**
 ```javascript
-const form = document.getElementById('user-form')
-form.addEventListener('input', (event) => {
-  console.log(`${event.target.name} 的值改變了`)
+// 每個按鈕都需要綁定監聽器
+const buttons = document.querySelectorAll('button')
+buttons.forEach(button => {
+  button.addEventListener('click', (e) => {
+    console.log('點擊:', e.target.innerText)
+  })
 })
+// 3 個按鈕 = 3 個監聽器 ❌
+// 新增按鈕需要重新綁定事件
+```
+</div>
+
+::right::
+
+### 使用 Event Delegation
+```html
+<div id="container">
+  <button>按鈕 1</button>
+  <button>按鈕 2</button>
+  <button>按鈕 3</button>
+</div>
+```
+
+```javascript
+// 只在父元素綁定一個監聽器
+const container = document.querySelector('#container')
+container.addEventListener('click', (e) => {
+  if (e.target.tagName === 'BUTTON') {
+    console.log('點擊:', e.target.innerText)
+  }
+})
+// 只有 1 個監聽器 ✅
+// 新增的按鈕自動擁有事件處理
 ```
 
 ---
@@ -218,7 +222,7 @@ wrapper.addEventListener("click", (event) => {
 
 # 總結
 
-Event Delegation 是一個強大的模式
+Event Delegation
 
 **優點**
 - 減少記憶體使用
