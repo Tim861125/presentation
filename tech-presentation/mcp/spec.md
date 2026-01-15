@@ -1,3 +1,4 @@
-﻿# [`Bug`: When I use tool call, the "tool_calls" list in the response is empty, and the value is in "content", which does not conform to the standard provided by OpenAI.(回應在 content 裡面，too_calls 為空)](https://github.com/vllm-project/vllm/issues/17161)
--  --tool-call-parser hermes
-
+﻿# 參考以下網址，幫我整理成技術分享的報告
+## 本專案使用 slidev，注意版面不要超過螢幕
+## 用繁體中文進行報告
+- https://modelcontextprotocol.io/docs/getting-started/intro
