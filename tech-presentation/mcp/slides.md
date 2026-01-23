@@ -4,376 +4,341 @@ background: https://images.unsplash.com/photo-1639322537228-f710d846310a?q=80&w=
 class: text-center
 highlighter: shiki
 lineNumbers: false
-info: |
-  ## Model Context Protocol (MCP)
-  AI 應用的標準化連接協議
-drawings:
-  persist: false
-transition: slide-left
-title: Model Context Protocol (MCP)
-mdc: true
 ---
 
-# Model Context Protocol
+# Model Context Protocol (MCP)
 
-## AI 應用的標準化連接協議
 
-<div class="pt-12">
-  <span @click="$slidev.nav.next" class="px-2 py-1 rounded cursor-pointer" hover="bg-white bg-opacity-10">
-    開始 <carbon:arrow-right class="inline"/>
-  </span>
-</div>
+PART 1 概念介紹
 
----
-layout: default
 ---
 
 # 什麼是 MCP？
 
-<v-clicks>
+<br>
 
-- **Model Context Protocol (MCP)** 是一個開源標準協議
-- 用於連接 AI 應用程序到外部系統
+- 由 **Anthropic** 開發並開源
+- **開放式協定**，讓 AI 應用與外部資源連接
+- **標準化**整合方式，不用每個 AI App 都重新造輪子
 
-<div class="mt-8">
-
-## 類比理解
-
-就像 **USB-C** 為電子設備提供標準化連接
-
-**MCP** 為 AI 應用提供標準化方式連接外部系統
-
-</div>
-
-<div class="mt-8 p-4 bg-blue-50 dark:bg-blue-900 rounded">
-
-使 AI 應用能夠：
-- 📁 連接到**數據源**（本地文件、資料庫）
-- 🔧 訪問**工具**（搜尋引擎、計算器）
-- ⚡ 執行**工作流**（專業提示）
-
-</div>
-
-</v-clicks>
-
----
-layout: two-cols
 ---
 
 # 為什麼需要 MCP？
 
-<v-clicks>
+## 傳統方式的問題
 
-## 對開發者
-- ✅ 減少開發時間
-- ✅ 降低整合複雜性
-- ✅ 標準化接口
-
-## 對 AI 應用
-- ✅ 豐富的數據源生態系統
-- ✅ 強大的工具集成能力
-- ✅ 可擴展性
-
-</v-clicks>
-
-::right::
-
-<v-clicks>
-
-<div class="ml-4">
-
-## 對終端用戶
-- ✅ 更強大的 AI 應用
-- ✅ 訪問個人數據
-- ✅ 執行實際操作
-
-<div class="mt-8 p-4 bg-green-50 dark:bg-green-900 rounded text-sm">
-
-**核心價值**
-
-提供一個統一的標準，讓 AI 應用能夠安全、高效地連接到各種外部系統
-
-</div>
-
-</div>
-
-</v-clicks>
-
----
-layout: default
----
-
-# MCP 架構
-
-````md magic-move
-```text
-┌─────────────────────────────┐
-│      AI 應用程序 (客戶端)    │
-│    Claude / ChatGPT / ...   │
-└──────────────┬──────────────┘
-               │
-               │
+```
+AI App 1 ──> 自定義連接器 ──> Database
+AI App 2 ──> 自定義連接器 ──> API
+AI App 3 ──> 自定義連接器 ──> Files
 ```
 
-```text
-┌─────────────────────────────┐
-│      AI 應用程序 (客戶端)    │
-│    Claude / ChatGPT / ...   │
-└──────────────┬──────────────┘
-               │
-         MCP Protocol
-       (標準化通信層)
-               │
+## MCP 的解決方案
+
+```
+AI App 1 ──┐
+AI App 2 ──┤──> MCP Protocol ──> MCP Servers ──> Resources
+AI App 3 ──┘
 ```
 
-```text
-┌─────────────────────────────┐
-│      AI 應用程序 (客戶端)    │
-│    Claude / ChatGPT / ...   │
-└──────────────┬──────────────┘
-               │
-         MCP Protocol
-       (標準化通信層)
-               │
-┌──────────────▼──────────────┐
-│        MCP 服務器           │
-│  • 數據源 (Resources)       │
-│  • 工具 (Tools)             │
-│  • 工作流 (Prompts)         │
-└─────────────────────────────┘
+---
+
+# Host、Client、Server 關係
+
+Host 不直接碰外部系統，都透過 Client → Server
+
+
+- Host 管 AI
+- Client 管通訊
+- Server 管工具
+
+---
+
+## 三個角色的職責
+
+**MCP Host** - AI 應用本體
+- 執行 LLM（例如 Claude）並決定要不要叫工具來幫忙
+- 範例：Claude Desktop、VS Code、IDE
+
+**MCP Client** - 通訊模組
+- Host 裡面的元件，負責跟某一個 MCP Server 建立與維持連線
+- 轉換格式：Host ↔ Client ↔ Server
+
+**MCP Server** - 工具提供者
+- 包裝外部能力（資料庫、API、檔案系統）的服務
+- 等 Client 來呼叫它做事
+
+---
+
+# 連線關係：一對一專線
+
+## 重要觀念
+
+- **一個 Client 連一個 Server**
+- **一個 Host 可以有多個 Client**
+- **一個 Server 可以被多個 Client 連接**
+
 ```
-````
-
-<v-click>
-
-<div class="mt-8 p-4 bg-purple-50 dark:bg-purple-900 rounded">
-
-**客戶端-服務器模型**：清晰的職責分離，AI 應用通過標準協議與各種服務器通信
-
-</div>
-
-</v-click>
-
----
-layout: default
----
-
-# 核心概念
-
-<div class="grid grid-cols-2 gap-4 mt-8">
-
-<v-clicks>
-
-<div class="p-4 border-2 border-blue-400 rounded">
-
-## 📦 Resources (資源)
-服務器提供的數據
-- 文件
-- 資料庫記錄
-- API 數據
-- ...
-
-</div>
-
-<div class="p-4 border-2 border-green-400 rounded">
-
-## 🔧 Tools (工具)
-服務器暴露的可調用函數
-- 搜尋功能
-- 計算器
-- API 調用
-- ...
-
-</div>
-
-<div class="p-4 border-2 border-yellow-400 rounded">
-
-## 💬 Prompts (提示)
-預定義的對話範本
-- 工作流模板
-- 專業提示
-- 情境預設
-- ...
-
-</div>
-
-<div class="p-4 border-2 border-red-400 rounded">
-
-## 🔌 Transports (傳輸)
-通信協議支援
-- stdio
-- HTTP
-- WebSocket
-- ...
-
-</div>
-
-</v-clicks>
-
-</div>
-
----
-layout: default
----
-
-# 應用場景 (1/2)
-
-<div class="grid grid-cols-2 gap-6 mt-8">
-
-<v-clicks>
-
-<div class="p-4 bg-gradient-to-br from-blue-50 to-blue-100 dark:from-blue-900 dark:to-blue-800 rounded-lg">
-
-### 📅 個性化 AI 助手
+┌────────────────────────────────────┐
+│  Claude Desktop (Host)             │
+│                                    │
+│  Client A ──┐                      │
+│  Client B ──┤  (Host 內的通訊模組)   │
+│  Client C ──┘                      │
+└─────┬───────┬────────┬─────────────┘
+      │       │        │
+      │       │        │
+      │       │        │
+   ┌──┴──┐ ┌──┴───┐ ┌──┴───┐
+   │ FS  │ │ DB   │ │ API  │
+   │ Srv │ │ Srv  │ │ Srv  │
+   └─────┘ └──────┘ └──────┘
 ```
-Agent
-  → Google Calendar
-  → Notion
-  → Email
-```
-充當個人秘書，管理日程和筆記
-
-</div>
-
-<div class="p-4 bg-gradient-to-br from-green-50 to-green-100 dark:from-green-900 dark:to-green-800 rounded-lg">
-
-### 🎨 設計到代碼
-```
-Claude Code
-  → Figma MCP Server
-  → 生成完整 Web 應用
-```
-從設計稿自動生成代碼
-
-</div>
-
-</v-clicks>
-
-</div>
 
 ---
-layout: default
+
+# 用比喻理解三者關係
+
+**Host** = 公司裡的「專案經理 + AI 腦袋」
+- 決策中心，決定要做什麼
+
+**Client** = 公司對外的「專線窗口、翻譯」
+- 負責溝通協調，轉換格式
+
+**Server** = 外包廠商
+- 資料庫服務商、雲端 API、檔案系統操作程式
+
 ---
 
-# 應用場景 (2/2)
+# 資料流
 
-<div class="grid grid-cols-2 gap-6 mt-8">
-
-<v-clicks>
-
-<div class="p-4 bg-gradient-to-br from-purple-50 to-purple-100 dark:from-purple-900 dark:to-purple-800 rounded-lg">
-
-### 🏢 企業數據分析
 ```
-Chatbot
-  → Database 1
-  → Database 2
-  → Database 3
+使用者輸入
+    ↓
+Host (LLM 理解並決定需要哪些工具)
+    ↓
+MCP Client (轉換成 MCP 協議)
+    ↓
+MCP Server (操作外部系統)
+    ↓
+外部系統 (資料庫、檔案、API...)
+    ↓
+MCP Server (回傳結果)
+    ↓
+MCP Client (轉換格式)
+    ↓
+Host (整合結果並產生回應)
+    ↓
+回覆給使用者
 ```
-通過聊天分析多個資料庫
 
-</div>
+---
 
-<div class="p-4 bg-gradient-to-br from-orange-50 to-orange-100 dark:from-orange-900 dark:to-orange-800 rounded-lg">
+# 核心概念：Resources
 
-### 🖨️ 3D 設計與製造
+## AI 可以讀取資源
+
+Resources 讓 AI 取得外部資訊
+
+```typescript
+{
+  uri: "file:///project/readme.md",
+  name: "README",
+  mimeType: "text/markdown",
+  description: "專案說明文件"
+}
 ```
-AI Model
-  → Blender
-  → 3D Printer
+
+**Ex:**
+- 專案文件內容
+- 資料庫查詢結果
+- API 回應資料
+
+---
+
+# 核心概念：Tools
+
+## 工具 - AI 可以執行的動作
+
+Tools 讓 AI 主動操作外部系統
+
+```typescript
+{
+  name: "search_database",
+  description: "搜尋資料庫",
+  inputSchema: {
+    type: "object",
+    properties: {
+      query: { type: "string" }
+    }
+  }
+}
 ```
-創建設計並直接打印
 
-</div>
+**Ex:**
 
-</v-clicks>
-
-</div>
-
----
-layout: default
----
-
-# 如何開始？
-
-<v-clicks>
-
-<div class="mt-8">
-
-## 1️⃣ 選擇你的角色
-
-<div class="grid grid-cols-3 gap-4 mt-4">
-  <div class="p-4 bg-blue-100 dark:bg-blue-900 rounded text-center">
-    <div class="text-2xl mb-2">👨‍💻</div>
-    構建客戶端
-  </div>
-  <div class="p-4 bg-green-100 dark:bg-green-900 rounded text-center">
-    <div class="text-2xl mb-2">⚙️</div>
-    構建服務器
-  </div>
-  <div class="p-4 bg-purple-100 dark:bg-purple-900 rounded text-center">
-    <div class="text-2xl mb-2">🔌</div>
-    連接服務器
-  </div>
-</div>
-
-</div>
-
-<div class="mt-8">
-
-## 2️⃣ 開始步驟
-1. 了解概念 → 閱讀 Architecture 文檔
-2. 選擇方向 → 客戶端或服務器
-3. 使用 SDK → Python、JavaScript、TypeScript 等
-4. 開發實現 → 根據用例編碼
-5. 測試調試 → 使用 MCP Inspector
-
-</div>
-
-</v-clicks>
+- 執行 SQL 查詢
+- 創建或修改檔案
+- 發送 HTTP 請求
 
 ---
-layout: center
-class: text-center
+
+# 核心概念：Prompts
+
+## 提示 - 可重複使用的對話模板
+
+Prompts 讓 Server 提供預設的工作流程
+
+```typescript
+{
+  name: "code_review",
+  description: "程式碼審查模板",
+  arguments: [
+    {
+      name: "file_path",
+      description: "要審查的檔案路徑",
+      required: true
+    }
+  ]
+}
+```
+
+**Ex:**
+- 程式碼審查流程
+- 文件生成模板
+- 常用任務腳本
+
 ---
 
-# 總結
+# Client 實作範例
 
-<v-clicks>
+Host 內的 Client 負責與 Server 溝通
 
-<div class="mt-8 text-left max-w-2xl mx-auto">
+```typescript
+import { Client } from '@modelcontextprotocol/sdk/client';
+import { StreamableHTTPClientTransport } from '@modelcontextprotocol/sdk/client/streamableHttp.js';
+import appConfig from '../../config';
 
-## MCP 的核心價值
+export const mcpClient = new Client(
+  { name: "bun-agent", version: "1.0.7" },
+  { capabilities: {} }
+);
 
-- 🌐 **標準化協議**：統一 AI 應用與外部系統的連接方式
-- 🚀 **提升效率**：減少開發時間，降低整合複雜性
-- 🔧 **靈活擴展**：支援多種數據源、工具和工作流
-- 🎯 **實際應用**：從個人助手到企業解決方案
+export async function initMcp() {
+  const url = appConfig.upatUrl
+  const transport = new StreamableHTTPClientTransport(new URL(url));
 
-<div class="mt-8 p-6 bg-gradient-to-r from-blue-500 to-purple-500 text-white rounded-lg">
+  await mcpClient.connect(transport);
+}
+```
 
-**MCP 正在成為 AI 應用生態系統的基礎設施**
+---
 
-讓 AI 從對話工具進化為真正的行動助手
+# Server 實作範例
 
-</div>
+Server 包裝外部能力，等待 Client 呼叫
 
-</div>
+```typescript
+import { McpServer } from "@modelcontextprotocol/sdk/server/mcp.js";
 
-</v-clicks>
+// 建立 Server
+const server = new McpServer({
+  name: "LTC",
+  version: packageJson.version,
+});
+```
+
+---
+
+# Server 實作範例
+
+```typescript
+// 註冊
+server.registerTool(
+  "search-query",
+  {
+    title: "Patent Query search",
+    description: "Use query search patent",
+    inputSchema: {
+      query: z.string().describe(
+        "Patent search query, ex: TAC:(LED \"light emitting diode\") AND IPC:(H01L033* G02F001* H05B045*)"
+      ),
+    },
+  },
+  async ({ query }) => {
+    const result = await searchQuery({ query });
+
+    return {
+      content: [{
+        type: "text",
+        text: "Query syntax is valid, ready to perform search.",
+      }],
+    };
+  },
+);
+```
+
+---
+
+# 傳輸層
+
+Client 與 Server 建立連線
+
+## Standard I/O
+```typescript
+const transport = new StdioClientTransport({
+  command: "node",
+  args: ["server.js"]
+});
+```
+
+<br>
+<br>
+<br>
+
+## HTTP with SSE
+```typescript
+const transport = new StreamableHTTPClientTransport(
+  new URL("http://localhost:3000/sse")
+);
+```
+
+---
+
+# 實際應用場景
+
+MCP 讓 AI 能做的事變多了
+
+- **開發工具整合**
+  IDE 讀取專案文件、連接資料庫、執行測試
+
+- **數據分析**
+  AI 助手分析公司內部資料、產生報表
+
+- **企業應用**
+  整合知識庫、搜尋內部文件
+
+- **自動化工作流程**
+  執行特定業務邏輯、串接多個系統
 
 ---
 layout: end
 ---
 
-# 謝謝聆聽
+# Thanks
 
-<div class="mt-8">
+---
+layout: end
+---
 
-## 參考資源
+## Ref
+<div style="font-size: 0.8em; text-align: center; margin-top: 2em;">
 
-- 📚 官方文檔：https://modelcontextprotocol.io
-- 💻 GitHub：https://github.com/modelcontextprotocol
-- 📖 入門指南：https://modelcontextprotocol.io/docs/getting-started/intro
+MCP Architecture: https://modelcontextprotocol.io/docs/learn/architecture
 
+Client Concepts: https://modelcontextprotocol.io/docs/learn/client-concepts
+
+Server Concepts: https://modelcontextprotocol.io/docs/learn/server-concepts
+
+MCP 架構解析: https://hackmd.io/@thc1006/mcp-whitepaper-home/%2F%40thc1006%2Fmcp-client-server-architecture
 </div>
