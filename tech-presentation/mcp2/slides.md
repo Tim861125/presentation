@@ -6,9 +6,9 @@ highlighter: shiki
 lineNumbers: false
 ---
 
-# MCP Transport 技術分享
+# MCP Transport 分享
 
-Model Context Protocol 傳輸層深度解析
+Model Context Protocol Transport
 
 ---
 
@@ -22,11 +22,11 @@ Model Context Protocol 傳輸層深度解析
 
 <br>
 
-### 三種主要 Transport 方式
+# 三種 Transport 方式
 
-- **StdioClientTransport** - 本地程序通訊
-- **SSEClientTransport** - 舊式事件推送模型
-- **StreamableHTTPClientTransport** - 新一代 HTTP 串流模型
+- **StdioClientTransport**
+- **SSEClientTransport**
+- **StreamableHTTPClientTransport**
 
 ---
 
@@ -286,10 +286,22 @@ try {
 - 只在必須向後相容時才使用 **SSEClientTransport**
 
 ---
+
+# Ref
+
+- [AI SDK - MCP Tools](https://ai-sdk.dev/docs/ai-sdk-core/mcp-tools)
+
+- [MCP TypeScript SDK Documentation](https://transdocs.org/SDK/modelcontextprotocol-typescript-sdk)
+
+- [ConnectSafely MCP Server Integration](https://connectsafely.ai/docs/integrations/mcp-server/typescript-sdk)
+
+- [MCP Transports Specification](https://mcp-docs.cn/specification/2025-11-25/basic/transports)
+
+---
 layout: center
 class: text-center
 ---
 
 # Thanks
 
-MCP Transport 技術分享
+MCP Transport 分享
