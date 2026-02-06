@@ -11,6 +11,17 @@ class: text-center
 
 ---
 
+# TipoMusic
+
+- 修復日期查詢問題
+- 使用清單比對規則確認
+
+<br>
+
+# 資料轉置問題處理
+
+---
+
 # IPTECH, WEBPAT
 
 ## UI 調整
@@ -24,16 +35,6 @@ class: text-center
 - 調整 prompt
 - PatentPilotService 接 Upat Mcp
 
----
-
-# TipoMusic
-
-- 修復日期查詢問題
-- 使用清單比對規則確認
-
-<br>
-
-# 資料轉置問題處理
 
 ---
 layout: center
