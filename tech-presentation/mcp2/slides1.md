@@ -48,7 +48,7 @@ Response 的 `tool_calls` 陣列為空，實際內容在 `content` 中
 }
 ```
 
-> Tool call 需處理 XML 格式
+> Tool call 需處理格式
 
 ---
 
