@@ -35,15 +35,20 @@ Model Context Protocol Transport
 本地程序間通訊，適合桌面應用整合
 
 ```ts
-import { createMCPClient } from '@ai-sdk/mcp';
-import { StdioClientTransport } from '@modelcontextprotocol/sdk/client/stdio.js';
+import { Client } from "@modelcontextprotocol/sdk/client/index.js";
+import { StdioClientTransport } from "@modelcontextprotocol/sdk/client/stdio.js";
 
-const mcpClient = await createMCPClient({
-  transport: new StdioClientTransport({
-    command: 'node',
-    args: ['src/stdio/dist/server.js'],
-  }),
+const client = new Client({
+  name: 'stdio-client',
+  version: '1.0.0'
 });
+
+const transport = new StdioClientTransport({
+  command: 'node',
+  args: ['server.js']
+});
+
+await client.connect(transport);
 ```
 
 **特點**
@@ -82,14 +87,15 @@ await client.connect(transport);
 新一代 HTTP streaming 傳輸方式
 
 ```ts
-import { StreamableHTTPClientTransport } from "@modelcontextprotocol/sdk/client/streamableHttp.js";
 import { Client } from "@modelcontextprotocol/sdk/client/index.js";
+import { StreamableHTTPClientTransport } from "@modelcontextprotocol/sdk/client/streamableHttp.js";
 
-const url = new URL("https://mcp.example.com/");
-url.searchParams.set("apiKey", "YOUR_API_KEY");
+const client = new Client({
+  name: 'http-client',
+  version: '1.0.0'
+});
 
-const transport = new StreamableHTTPClientTransport(url.toString());
-const client = new Client({ name: "My App", version: "1.0.0" });
+const transport = new StreamableHTTPClientTransport(new URL(baseUrl));
 await client.connect(transport);
 ```
 
@@ -143,7 +149,7 @@ Client
 
 ---
 
-# 為什麼 SSE 會被淘汰？
+# 為什麼 SSE 會被棄用？
 
 ### SSE 的結構性問題
 
@@ -208,7 +214,7 @@ Client
 
 ```ts
 const client = new Client({ name: 'sse-client', version: '1.0.0' });
-const transport = new SSEClientTransport(new URL(url));
+const transport = new SSEClientTransport(new URL(baseUrl));
 await client.connect(transport);
 // 需要處理兩條連線的生命週期
 ```
@@ -216,8 +222,8 @@ await client.connect(transport);
 ### StreamableHTTPClientTransport（新式）
 
 ```ts
-const client = new Client({ name: 'My App', version: '1.0.0' });
-const transport = new StreamableHTTPClientTransport(url);
+const client = new Client({ name: 'http-client', version: '1.0.0' });
+const transport = new StreamableHTTPClientTransport(new URL(baseUrl));
 await client.connect(transport);
 // 單一連線，簡單明瞭
 ```
@@ -288,6 +294,10 @@ try {
 ---
 
 # Ref
+
+- [Model Context Protocol - Building MCP Clients](https://modelcontextprotocol.info/docs/tutorials/building-a-client-node/)
+
+- [Model Context Protocol - Transports](https://modelcontextprotocol.info/docs/concepts/transports/)
 
 - [AI SDK - MCP Tools](https://ai-sdk.dev/docs/ai-sdk-core/mcp-tools)
 
