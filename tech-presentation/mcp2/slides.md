@@ -134,21 +134,6 @@ Client
 
 ---
 
-# 能力對比表
-
-| 面向 | SSEClientTransport | StreamableHTTPClientTransport |
-|------|-------------------|------------------------------|
-| 傳輸模型 | HTTP + SSE | HTTP streaming |
-| 連線數 | 至少 2 條 | 1 條 |
-| 傳輸方向 | SSE 單向 | 雙向 |
-| Progress 支援 | ⚠️ 勉強可做 | ✅ 原生設計 |
-| JSON-RPC 對齊 | 不完整 | ✅ 完整對齊 MCP |
-| 瀏覽器支援 | ✅ 非常好 | ✅ fetch streaming |
-| 防火牆友善度 | ⚠️ SSE 偶爾被擋 | ✅ 跟一般 HTTP 一樣 |
-| 官方推薦度 | ❌ legacy | ⭐⭐⭐⭐⭐ |
-
----
-
 # 為什麼 SSE 會被棄用？
 
 ### SSE 的結構性問題
