@@ -268,3 +268,29 @@ layout: default
     </div>
   </div>
 </div>
+
+---
+layout: center
+class: text-center
+---
+
+# 三件事帶走
+
+<div class="grid grid-cols-3 gap-6 mt-8">
+  <div class="p-5 bg-slate-800/50 border border-blue-500/30 rounded-xl">
+    <div class="text-3xl mb-3">🧩</div>
+    <div class="font-bold text-blue-400 mb-2">Prompt 四元素</div>
+    <p class="text-gray-400 text-xs">動作動詞 + 環境條件 + 分析目標 + 輸出格式</p>
+  </div>
+  <div class="p-5 bg-slate-800/50 border border-green-500/30 rounded-xl">
+    <div class="text-3xl mb-3">🔗</div>
+    <div class="font-bold text-green-400 mb-2">工具串接模式</div>
+    <p class="text-gray-400 text-xs">一個 prompt 串多工具，指定依賴順序與輸出格式</p>
+  </div>
+  <div class="p-5 bg-slate-800/50 border border-purple-500/30 rounded-xl">
+    <div class="text-3xl mb-3">⚙️</div>
+    <div class="font-bold text-purple-400 mb-2">MCP 設定方式</div>
+    <p class="text-gray-400 text-xs">claude_desktop_config.json +<br>--remote-debugging-port=9222</p>
+  </div>
+</div>
+
