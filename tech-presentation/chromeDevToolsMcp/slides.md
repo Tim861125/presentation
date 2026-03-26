@@ -7,15 +7,15 @@ lineNumbers: false
 drawings:
   persist: false
 transition: slide-left
-title: Chrome DevTools MCP - 有效使用的實戰指南
+title: Chrome DevTools MCP - 工具介紹與實戰展示
 ---
 
 # Chrome DevTools MCP
 
-<h2 class="text-blue-400 opacity-80">有效使用工具的實戰指南</h2>
+<h2 class="text-blue-400 opacity-80">工具介紹與實戰展示</h2>
 
 <div class="mt-8 text-gray-400 text-lg">
-  Prompt 設計 · 工具串接 · 實戰案例
+  27 個工具 · 初階到進階 · 直接可用的 Prompt
 </div>
 
 <div class="absolute bottom-10 left-0 right-0 text-sm text-gray-500">
@@ -68,217 +68,171 @@ layout: default
 layout: default
 ---
 
-# Prompt 解剖：四個構成元素
-
-<div class="flex flex-col gap-4 mt-4">
-  <div class="bg-slate-800/60 p-5 rounded-xl border border-slate-600/40 font-mono text-sm leading-loose">
-    <span class="text-green-400 font-bold">[動作動詞]</span><span class="text-slate-200"> 導航到 https://example.com/checkout，</span><br>
-    <span class="text-yellow-300 font-bold">[環境條件]</span><span class="text-slate-200"> 模擬 iPhone 14 + 4G 網路，</span><br>
-    <span class="text-purple-400 font-bold">[分析目標]</span><span class="text-slate-200"> 錄製 reload 的完整 trace，找出 LCP 超過 2.5s 的根因，</span><br>
-    <span class="text-blue-400 font-bold">[輸出格式]</span><span class="text-slate-200"> 以條列式列出：指標數值 / 根因元素 / 建議優化方向</span>
-  </div>
-  <div class="grid grid-cols-4 gap-3 text-sm">
-    <div class="p-3 bg-green-900/20 border border-green-500/30 rounded-lg">
-      <div class="font-bold text-green-400 mb-1">動作動詞</div>
-      <p class="text-xs text-gray-400">導航 / 錄製 / 截圖 / 分析 / 執行 JS</p>
-    </div>
-    <div class="p-3 bg-yellow-900/20 border border-yellow-500/30 rounded-lg">
-      <div class="font-bold text-yellow-300 mb-1">環境條件</div>
-      <p class="text-xs text-gray-400">裝置、網路、時區、UA。影響重現的可控變數</p>
-    </div>
-    <div class="p-3 bg-purple-900/20 border border-purple-500/30 rounded-lg">
-      <div class="font-bold text-purple-400 mb-1">分析目標</div>
-      <p class="text-xs text-gray-400">要找什麼、門檻值是多少。避免 AI 自行判斷範圍</p>
-    </div>
-    <div class="p-3 bg-blue-900/20 border border-blue-500/30 rounded-lg">
-      <div class="font-bold text-blue-400 mb-1">輸出格式</div>
-      <p class="text-xs text-gray-400">表格 / 條列 / JSON / Markdown report</p>
-    </div>
-  </div>
-</div>
-
----
-layout: default
----
-
-# Prompt 範例集 (1)：效能與監控
-
-<div class="grid grid-cols-2 gap-3 mt-4">
-  <div class="bg-slate-800/50 border border-green-500/20 rounded-lg p-3">
-    <div class="text-green-400 font-bold text-xs mb-2">Performance Trace</div>
-    <p class="font-mono text-yellow-200/90 text-xs leading-relaxed">
-      導航到 https://example.com，錄製頁面 reload 的完整 performance trace，分析 LCP 時間、找出所有超過 50ms 的 Long Task，列出造成 render-blocking 的資源，以 Markdown 表格輸出：任務名稱 / 耗時 / 根因檔案
-    </p>
-  </div>
-  <div class="bg-slate-800/50 border border-blue-500/20 rounded-lg p-3">
-    <div class="text-blue-400 font-bold text-xs mb-2">Network 檢查</div>
-    <p class="font-mono text-yellow-200/90 text-xs leading-relaxed">
-      列出頁面所有網路請求，篩選出耗時超過 500ms 的項目，標記哪些是 render-blocking CSS/JS，以表格呈現：URL / 狀態碼 / 耗時 / 資源大小 / 是否 blocking
-    </p>
-  </div>
-  <div class="bg-slate-800/50 border border-orange-500/20 rounded-lg p-3">
-    <div class="text-orange-400 font-bold text-xs mb-2">Console + JS 執行</div>
-    <p class="font-mono text-yellow-200/90 text-xs leading-relaxed">
-      擷取頁面所有 console 訊息，過濾出 error 與 warning 層級，再執行 JS：document.querySelectorAll('img:not([loading])').length，回報未加 lazy loading 的圖片數量
-    </p>
-  </div>
-  <div class="bg-slate-800/50 border border-purple-500/20 rounded-lg p-3">
-    <div class="text-purple-400 font-bold text-xs mb-2">Memory Snapshot</div>
-    <p class="font-mono text-yellow-200/90 text-xs leading-relaxed">
-      對目前頁面拍攝 heap memory snapshot，找出 retained size 最大的前 10 個節點，說明是否有疑似 detached DOM 或 event listener 洩漏的跡象
-    </p>
-  </div>
-</div>
-
----
-layout: default
----
-
-# Prompt 範例集 (2)：進階工具應用
-
-<div class="grid grid-cols-2 gap-3 mt-4">
-  <div class="bg-slate-800/50 border border-teal-500/20 rounded-lg p-3">
-    <div class="text-teal-400 font-bold text-xs mb-2">Accessibility Tree</div>
-    <p class="font-mono text-yellow-200/90 text-xs leading-relaxed">
-      取得頁面 accessibility tree，找出所有缺少 aria-label 或 role 屬性的互動元素，以條列式列出：元素標籤 / 位置描述 / 建議補上的屬性值
-    </p>
-  </div>
-  <div class="bg-slate-800/50 border border-pink-500/20 rounded-lg p-3">
-    <div class="text-pink-400 font-bold text-xs mb-2">Cookie / LocalStorage 檢查</div>
-    <p class="font-mono text-yellow-200/90 text-xs leading-relaxed">
-      取得目前頁面的所有 cookie 與 localStorage 內容，確認 auth_token 是否存在且未過期，回報 session 狀態是否正常、有無敏感資料明文儲存
-    </p>
-  </div>
-  <div class="bg-slate-800/50 border border-yellow-500/20 rounded-lg p-3">
-    <div class="text-yellow-400 font-bold text-xs mb-2">Geolocation + Timezone 模擬</div>
-    <p class="font-mono text-yellow-200/90 text-xs leading-relaxed">
-      設定地理位置為東京（35.6762° N, 139.6503° E），時區設為 Asia/Tokyo，導航到 /events 頁面，截圖確認日期時間顯示是否正確切換為當地格式
-    </p>
-  </div>
-  <div class="bg-slate-800/50 border border-cyan-500/20 rounded-lg p-3">
-    <div class="text-cyan-400 font-bold text-xs mb-2">Page Source（SSR / SEO 檢查）</div>
-    <p class="font-mono text-yellow-200/90 text-xs leading-relaxed">
-      取得 https://example.com 的 HTML 原始碼，確認 &lt;title&gt;、og:title、og:description、canonical URL 是否存在且內容正確，列出任何缺失或重複的 meta tag
-    </p>
-  </div>
-</div>
-
----
-layout: default
----
-
-# 工具串接：一個 Prompt 完成完整任務
-
-<div class="mt-4 grid grid-cols-2 gap-5">
-  <div>
-    <div class="text-xs text-slate-400 mb-3">串接流程</div>
-    <div class="flex flex-col gap-2 text-xs">
-      <div class="flex items-center gap-2 flex-wrap">
-        <span class="bg-blue-500/20 text-blue-300 px-2 py-1 rounded font-mono">navigate</span>
-        <span class="text-slate-500">→</span>
-        <span class="bg-yellow-500/20 text-yellow-300 px-2 py-1 rounded font-mono">emulate_device</span>
-        <span class="text-slate-500">→</span>
-        <span class="bg-green-500/20 text-green-300 px-2 py-1 rounded font-mono">start_trace</span>
-      </div>
-      <div class="ml-2 text-slate-500 text-lg leading-none">↓</div>
-      <div class="flex items-center gap-2 flex-wrap">
-        <span class="bg-purple-500/20 text-purple-300 px-2 py-1 rounded font-mono">get_network</span>
-        <span class="text-slate-500">→</span>
-        <span class="bg-orange-500/20 text-orange-300 px-2 py-1 rounded font-mono">get_console</span>
-        <span class="text-slate-500">→</span>
-        <span class="bg-pink-500/20 text-pink-300 px-2 py-1 rounded font-mono">screenshot</span>
-      </div>
-    </div>
-    <div class="mt-4 text-xs text-slate-400 bg-slate-800/40 rounded-lg p-3 border border-slate-600/20">
-      💡 連接現有 Chrome：啟動時加上<br>
-      <code class="text-slate-300">--remote-debugging-port=9222</code><br>
-      MCP config 設定 <code class="text-slate-300">"port": 9222</code>
-    </div>
-  </div>
-  <div>
-    <div class="text-xs text-slate-400 mb-3">完整 Prompt</div>
-    <div class="bg-slate-800/70 rounded-lg p-4 font-mono text-yellow-200/90 text-xs leading-loose border border-slate-600/30">
-      導航到 https://example.com，<br>
-      模擬 iPhone 14 + 4G 網路，<br>
-      開始 trace 後重新載入頁面，停止 trace，<br>
-      同時取得 network 請求與 console 錯誤，<br>
-      最後截圖，<br>
-      整合所有資料輸出一份 Markdown 效能診斷報告：<br>
-      包含 LCP / 慢請求 / JS 錯誤 / 視覺截圖附件
-    </div>
-  </div>
-</div>
-
----
-layout: default
----
-
-# Case Study：LCP 慢排查
-
-<div class="text-sm text-slate-400 mb-4">場景：用戶回報首頁在手機上載入很慢</div>
-
-<div class="flex flex-col gap-3">
-  <div class="flex gap-3 items-start">
-    <span class="bg-blue-500/20 text-blue-300 border border-blue-500/30 rounded px-2 py-1 text-xs flex-shrink-0 font-bold">Step 1</span>
-    <div class="flex-1">
-      <div class="text-sm text-slate-300 mb-1">重現環境</div>
-      <div class="bg-slate-800/70 rounded p-3 font-mono text-yellow-200/90 text-xs leading-relaxed border border-slate-600/20">
-        導航到 https://example.com，模擬 iPhone 14 尺寸（390×844）與 4G 網路，截圖記錄初始狀態
-      </div>
-    </div>
-  </div>
-  <div class="flex gap-3 items-start">
-    <span class="bg-blue-500/20 text-blue-300 border border-blue-500/30 rounded px-2 py-1 text-xs flex-shrink-0 font-bold">Step 2</span>
-    <div class="flex-1">
-      <div class="text-sm text-slate-300 mb-1">錄製 Performance Trace</div>
-      <div class="bg-slate-800/70 rounded p-3 font-mono text-yellow-200/90 text-xs leading-relaxed border border-slate-600/20">
-        開始 performance trace，重新載入頁面，停止 trace，分析 LCP 時間與所有 render-blocking 資源，找出耗時最長的 Long Task
-      </div>
-    </div>
-  </div>
-  <div class="flex gap-3 items-start">
-    <span class="bg-blue-500/20 text-blue-300 border border-blue-500/30 rounded px-2 py-1 text-xs flex-shrink-0 font-bold">Step 3</span>
-    <div class="flex-1">
-      <div class="text-sm text-slate-300 mb-1">交叉比對 Network</div>
-      <div class="bg-slate-800/70 rounded p-3 font-mono text-yellow-200/90 text-xs leading-relaxed border border-slate-600/20">
-        列出所有資源請求，篩選出超過 500ms 的項目，標記是否為 render-blocking CSS/JS，回報資源大小與優先順序
-      </div>
-    </div>
-  </div>
-</div>
-
----
-layout: default
----
-
-# Case Study：AI 輸出的診斷報告
+# 基礎工具：導航 + 截圖
 
 <div class="grid grid-cols-2 gap-5 mt-4">
-  <div class="bg-slate-800/50 border border-slate-600/30 rounded-xl p-5">
-    <div class="text-slate-300 font-bold mb-3 text-sm">Claude 輸出示意</div>
-    <div class="flex flex-col gap-2 text-sm text-slate-300 leading-relaxed">
-      <div><span class="text-red-400 font-bold">LCP：4.2s</span>（目標 ≤ 2.5s）</div>
-      <div><span class="text-yellow-400 font-bold">根因元素：</span>/images/hero.jpg（1.8 MB，未壓縮）</div>
-      <div><span class="text-orange-400 font-bold">Blocking 資源：</span>analytics.js（780ms），fonts.css（430ms）</div>
-      <div><span class="text-blue-400 font-bold">Long Task：</span>main.bundle.js 第 1823 行，執行 312ms</div>
+  <div class="flex flex-col gap-3">
+    <div class="bg-slate-800/50 border border-blue-500/20 rounded-xl p-4">
+      <div class="flex items-center gap-2 mb-3">
+        <code class="text-blue-300 font-bold text-sm">navigate_page</code>
+        <span class="text-xs text-slate-500">導航操作</span>
+      </div>
+      <p class="text-xs text-slate-400 mb-3">將瀏覽器導航到指定 URL，支援等待頁面載入完成後再繼續操作。</p>
+      <div class="bg-slate-900/60 rounded-lg p-3 font-mono text-yellow-200/90 text-xs leading-relaxed">
+        導航到 https://example.com/login
+      </div>
     </div>
-    <div class="mt-4 pt-3 border-t border-slate-600/30">
-      <div class="text-green-400 font-bold mb-2 text-sm">建議修復</div>
-      <ul class="text-slate-400 text-xs space-y-1">
-        <li>• hero.jpg 使用 WebP + 壓縮，加上 fetchpriority="high"</li>
-        <li>• analytics.js 改為 async/defer</li>
-        <li>• fonts.css 使用 font-display: swap</li>
-      </ul>
+    <div class="bg-slate-800/50 border border-green-500/20 rounded-xl p-4">
+      <div class="flex items-center gap-2 mb-3">
+        <code class="text-green-300 font-bold text-sm">take_screenshot</code>
+        <span class="text-xs text-slate-500">截圖記錄</span>
+      </div>
+      <p class="text-xs text-slate-400 mb-3">截取目前頁面的完整畫面，可指定視窗尺寸或特定元素範圍。</p>
+      <div class="bg-slate-900/60 rounded-lg p-3 font-mono text-yellow-200/90 text-xs leading-relaxed">
+        截圖目前頁面，解析度設為 1440×900
+      </div>
     </div>
   </div>
-  <div class="flex flex-col gap-4">
-    <div class="bg-green-900/20 border border-green-500/30 rounded-xl p-4">
-      <div class="text-green-400 font-bold mb-1 text-sm">全程 prompt-driven</div>
-      <p class="text-slate-400 text-xs">從問題回報到拿到完整診斷報告，不需要手動開 DevTools，不需要逐格看 Flamechart</p>
+  <div class="bg-slate-800/40 border border-slate-600/20 rounded-xl p-4 flex flex-col gap-3">
+    <div class="text-xs text-slate-400 font-bold">組合使用範例</div>
+    <div class="bg-slate-900/60 rounded-lg p-4 font-mono text-yellow-200/90 text-xs leading-loose flex-1">
+      導航到 https://example.com，<br>
+      等待頁面完全載入，<br>
+      截圖並回傳圖片
     </div>
-    <div class="bg-blue-900/20 border border-blue-500/30 rounded-xl p-4">
-      <div class="text-blue-400 font-bold mb-1 text-sm">可重複執行</div>
-      <p class="text-slate-400 text-xs">修復後重跑同一組 prompt，驗證指標是否改善，形成可追蹤的優化閉環</p>
+    <div class="text-xs text-slate-500">
+      💡 截圖會直接在對話中顯示，可立即確認頁面狀態
+    </div>
+  </div>
+</div>
+
+---
+layout: default
+---
+
+# 基礎工具：Console + Network
+
+<div class="grid grid-cols-2 gap-5 mt-4">
+  <div class="bg-slate-800/50 border border-orange-500/20 rounded-xl p-4">
+    <div class="flex items-center gap-2 mb-3">
+      <code class="text-orange-300 font-bold text-sm">list_console_messages</code>
+      <span class="text-xs text-slate-500">DevTools 檢查</span>
+    </div>
+    <p class="text-xs text-slate-400 mb-3">取得瀏覽器 Console 中的所有訊息，可依 error / warning / log 層級過濾。</p>
+    <div class="bg-slate-900/60 rounded-lg p-3 font-mono text-yellow-200/90 text-xs leading-relaxed mb-3">
+      列出頁面所有 console error 與 warning
+    </div>
+    <div class="bg-slate-900/40 rounded-lg p-3 text-xs text-slate-300 border border-slate-600/20">
+      <div class="text-slate-500 mb-1">輸出示意</div>
+      <div class="text-red-400">❌ TypeError: Cannot read 'id' of undefined</div>
+      <div class="text-yellow-400">⚠ [Deprecation] getDisplayMedia requires...</div>
+    </div>
+  </div>
+  <div class="bg-slate-800/50 border border-purple-500/20 rounded-xl p-4">
+    <div class="flex items-center gap-2 mb-3">
+      <code class="text-purple-300 font-bold text-sm">list_network_requests</code>
+      <span class="text-xs text-slate-500">DevTools 檢查</span>
+    </div>
+    <p class="text-xs text-slate-400 mb-3">列出頁面所有網路請求，包含狀態碼、耗時、資源大小，可用於排查 API 異常。</p>
+    <div class="bg-slate-900/60 rounded-lg p-3 font-mono text-yellow-200/90 text-xs leading-relaxed mb-3">
+      列出所有網路請求，找出狀態碼非 200 的項目，以表格呈現 URL / 狀態碼 / 耗時
+    </div>
+    <div class="bg-slate-900/40 rounded-lg p-3 text-xs text-slate-300 border border-slate-600/20">
+      <div class="text-slate-500 mb-1">輸出示意</div>
+      <div class="text-red-400">❌ /api/user 500 · 1.2s</div>
+      <div class="text-green-400">✓ /api/products 200 · 230ms</div>
+    </div>
+  </div>
+</div>
+
+---
+layout: default
+---
+
+# 基礎工具：頁面互動
+
+<div class="grid grid-cols-3 gap-4 mt-4">
+  <div class="bg-slate-800/50 border border-cyan-500/20 rounded-xl p-4">
+    <code class="text-cyan-300 font-bold text-sm">click</code>
+    <p class="text-xs text-slate-400 mt-2 mb-3">點擊頁面上的指定元素，可用 CSS selector 或描述定位。</p>
+    <div class="bg-slate-900/60 rounded-lg p-3 font-mono text-yellow-200/90 text-xs leading-relaxed">
+      點擊「登入」按鈕
+    </div>
+  </div>
+  <div class="bg-slate-800/50 border border-pink-500/20 rounded-xl p-4">
+    <code class="text-pink-300 font-bold text-sm">fill</code>
+    <p class="text-xs text-slate-400 mt-2 mb-3">在輸入框中填入指定文字，常用於表單自動化測試。</p>
+    <div class="bg-slate-900/60 rounded-lg p-3 font-mono text-yellow-200/90 text-xs leading-relaxed">
+      在 email 欄位填入 test@example.com
+    </div>
+  </div>
+  <div class="bg-slate-800/50 border border-yellow-500/20 rounded-xl p-4">
+    <code class="text-yellow-300 font-bold text-sm">evaluate_script</code>
+    <p class="text-xs text-slate-400 mt-2 mb-3">在頁面上下文執行任意 JavaScript，提取數據或操控 DOM。</p>
+    <div class="bg-slate-900/60 rounded-lg p-3 font-mono text-yellow-200/90 text-xs leading-relaxed">
+      執行 JS 取得目前登入的 user id
+    </div>
+  </div>
+</div>
+
+<div class="mt-4 bg-slate-800/40 border border-slate-600/20 rounded-xl p-4">
+  <div class="text-xs text-slate-400 mb-2 font-bold">串接範例：完整登入流程測試</div>
+  <div class="font-mono text-yellow-200/90 text-xs leading-loose">
+    導航到 /login，在 email 填入 test@example.com，在 password 填入 Test1234，點擊「登入」按鈕，截圖確認是否成功跳轉到 /dashboard
+  </div>
+</div>
+
+---
+layout: default
+---
+
+# 進階工具：Memory Snapshot
+
+<div class="grid grid-cols-2 gap-5 mt-4">
+  <div class="flex flex-col gap-3">
+    <div class="bg-slate-800/50 border border-red-500/20 rounded-xl p-4">
+      <div class="flex items-center gap-2 mb-3">
+        <code class="text-red-300 font-bold text-sm">take_memory_snapshot</code>
+        <span class="text-xs bg-red-500/20 text-red-300 px-2 py-0.5 rounded">進階</span>
+      </div>
+      <p class="text-xs text-slate-400 mb-3">
+        對當前頁面拍攝 JavaScript heap memory snapshot，分析物件保留大小（retained size），找出記憶體洩漏的根源節點。
+      </p>
+      <div class="text-xs text-slate-500 space-y-1">
+        <div>📌 適用場景：SPA 頁面切換後記憶體持續增長</div>
+        <div>📌 常見根因：未移除的 event listener、detached DOM</div>
+      </div>
+    </div>
+    <div class="bg-slate-900/60 rounded-lg p-4 font-mono text-yellow-200/90 text-xs leading-loose border border-slate-600/20">
+      對目前頁面拍攝 heap memory snapshot，<br>
+      列出 retained size 最大的前 10 個節點，<br>
+      說明是否有 detached DOM 或<br>
+      未清除的 event listener 跡象
+    </div>
+  </div>
+  <div class="flex flex-col gap-3">
+    <div class="text-xs text-slate-400 font-bold">輸出示意</div>
+    <div class="bg-slate-900/60 rounded-xl p-4 border border-slate-600/20 text-xs flex flex-col gap-2">
+      <div class="text-slate-500 mb-1">Top retained nodes</div>
+      <div class="flex justify-between">
+        <span class="text-red-400 font-mono">Detached HTMLDivElement</span>
+        <span class="text-slate-300">42.3 MB</span>
+      </div>
+      <div class="flex justify-between">
+        <span class="text-orange-400 font-mono">EventListener (scroll)</span>
+        <span class="text-slate-300">18.1 MB</span>
+      </div>
+      <div class="flex justify-between">
+        <span class="text-yellow-400 font-mono">Array (closure)</span>
+        <span class="text-slate-300">9.6 MB</span>
+      </div>
+      <div class="mt-3 pt-3 border-t border-slate-600/30 text-slate-300">
+        ⚠ 發現 <span class="text-red-400 font-bold">23 個 detached DOM</span> 節點，<br>
+        推測來源：<code class="text-slate-300">ComponentA</code> unmount 時未呼叫 <code class="text-slate-300">removeEventListener</code>
+      </div>
+    </div>
+    <div class="text-xs text-slate-500">
+      💡 建議在使用者操作幾輪後再拍 snapshot，對比前後差異更能找出洩漏點
     </div>
   </div>
 </div>
@@ -288,23 +242,37 @@ layout: center
 class: text-center
 ---
 
-# 三件事帶走
+# 今天介紹的工具
 
-<div class="grid grid-cols-3 gap-6 mt-8">
-  <div class="p-5 bg-slate-800/50 border border-blue-500/30 rounded-xl">
-    <div class="text-3xl mb-3">🧩</div>
-    <div class="font-bold text-blue-400 mb-2">Prompt 四元素</div>
-    <p class="text-gray-400 text-xs">動作動詞 + 環境條件 + 分析目標 + 輸出格式</p>
+<div class="grid grid-cols-4 gap-4 mt-8">
+  <div class="p-4 bg-slate-800/50 border border-blue-500/30 rounded-xl">
+    <div class="font-bold text-blue-400 mb-3 text-sm">導航 + 截圖</div>
+    <div class="flex flex-col gap-1 text-xs font-mono text-slate-400">
+      <span>navigate_page</span>
+      <span>take_screenshot</span>
+    </div>
   </div>
-  <div class="p-5 bg-slate-800/50 border border-green-500/30 rounded-xl">
-    <div class="text-3xl mb-3">🔗</div>
-    <div class="font-bold text-green-400 mb-2">工具串接模式</div>
-    <p class="text-gray-400 text-xs">一個 prompt 串多工具，指定依賴順序與輸出格式</p>
+  <div class="p-4 bg-slate-800/50 border border-orange-500/30 rounded-xl">
+    <div class="font-bold text-orange-400 mb-3 text-sm">Console + Network</div>
+    <div class="flex flex-col gap-1 text-xs font-mono text-slate-400">
+      <span>list_console_messages</span>
+      <span>list_network_requests</span>
+    </div>
   </div>
-  <div class="p-5 bg-slate-800/50 border border-purple-500/30 rounded-xl">
-    <div class="text-3xl mb-3">⚙️</div>
-    <div class="font-bold text-purple-400 mb-2">MCP 設定方式</div>
-    <p class="text-gray-400 text-xs">claude_desktop_config.json +<br>--remote-debugging-port=9222</p>
+  <div class="p-4 bg-slate-800/50 border border-cyan-500/30 rounded-xl">
+    <div class="font-bold text-cyan-400 mb-3 text-sm">頁面互動</div>
+    <div class="flex flex-col gap-1 text-xs font-mono text-slate-400">
+      <span>click</span>
+      <span>fill</span>
+      <span>evaluate_script</span>
+    </div>
+  </div>
+  <div class="p-4 bg-slate-800/50 border border-red-500/30 rounded-xl">
+    <div class="font-bold text-red-400 mb-3 text-sm">進階</div>
+    <div class="flex flex-col gap-1 text-xs font-mono text-slate-400">
+      <span>take_memory_snapshot</span>
+    </div>
   </div>
 </div>
 
+<div class="mt-6 text-slate-500 text-sm">還有 20+ 個工具等你探索 → 完整清單見工具箱頁</div>
