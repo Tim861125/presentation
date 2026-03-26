@@ -1,6 +1,6 @@
 ---
 theme: seriph
-background: https://images.unsplash.com/photo-1550751827-4bd374c3f58b?auto=format&fit=crop&q=80&w=2070
+background: https://cover.sli.dev
 class: text-center
 highlighter: shiki
 lineNumbers: false
@@ -116,26 +116,26 @@ layout: default
 
 # 總結：開發者體驗 (DX) 的躍遷
 
-<div class="grid grid-cols-2 gap-8 mt-10">
+<div class="grid grid-cols-2 gap-8 mt-4 text-sm">
   <div>
-    <h3 class="text-gray-400 mb-4">Before: 體力勞動</h3>
-    <ul class="space-y-2 opacity-60">
+    <h3 class="text-gray-400 mb-1">Before: 體力勞動</h3>
+    <ul class="space-y-1 opacity-60">
       <li>❌ 手動錄製 Trace 並逐格分析</li>
       <li>❌ 在多個面板間拼湊真相</li>
       <li>❌ 撰寫重複的性能報告</li>
     </ul>
   </div>
   <div>
-    <h3 class="text-blue-400 mb-4">After: 決策驅動</h3>
-    <ul class="space-y-2">
+    <h3 class="text-blue-400 mb-1">After: 決策驅動</h3>
+    <ul class="space-y-1">
       <li>🚀 AI 自動鎖定「最長任務」與「阻塞資源」</li>
       <li>🚀 自然語言對話式 Debug</li>
-      <li>🚀 直接獲取帶有數據背書的優化建議</li>
+      <li>🚀 直接獲取優化建議</li>
     </ul>
   </div>
 </div>
 
-<ComparisonView class="mt-8" />
+<ComparisonView class="mt-4" />
 
 ---
 layout: center
