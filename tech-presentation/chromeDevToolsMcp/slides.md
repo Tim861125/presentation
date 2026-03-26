@@ -28,17 +28,31 @@ layout: default
 
 # 什麼是 Chrome DevTools MCP?
 
-<div class="flex items-center gap-10 mt-8">
-  <div class="flex-1 bg-slate-800/50 p-6 rounded-xl border border-blue-500/20">
-    <p class="text-blue-300 font-mono italic">"It's the bridge between LLMs and the browser's engine."</p>
-    <ul class="mt-4 space-y-3 text-sm">
+<div class="grid grid-cols-2 gap-6 mt-6">
+  <div class="bg-slate-800/50 p-5 rounded-xl border border-blue-500/20">
+    <p class="text-blue-300 font-mono italic text-sm">"Bridge between LLMs and the browser's engine."</p>
+    <ul class="mt-4 space-y-2 text-sm">
       <li>✅ <strong>Google 官方維護</strong>：基於 MCP 開放標準</li>
       <li>✅ <strong>深度存取</strong>：直接調用 27+ 個 CDP 核心工具</li>
       <li>✅ <strong>保留 Session</strong>：可連接現有 Chrome 實例</li>
     </ul>
   </div>
-  <div class="flex-1">
-    <img src="https://mermaid.ink/svg/pako:eNptkE1Lw0AQhv_KMOdStNqDN9vWiyAKpUIPe7Ehu00T7W6S3Y1V6X_3Jmq1B8_DzDPvO8O8Yis7rDAs_L6pYpZlUvS_H9Sreid8L5H0-pS8n87-4Xn9n7L2qHl6O0_fP2D6q9K40xP0V9U37U6O0X9Xfdfu7Ojkp_p37e6OTv6p_t_unfzlS69f9W5n9L063YNoSStS0oo6WtOSFjSrOa1pT-shY7EAsQCxgDHP6D0m9B4Teg-ZkDEDMqW8pZzFPMYCxlI7A7EBsQCxAInEAsQCxALEAsSCTKlvqWCpj7GAsYyxmLEYixjLGEu9By7vAQ_4z98_lA2U0Q" class="w-full opacity-90" />
+  <div class="flex flex-col gap-3">
+    <div class="text-xs text-slate-400 mb-1">claude_desktop_config.json</div>
+    <div class="bg-slate-900/80 rounded-lg p-3 font-mono text-xs text-green-300 border border-slate-600/30 leading-relaxed">
+      {<br>
+      &nbsp;&nbsp;"mcpServers": {<br>
+      &nbsp;&nbsp;&nbsp;&nbsp;"chrome-devtools": {<br>
+      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"command": "npx",<br>
+      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"args": ["@chrome-devtools/mcp"]<br>
+      &nbsp;&nbsp;&nbsp;&nbsp;}<br>
+      &nbsp;&nbsp;}<br>
+      }
+    </div>
+    <div class="text-xs text-slate-400 mt-1">
+      連接現有 Chrome：啟動時加上
+      <code class="text-slate-300 bg-slate-800 px-1 rounded">--remote-debugging-port=9222</code>
+    </div>
   </div>
 </div>
 
