@@ -49,3 +49,36 @@ layout: default
 # 核心工具箱：27 種強大能力
 
 <ToolsLibrary />
+
+---
+layout: default
+---
+
+# Prompt 解剖：四個構成元素
+
+<div class="flex flex-col gap-4 mt-4">
+  <div class="bg-slate-800/60 p-5 rounded-xl border border-slate-600/40 font-mono text-sm leading-loose">
+    <span class="text-green-400 font-bold">[動作動詞]</span><span class="text-slate-200"> 導航到 https://example.com/checkout，</span><br>
+    <span class="text-yellow-300 font-bold">[環境條件]</span><span class="text-slate-200"> 模擬 iPhone 14 + 4G 網路，</span><br>
+    <span class="text-purple-400 font-bold">[分析目標]</span><span class="text-slate-200"> 錄製 reload 的完整 trace，找出 LCP 超過 2.5s 的根因，</span><br>
+    <span class="text-blue-400 font-bold">[輸出格式]</span><span class="text-slate-200"> 以條列式列出：指標數值 / 根因元素 / 建議優化方向</span>
+  </div>
+  <div class="grid grid-cols-4 gap-3 text-sm">
+    <div class="p-3 bg-green-900/20 border border-green-500/30 rounded-lg">
+      <div class="font-bold text-green-400 mb-1">動作動詞</div>
+      <p class="text-xs text-gray-400">導航 / 錄製 / 截圖 / 分析 / 執行 JS</p>
+    </div>
+    <div class="p-3 bg-yellow-900/20 border border-yellow-500/30 rounded-lg">
+      <div class="font-bold text-yellow-300 mb-1">環境條件</div>
+      <p class="text-xs text-gray-400">裝置、網路、時區、UA。影響重現的可控變數</p>
+    </div>
+    <div class="p-3 bg-purple-900/20 border border-purple-500/30 rounded-lg">
+      <div class="font-bold text-purple-400 mb-1">分析目標</div>
+      <p class="text-xs text-gray-400">要找什麼、門檻值是多少。避免 AI 自行判斷範圍</p>
+    </div>
+    <div class="p-3 bg-blue-900/20 border border-blue-500/30 rounded-lg">
+      <div class="font-bold text-blue-400 mb-1">輸出格式</div>
+      <p class="text-xs text-gray-400">表格 / 條列 / JSON / Markdown report</p>
+    </div>
+  </div>
+</div>
