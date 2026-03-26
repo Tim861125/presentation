@@ -148,3 +148,49 @@ layout: default
     </p>
   </div>
 </div>
+
+---
+layout: default
+---
+
+# 工具串接：一個 Prompt 完成完整任務
+
+<div class="mt-4 grid grid-cols-2 gap-5">
+  <div>
+    <div class="text-xs text-slate-400 mb-3">串接流程</div>
+    <div class="flex flex-col gap-2 text-xs">
+      <div class="flex items-center gap-2 flex-wrap">
+        <span class="bg-blue-500/20 text-blue-300 px-2 py-1 rounded font-mono">navigate</span>
+        <span class="text-slate-500">→</span>
+        <span class="bg-yellow-500/20 text-yellow-300 px-2 py-1 rounded font-mono">emulate_device</span>
+        <span class="text-slate-500">→</span>
+        <span class="bg-green-500/20 text-green-300 px-2 py-1 rounded font-mono">start_trace</span>
+      </div>
+      <div class="ml-2 text-slate-500 text-lg leading-none">↓</div>
+      <div class="flex items-center gap-2 flex-wrap">
+        <span class="bg-purple-500/20 text-purple-300 px-2 py-1 rounded font-mono">get_network</span>
+        <span class="text-slate-500">→</span>
+        <span class="bg-orange-500/20 text-orange-300 px-2 py-1 rounded font-mono">get_console</span>
+        <span class="text-slate-500">→</span>
+        <span class="bg-pink-500/20 text-pink-300 px-2 py-1 rounded font-mono">screenshot</span>
+      </div>
+    </div>
+    <div class="mt-4 text-xs text-slate-400 bg-slate-800/40 rounded-lg p-3 border border-slate-600/20">
+      💡 連接現有 Chrome：啟動時加上<br>
+      <code class="text-slate-300">--remote-debugging-port=9222</code><br>
+      MCP config 設定 <code class="text-slate-300">"port": 9222</code>
+    </div>
+  </div>
+  <div>
+    <div class="text-xs text-slate-400 mb-3">完整 Prompt</div>
+    <div class="bg-slate-800/70 rounded-lg p-4 font-mono text-yellow-200/90 text-xs leading-loose border border-slate-600/30">
+      導航到 https://example.com，<br>
+      模擬 iPhone 14 + 4G 網路，<br>
+      開始 trace 後重新載入頁面，停止 trace，<br>
+      同時取得 network 請求與 console 錯誤，<br>
+      最後截圖，<br>
+      整合所有資料輸出一份 Markdown 效能診斷報告：<br>
+      包含 LCP / 慢請求 / JS 錯誤 / 視覺截圖附件
+    </div>
+  </div>
+</div>
