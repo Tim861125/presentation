@@ -194,3 +194,77 @@ layout: default
     </div>
   </div>
 </div>
+
+---
+layout: default
+---
+
+# Case Study：LCP 慢排查
+
+<div class="text-sm text-slate-400 mb-4">場景：用戶回報首頁在手機上載入很慢</div>
+
+<div class="flex flex-col gap-3">
+  <div class="flex gap-3 items-start">
+    <span class="bg-blue-500/20 text-blue-300 border border-blue-500/30 rounded px-2 py-1 text-xs flex-shrink-0 font-bold">Step 1</span>
+    <div class="flex-1">
+      <div class="text-sm text-slate-300 mb-1">重現環境</div>
+      <div class="bg-slate-800/70 rounded p-3 font-mono text-yellow-200/90 text-xs leading-relaxed border border-slate-600/20">
+        導航到 https://example.com，模擬 iPhone 14 尺寸（390×844）與 4G 網路，截圖記錄初始狀態
+      </div>
+    </div>
+  </div>
+  <div class="flex gap-3 items-start">
+    <span class="bg-blue-500/20 text-blue-300 border border-blue-500/30 rounded px-2 py-1 text-xs flex-shrink-0 font-bold">Step 2</span>
+    <div class="flex-1">
+      <div class="text-sm text-slate-300 mb-1">錄製 Performance Trace</div>
+      <div class="bg-slate-800/70 rounded p-3 font-mono text-yellow-200/90 text-xs leading-relaxed border border-slate-600/20">
+        開始 performance trace，重新載入頁面，停止 trace，分析 LCP 時間與所有 render-blocking 資源，找出耗時最長的 Long Task
+      </div>
+    </div>
+  </div>
+  <div class="flex gap-3 items-start">
+    <span class="bg-blue-500/20 text-blue-300 border border-blue-500/30 rounded px-2 py-1 text-xs flex-shrink-0 font-bold">Step 3</span>
+    <div class="flex-1">
+      <div class="text-sm text-slate-300 mb-1">交叉比對 Network</div>
+      <div class="bg-slate-800/70 rounded p-3 font-mono text-yellow-200/90 text-xs leading-relaxed border border-slate-600/20">
+        列出所有資源請求，篩選出超過 500ms 的項目，標記是否為 render-blocking CSS/JS，回報資源大小與優先順序
+      </div>
+    </div>
+  </div>
+</div>
+
+---
+layout: default
+---
+
+# Case Study：AI 輸出的診斷報告
+
+<div class="grid grid-cols-2 gap-5 mt-4">
+  <div class="bg-slate-800/50 border border-slate-600/30 rounded-xl p-5">
+    <div class="text-slate-300 font-bold mb-3 text-sm">Claude 輸出示意</div>
+    <div class="flex flex-col gap-2 text-sm text-slate-300 leading-relaxed">
+      <div><span class="text-red-400 font-bold">LCP：4.2s</span>（目標 ≤ 2.5s）</div>
+      <div><span class="text-yellow-400 font-bold">根因元素：</span>/images/hero.jpg（1.8 MB，未壓縮）</div>
+      <div><span class="text-orange-400 font-bold">Blocking 資源：</span>analytics.js（780ms），fonts.css（430ms）</div>
+      <div><span class="text-blue-400 font-bold">Long Task：</span>main.bundle.js 第 1823 行，執行 312ms</div>
+    </div>
+    <div class="mt-4 pt-3 border-t border-slate-600/30">
+      <div class="text-green-400 font-bold mb-2 text-sm">建議修復</div>
+      <ul class="text-slate-400 text-xs space-y-1">
+        <li>• hero.jpg 使用 WebP + 壓縮，加上 fetchpriority="high"</li>
+        <li>• analytics.js 改為 async/defer</li>
+        <li>• fonts.css 使用 font-display: swap</li>
+      </ul>
+    </div>
+  </div>
+  <div class="flex flex-col gap-4">
+    <div class="bg-green-900/20 border border-green-500/30 rounded-xl p-4">
+      <div class="text-green-400 font-bold mb-1 text-sm">全程 prompt-driven</div>
+      <p class="text-slate-400 text-xs">從問題回報到拿到完整診斷報告，不需要手動開 DevTools，不需要逐格看 Flamechart</p>
+    </div>
+    <div class="bg-blue-900/20 border border-blue-500/30 rounded-xl p-4">
+      <div class="text-blue-400 font-bold mb-1 text-sm">可重複執行</div>
+      <p class="text-slate-400 text-xs">修復後重跑同一組 prompt，驗證指標是否改善，形成可追蹤的優化閉環</p>
+    </div>
+  </div>
+</div>
