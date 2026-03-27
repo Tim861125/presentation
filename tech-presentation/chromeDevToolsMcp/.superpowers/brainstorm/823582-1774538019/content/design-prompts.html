@@ -1,0 +1,69 @@
+<h2>新頁面設計預覽</h2>
+<p class="subtitle">確認內容方向，點選你偏好的版本</p>
+
+<div style="display:flex;flex-direction:column;gap:20px;margin-top:16px">
+
+  <!-- Slide 4: Prompt 設計原則 -->
+  <div>
+    <div style="font-size:11px;color:#64748b;margin-bottom:8px;font-weight:bold">頁面 4 — Prompt 設計原則</div>
+    <div style="background:rgba(15,23,42,0.8);border:1px solid rgba(59,130,246,0.3);border-radius:10px;padding:16px;font-size:12px">
+      <div style="color:#93c5fd;font-size:15px;font-weight:bold;margin-bottom:12px">寫出好 Prompt 的三條原則</div>
+      <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px">
+        <div style="background:rgba(30,41,59,0.6);border-radius:8px;padding:10px">
+          <div style="color:#34d399;font-weight:bold;margin-bottom:6px">① 給目標，不給步驟</div>
+          <div style="color:#ef4444;font-size:10px;margin-bottom:4px">✕ 模糊：「幫我看一下效能」</div>
+          <div style="color:#10b981;font-size:10px">✓ 精確：「錄製 5 秒 trace，找出超過 50ms 的 Long Task 並說明是哪支 JS 造成的」</div>
+        </div>
+        <div style="background:rgba(30,41,59,0.6);border-radius:8px;padding:10px">
+          <div style="color:#34d399;font-weight:bold;margin-bottom:6px">② 指定輸出格式</div>
+          <div style="color:#ef4444;font-size:10px;margin-bottom:4px">✕ 模糊：「分析網路請求」</div>
+          <div style="color:#10b981;font-size:10px">✓ 精確：「列出所有超過 1s 的請求，以表格呈現：URL、狀態碼、耗時」</div>
+        </div>
+        <div style="background:rgba(30,41,59,0.6);border-radius:8px;padding:10px">
+          <div style="color:#34d399;font-weight:bold;margin-bottom:6px">③ 給上下文</div>
+          <div style="color:#ef4444;font-size:10px;margin-bottom:4px">✕ 模糊：「截圖」</div>
+          <div style="color:#10b981;font-size:10px">✓ 精確：「導航到 /checkout，模擬 iPhone 14 + 3G 網路，截圖並標記 LCP 元素位置」</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Slide 7-8: Case Study -->
+  <div>
+    <div style="font-size:11px;color:#64748b;margin-bottom:8px;font-weight:bold">頁面 7–8 — Case Study：LCP 慢排查流程</div>
+    <div style="background:rgba(15,23,42,0.8);border:1px solid rgba(16,185,129,0.3);border-radius:10px;padding:16px;font-size:12px">
+      <div style="color:#34d399;font-size:13px;font-weight:bold;margin-bottom:12px">場景：用戶回報首頁在手機上很慢</div>
+      <div style="display:flex;flex-direction:column;gap:8px">
+        <div style="display:flex;gap:10px;align-items:flex-start">
+          <span style="background:rgba(59,130,246,0.2);color:#60a5fa;border-radius:4px;padding:2px 8px;font-size:11px;flex-shrink:0">Step 1</span>
+          <div>
+            <div style="color:#e2e8f0">重現環境</div>
+            <code style="color:#fde68a;font-size:10px;background:rgba(0,0,0,0.3);padding:3px 6px;border-radius:4px;display:block;margin-top:3px">導航到 https://example.com，模擬 iPhone 14 尺寸與 4G 網路，截圖</code>
+          </div>
+        </div>
+        <div style="display:flex;gap:10px;align-items:flex-start">
+          <span style="background:rgba(59,130,246,0.2);color:#60a5fa;border-radius:4px;padding:2px 8px;font-size:11px;flex-shrink:0">Step 2</span>
+          <div>
+            <div style="color:#e2e8f0">錄製 Trace</div>
+            <code style="color:#fde68a;font-size:10px;background:rgba(0,0,0,0.3);padding:3px 6px;border-radius:4px;display:block;margin-top:3px">開始 performance trace，重新載入頁面，停止後分析 LCP 時間與 render-blocking 資源</code>
+          </div>
+        </div>
+        <div style="display:flex;gap:10px;align-items:flex-start">
+          <span style="background:rgba(59,130,246,0.2);color:#60a5fa;border-radius:4px;padding:2px 8px;font-size:11px;flex-shrink:0">Step 3</span>
+          <div>
+            <div style="color:#e2e8f0">檢查網路</div>
+            <code style="color:#fde68a;font-size:10px;background:rgba(0,0,0,0.3);padding:3px 6px;border-radius:4px;display:block;margin-top:3px">列出所有資源請求，找出超過 500ms 的項目，標出是否有 render-blocking CSS/JS</code>
+          </div>
+        </div>
+        <div style="display:flex;gap:10px;align-items:flex-start">
+          <span style="background:rgba(16,185,129,0.2);color:#34d399;border-radius:4px;padding:2px 8px;font-size:11px;flex-shrink:0">結論</span>
+          <div>
+            <div style="color:#e2e8f0">AI 輸出診斷報告</div>
+            <div style="color:#64748b;font-size:11px;margin-top:3px">根因、受影響指標、建議修復方式</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>

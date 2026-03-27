@@ -12,7 +12,7 @@
 
 ---
 
-## New Slide Structure（共 9 頁）
+## New Slide Structure（共 10 頁）
 
 ### 頁 1 — Title（保留，副標微調）
 - 副標改為：「有效使用 Chrome DevTools MCP 的實戰指南」
@@ -36,22 +36,31 @@
 
 視覺：一段完整 prompt 用顏色標出各元素 + 四個說明卡
 
-### 頁 5 — Prompt 範例集（新增）
-四大類工具各一個真實、完整的 prompt 範例：
-- **導航 + 環境模擬**：模擬裝置 + 網路條件後截圖
-- **Performance Trace**：錄製 reload、分析 LCP / Long Task
-- **Network 檢查**：列出慢請求、標出 render-blocking 資源
-- **Console + JS 執行**：抓 JS 錯誤、執行自定義分析腳本
+### 頁 5 — Prompt 範例集 (1)：效能與監控（新增）
+效能相關工具的完整 prompt 範例：
+- **Performance Trace**：錄製 reload、分析 LCP / Long Task / render-blocking
+- **Network 檢查**：列出慢請求、標出資源大小與優先順序
+- **Console + JS 執行**：抓 JS 錯誤、執行自定義分析腳本（含 `evaluate_js` 注入）
+- **Memory Snapshot**：分析 heap 使用量，找出記憶體洩漏節點
 
-每個範例直接呈現可複用的 prompt 文字，不加多餘解釋。
+每個範例直接呈現可複用的 prompt 文字。
 
-### 頁 6 — 工具串接技巧（新增）
+### 頁 6 — Prompt 範例集 (2)：進階工具應用（新增）
+較少被使用但實用性高的工具 prompt 範例：
+- **Accessibility Tree**：A11y 稽核，找出缺少 aria-label 或 role 的元素
+- **Cookie / LocalStorage 檢查**：驗證登入狀態、token 過期、session 資料正確性
+- **Geolocation + Timezone 模擬**：測試地區性功能（地圖、在地化日期格式）
+- **Page Source（SSR/SEO 檢查）**：確認 SSR 渲染結果，驗證 meta tag / OG tag
+
+每個範例直接呈現可複用的 prompt 文字。
+
+### 頁 7 — 工具串接技巧（新增）
 展示在單一對話中串接多個工具完成一個完整任務：
 - 範例：「導航 → 模擬環境 → 錄 trace → 檢查 network → 輸出完整報告」
 - 重點：如何在 prompt 中描述跨工具的依賴順序
 - 補充：如何指定 session 連接到已開啟的頁面
 
-### 頁 7 — Case Study Part 1：LCP 慢排查（新增）
+### 頁 8 — Case Study Part 1：LCP 慢排查（新增）
 **場景**：用戶回報首頁在手機上載入很慢
 
 步驟：
@@ -61,11 +70,11 @@
 
 每步驟附實際 prompt 文字（code block 風格）。
 
-### 頁 8 — Case Study Part 2：結論與輸出（新增）
+### 頁 9 — Case Study Part 2：結論與輸出（新增）
 - AI 輸出的診斷報告示意（根因 / 受影響指標 / 建議修復方向）
 - 強調：從「發現問題」到「拿到報告」全程 prompt-driven，不需要手動開 DevTools
 
-### 頁 9 — 總結（改版）
+### 頁 10 — 總結（改版）
 - 移除 Before/After 痛點對比
 - 改為：「三件事帶走」
   1. Prompt 四元素結構

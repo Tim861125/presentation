@@ -1,0 +1,43 @@
+<h2>Prompt 設計原則（修訂版）</h2>
+<p class="subtitle">移除反例，改為技術導向的 prompt 結構模式</p>
+
+<div style="background:rgba(15,23,42,0.8);border:1px solid rgba(59,130,246,0.3);border-radius:10px;padding:18px;font-size:12px;margin-top:16px">
+  <div style="color:#93c5fd;font-size:15px;font-weight:bold;margin-bottom:14px">Prompt 解剖：一個有效的 prompt 長什麼樣</div>
+
+  <!-- Prompt 結構圖 -->
+  <div style="background:rgba(0,0,0,0.4);border-radius:8px;padding:14px;margin-bottom:14px;font-family:monospace">
+    <div style="line-height:1.9;font-size:11.5px">
+      <span style="color:#86efac">[動作動詞]</span>
+      <span style="color:#e2e8f0"> 導航到 https://example.com/checkout，</span>
+      <br>
+      <span style="color:#fde68a">[環境條件]</span>
+      <span style="color:#e2e8f0"> 模擬 iPhone 14 + 4G 網路，</span>
+      <br>
+      <span style="color:#c084fc">[分析目標]</span>
+      <span style="color:#e2e8f0"> 錄製 reload 的完整 trace，找出 LCP 超過 2.5s 的根因，</span>
+      <br>
+      <span style="color:#60a5fa">[輸出格式]</span>
+      <span style="color:#e2e8f0"> 以條列式列出：指標數值 / 根因元素 / 建議優化方向</span>
+    </div>
+  </div>
+
+  <!-- 四個元素說明 -->
+  <div style="display:grid;grid-template-columns:1fr 1fr 1fr 1fr;gap:8px">
+    <div style="background:rgba(134,239,172,0.08);border:1px solid rgba(134,239,172,0.2);border-radius:7px;padding:9px">
+      <div style="color:#86efac;font-weight:bold;margin-bottom:5px">動作動詞</div>
+      <div style="color:#94a3b8;font-size:10px;line-height:1.5">明確告知要做什麼操作。導航 / 錄製 / 截圖 / 分析 / 執行 JS</div>
+    </div>
+    <div style="background:rgba(253,230,138,0.08);border:1px solid rgba(253,230,138,0.2);border-radius:7px;padding:9px">
+      <div style="color:#fde68a;font-weight:bold;margin-bottom:5px">環境條件</div>
+      <div style="color:#94a3b8;font-size:10px;line-height:1.5">裝置、網路、時區、UA。影響重現的可控變數</div>
+    </div>
+    <div style="background:rgba(192,132,252,0.08);border:1px solid rgba(192,132,252,0.2);border-radius:7px;padding:9px">
+      <div style="color:#c084fc;font-weight:bold;margin-bottom:5px">分析目標</div>
+      <div style="color:#94a3b8;font-size:10px;line-height:1.5">要找什麼、門檻值是多少。避免 AI 自行判斷範圍</div>
+    </div>
+    <div style="background:rgba(96,165,250,0.08);border:1px solid rgba(96,165,250,0.2);border-radius:7px;padding:9px">
+      <div style="color:#60a5fa;font-weight:bold;margin-bottom:5px">輸出格式</div>
+      <div style="color:#94a3b8;font-size:10px;line-height:1.5">表格 / 條列 / JSON / Markdown report。控制輸出可讀性</div>
+    </div>
+  </div>
+</div>
