@@ -60,6 +60,41 @@ layout: default
 layout: default
 ---
 
+# 🆕 最新功能更新
+
+<div class="grid grid-cols-3 gap-4 mt-4">
+  <div class="bg-slate-800/50 border border-green-500/20 rounded-xl p-4">
+    <code class="text-green-300 font-bold text-sm">--auto-connect</code>
+    <p class="text-xs text-slate-400 mt-2 mb-3">自動探索並附加到運行中的 Chrome 實例，不再需要手動複製 WebSocket URL。</p>
+    <div class="bg-slate-900/60 rounded-lg p-3 font-mono text-yellow-200/90 text-xs leading-relaxed">
+      使用 auto-connect 連接本機 Chrome
+    </div>
+    <div class="text-xs text-slate-500 mt-2">
+      💡 啟動時加上 <code class="text-slate-300 bg-slate-800 px-1 rounded">--auto-connect</code> 即可
+    </div>
+  </div>
+  <div class="bg-slate-800/50 border border-purple-500/20 rounded-xl p-4">
+    <code class="text-purple-300 font-bold text-sm">emulate</code>
+    <span class="text-xs text-slate-500 ml-1">統一模擬工具</span>
+    <p class="text-xs text-slate-400 mt-2 mb-3">整合地理位置、網路節流 (offline/3G)、CPU 節流、User Agent 覆寫為單一工具。</p>
+    <div class="bg-slate-900/60 rounded-lg p-3 font-mono text-yellow-200/90 text-xs leading-relaxed">
+      模擬 3G 網路 + 4x CPU 節流
+    </div>
+  </div>
+  <div class="bg-slate-800/50 border border-orange-500/20 rounded-xl p-4">
+    <code class="text-orange-300 font-bold text-sm">Preserve Logs</code>
+    <span class="text-xs text-slate-500 ml-1">跨頁面保留</span>
+    <p class="text-xs text-slate-400 mt-2 mb-3">跨頁面保留 console messages 和 network requests，如同 DevTools 的 Preserve log 功能。</p>
+    <div class="bg-slate-900/60 rounded-lg p-3 font-mono text-yellow-200/90 text-xs leading-relaxed">
+      保留 logs 後到下一頁，檢查所有 network 請求
+    </div>
+  </div>
+</div>
+
+---
+layout: default
+---
+
 # 核心工具箱：27 種強大能力
 
 <ToolsLibrary />
@@ -68,18 +103,18 @@ layout: default
 layout: default
 ---
 
-# 基礎工具：導航 + 截圖
+# 工具：開啟 + 截圖
 
 <div class="grid grid-cols-2 gap-5 mt-4">
   <div class="flex flex-col gap-3">
     <div class="bg-slate-800/50 border border-blue-500/20 rounded-xl p-4">
       <div class="flex items-center gap-2 mb-3">
         <code class="text-blue-300 font-bold text-sm">navigate_page</code>
-        <span class="text-xs text-slate-500">導航操作</span>
+        <span class="text-xs text-slate-500"></span>
       </div>
-      <p class="text-xs text-slate-400 mb-3">將瀏覽器導航到指定 URL，支援等待頁面載入完成後再繼續操作。</p>
+      <p class="text-xs text-slate-400 mb-3">瀏覽器到指定 URL，支援等待頁面載入完成後再繼續操作。</p>
       <div class="bg-slate-900/60 rounded-lg p-3 font-mono text-yellow-200/90 text-xs leading-relaxed">
-        導航到 https://example.com/login
+        打開 https://example.com/login
       </div>
     </div>
     <div class="bg-slate-800/50 border border-green-500/20 rounded-xl p-4">
@@ -110,7 +145,7 @@ layout: default
 layout: default
 ---
 
-# 基礎工具：Console + Network
+# 工具：Console + Network
 
 <div class="grid grid-cols-2 gap-5 mt-4">
   <div class="bg-slate-800/50 border border-orange-500/20 rounded-xl p-4">
@@ -149,7 +184,7 @@ layout: default
 layout: default
 ---
 
-# 基礎工具：頁面互動
+# 工具：頁面互動
 
 <div class="grid grid-cols-3 gap-4 mt-4">
   <div class="bg-slate-800/50 border border-cyan-500/20 rounded-xl p-4">
@@ -184,7 +219,7 @@ class: text-center
 
 <div class="grid grid-cols-4 gap-4 mt-8">
   <div class="p-4 bg-slate-800/50 border border-blue-500/30 rounded-xl">
-    <div class="font-bold text-blue-400 mb-3 text-sm">導航 + 截圖</div>
+    <div class="font-bold text-blue-400 mb-3 text-sm">開啟 + 截圖</div>
     <div class="flex flex-col gap-1 text-xs font-mono text-slate-400">
       <span>navigate_page</span>
       <span>take_screenshot</span>
@@ -205,10 +240,12 @@ class: text-center
       <span>evaluate_script</span>
     </div>
   </div>
-  <div class="p-4 bg-slate-800/50 border border-red-500/30 rounded-xl">
-    <div class="font-bold text-red-400 mb-3 text-sm">進階</div>
+  <div class="p-4 bg-slate-800/50 border border-green-500/30 rounded-xl">
+    <div class="font-bold text-green-400 mb-3 text-sm">🆕 新功能</div>
     <div class="flex flex-col gap-1 text-xs font-mono text-slate-400">
-      <span>take_memory_snapshot</span>
+      <span>--auto-connect</span>
+      <span>emulate</span>
+      <span>Preserve Logs</span>
     </div>
   </div>
 </div>
