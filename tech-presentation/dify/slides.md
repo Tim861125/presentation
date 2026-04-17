@@ -23,12 +23,6 @@ layout: full
 layout: full
 ---
 
-<APIModesSlide />
-
----
-layout: full
----
-
 <APICodeSlide />
 
 ---
@@ -48,9 +42,3 @@ layout: full
 ---
 
 <APISummarySlide />
-
----
-layout: full
----
-
-<LiveDemoSlide />

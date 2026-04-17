@@ -19,41 +19,35 @@
     <div class="grid grid-cols-2 gap-5 flex-1 min-h-0">
 
       <!-- left: annotated schema -->
-      <div class="flex flex-col gap-2">
+      <div class="flex flex-col gap-2 min-h-0">
         <div class="text-xs font-mono text-green-400 mb-1">blocking — 欄位說明</div>
-        <pre class="bg-gray-800/60 rounded border border-white/10 p-3 text-xs font-mono leading-relaxed flex-1 overflow-auto">{
-  <span class="text-yellow-400">"task_id"</span>:          <span class="text-gray-500">// 停止串流用</span>
-  <span class="text-yellow-400">"workflow_run_id"</span>:   <span class="text-gray-500">// 查詢 / 追蹤</span>
-  <span class="text-yellow-400">"data"</span>: {
-    <span class="text-yellow-400">"status"</span>:         <span class="text-green-300">"succeeded"</span>
-    <span class="text-yellow-400">"outputs"</span>:        <span class="text-gray-500">// 最終結果</span>
-    <span class="text-yellow-400">"error"</span>:          <span class="text-gray-500">// 失敗時非 null</span>
-    <span class="text-yellow-400">"elapsed_time"</span>:   <span class="text-gray-500">// 執行秒數</span>
-    <span class="text-yellow-400">"total_steps"</span>:    <span class="text-gray-500">// 節點總數</span>
-    <span class="text-yellow-400">"created_at"</span>:     <span class="text-gray-500">// Unix timestamp</span>
-    <span class="text-yellow-400">"finished_at"</span>:    <span class="text-gray-500">// Unix timestamp</span>
-  }
-}</pre>
+        <div class="flex-1 bg-gray-800/60 rounded border border-white/10 p-3 overflow-auto min-h-0 text-xs font-mono leading-relaxed">
+          <div class="text-gray-300">{</div>
+          <div class="pl-4"><span class="text-yellow-400">"task_id"</span><span class="text-gray-500 ml-2">// 停止串流用</span></div>
+          <div class="pl-4"><span class="text-yellow-400">"workflow_run_id"</span><span class="text-gray-500 ml-2">// 查詢 / 追蹤</span></div>
+          <div class="pl-4"><span class="text-yellow-400">"data"</span><span class="text-gray-300">: {</span></div>
+          <div class="pl-8"><span class="text-yellow-400">"id"</span><span class="text-gray-500 ml-2">// 本次執行記錄 ID</span></div>
+          <div class="pl-8"><span class="text-yellow-400">"workflow_id"</span><span class="text-gray-500 ml-2">// Workflow 定義 ID</span></div>
+          <div class="pl-8"><span class="text-yellow-400">"status"</span><span class="text-gray-300 ml-2">:</span> <span class="text-green-300">"succeeded"</span> <span class="text-gray-500">| "failed" | "running"</span></div>
+          <div class="pl-8"><span class="text-yellow-400">"outputs"</span><span class="text-gray-500 ml-2">// 最終輸出結果</span></div>
+          <div class="pl-8"><span class="text-yellow-400">"error"</span><span class="text-gray-500 ml-2">// 失敗時非 null</span></div>
+          <div class="pl-8"><span class="text-yellow-400">"elapsed_time"</span><span class="text-gray-500 ml-2">// 執行秒數</span></div>
+          <div class="pl-8"><span class="text-yellow-400">"total_steps"</span><span class="text-gray-500 ml-2">// 節點總數</span></div>
+          <div class="pl-8"><span class="text-yellow-400">"total_tokens"</span><span class="text-gray-500 ml-2">// 消耗 token 數</span></div>
+          <div class="pl-8"><span class="text-yellow-400">"created_at"</span><span class="text-gray-500 ml-2">// Unix timestamp</span></div>
+          <div class="pl-8"><span class="text-yellow-400">"finished_at"</span><span class="text-gray-500 ml-2">// Unix timestamp</span></div>
+          <div class="pl-4 text-gray-300">}</div>
+          <div class="text-gray-300">}</div>
+        </div>
       </div>
 
       <!-- right: live response -->
-      <div class="flex flex-col gap-2">
+      <div class="flex flex-col gap-2 min-h-0">
         <div class="text-xs font-mono text-green-400 mb-1">實際回應</div>
         <div class="flex-1 bg-gray-900/60 rounded border border-white/10 p-3 overflow-auto min-h-0">
           <div v-if="error" class="text-xs text-red-400 font-mono">{{ error }}</div>
-          <div v-else-if="res" class="text-xs font-mono space-y-1">
-            <div><span class="text-yellow-400">task_id:</span> <span class="text-gray-300">{{ res.task_id }}</span></div>
-            <div><span class="text-yellow-400">workflow_run_id:</span> <span class="text-gray-300">{{ res.workflow_run_id }}</span></div>
-            <div class="mt-1"><span class="text-yellow-400">status:</span>
-              <span :class="res.data?.status === 'succeeded' ? 'text-green-400' : 'text-red-400'" class="ml-1">{{ res.data?.status }}</span>
-            </div>
-            <div><span class="text-yellow-400">elapsed_time:</span> <span class="text-gray-300">{{ res.data?.elapsed_time }}s</span></div>
-            <div><span class="text-yellow-400">total_steps:</span> <span class="text-gray-300">{{ res.data?.total_steps }}</span></div>
-            <div v-if="res.data?.error"><span class="text-red-400">error:</span> <span class="text-red-300">{{ res.data.error }}</span></div>
-            <div class="mt-2"><span class="text-yellow-400">outputs:</span></div>
-            <pre class="text-gray-200 pl-2 whitespace-pre-wrap break-words">{{ JSON.stringify(res.data?.outputs, null, 2) }}</pre>
-          </div>
-          <div v-else class="text-xs text-gray-700">執行後顯示實際欄位</div>
+          <pre v-else-if="res" class="text-xs text-gray-200 font-mono whitespace-pre-wrap break-words">{{ JSON.stringify(res, null, 2) }}</pre>
+          <div v-else class="text-xs text-gray-700">執行後顯示完整 response</div>
         </div>
       </div>
 
