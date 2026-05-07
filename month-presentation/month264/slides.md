@@ -9,25 +9,27 @@ class: text-center
 
 ---
 
-# 分類通＆微分通&魚骨通
+# AI - 分類通 ＆ 微分通 & 魚骨通
 IPTECH / WEBPAT
 
 - 分類通、微分通優化
-- 魚骨通 - regen node query
-    - 套用檢索通流程
+- 魚骨通 - 節點專利筆數 10~500
 
 ---
 
-# Dify API
+## Dify API
 IPTECH / WEBPAT
 
 - 洞察通、魚骨通、分類通
 - 接 patentpilot service
 
----
+<br>
 
-# 系統與 UI 修正
-# TipoMusic 年度資轉
+## IPTECH WEBPAT 資轉等等修正
+
+<br>
+
+## TipoMusic 年度資轉
 
 ---
 layout: center
