@@ -1,3 +1,7 @@
+<script setup lang="ts">
+import { Badge } from '@/components/ui/badge'
+</script>
+
 <template>
   <div class="relative h-full w-full overflow-hidden bg-zinc-950 text-zinc-100">
     <div class="absolute inset-0 bg-gradient-to-br from-zinc-950 via-zinc-900 to-zinc-950" />
@@ -14,7 +18,7 @@
             RD 技術分享 · 2026
           </span>
         </div>
-        <ShadBadge variant="outline">MIT · 114k★</ShadBadge>
+        <Badge variant="outline">MIT · 114k★</Badge>
       </div>
 
       <div class="flex items-baseline gap-3 mb-2">
@@ -30,11 +34,11 @@
       </div>
 
       <div class="flex flex-wrap gap-2 mb-8">
-        <ShadBadge variant="secondary">Open Source</ShadBadge>
-        <ShadBadge variant="secondary">Open Code</ShadBadge>
-        <ShadBadge variant="secondary">Radix UI</ShadBadge>
-        <ShadBadge variant="secondary">Tailwind v4</ShadBadge>
-        <ShadBadge variant="secondary">AI-Ready</ShadBadge>
+        <Badge variant="secondary">Open Source</Badge>
+        <Badge variant="secondary">Open Code</Badge>
+        <Badge variant="secondary">Radix UI</Badge>
+        <Badge variant="secondary">Tailwind v4</Badge>
+        <Badge variant="secondary">AI-Ready</Badge>
       </div>
 
       <div class="flex items-center gap-6 text-[10px] text-zinc-500 font-mono">
