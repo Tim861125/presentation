@@ -6,24 +6,28 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Repository shape
 
-A mono-repo of **independent Slidev decks**. There is no root `package.json`, no workspace tooling, and no root-level scripts. Every deck sits directly at the repo root as a self-contained Slidev project with its own `package.json`, `bun.lock`, `node_modules`, and deployment config.
+A **bun workspace monorepo** of Slidev decks. The root `package.json` declares `workspaces: ["*"]` and owns the four shared deps (`@slidev/cli`, `@slidev/theme-default`, `@slidev/theme-seriph`, `vue`) at a single pinned version. Each deck has its own `package.json` for deck-specific deps and shares the root `node_modules` via bun hoisting. There is one lockfile at the root.
 
 Two kinds of decks, distinguished by directory name:
 
 - **Technical deep-dives** — topic-named directories (e.g. `dify`, `shadcn-ui`, `chromeDevToolsMcp`, `zod`)
 - **Monthly work reports** — `month<YYMM>` directories (e.g. `month264` for 2026-04)
 
-A single root `.gitignore` covers build output, dependencies, and editor/OS noise for every deck — individual decks don't need their own.
+A single root `.gitignore` covers build output, dependencies, and editor/OS noise for every deck.
 
-**Always `cd` into a specific deck directory before running any command.** Running commands at the repo root will do nothing useful.
+**First setup:** run `bun install` once at the repo root. After that, `cd` into a deck and use its scripts as usual.
 
-## Commands (run inside a deck directory)
+## Commands
 
-Bun is the package manager (every deck ships a `bun.lock`); `npm`/`pnpm` work as fallbacks.
+Bun is the package manager. Only the repo root has `bun.lock`.
 
 ```bash
-bun install        # first-time setup for a deck
-bun run dev        # start dev server with live reload, opens browser
+# At repo root, once after cloning:
+bun install
+
+# Inside any deck directory:
+cd <deck>
+bun run dev        # dev server with live reload, opens browser
 bun run build      # static build to dist/
 bun run export     # export to PDF
 ```
@@ -52,6 +56,13 @@ Each deck deploys independently. `netlify.toml` and `vercel.json` in the deck di
 
 ## Conventions when adding a new deck
 
-- Copy structure from a recent deck (`shadcn-ui` or `month264` are current).
+Do **not** run `npx slidev create` — it produces a standalone project that conflicts with the workspace. Instead:
+
+1. `cp -r shadcn-ui <new-deck>` (or `month264` for a monthly report)
+2. Edit `<new-deck>/package.json`: set `name` to `<new-deck>`, and remove any stray `bun.lock` inside the deck if the copy brought one
+3. Run `bun install` at the repo root to wire the new deck into the workspace
+
+Then:
+
 - For tech topics, write a `spec.md` of source research before writing slides — this is the project's working pattern.
 - Component-heavy structure is preferred when slides have significant custom layout or interactivity; markdown-heavy is fine for text/bullet decks.

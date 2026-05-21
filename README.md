@@ -5,8 +5,11 @@ A mono-repo of independent [Slidev](https://sli.dev/) decks. Each deck sits dire
 ## Quick start
 
 ```bash
-cd <deck>
+# Once after cloning (at repo root):
 bun install
+
+# In any deck directory:
+cd <deck>
 bun run dev     # dev server with live reload
 bun run build   # static build to dist/
 bun run export  # export to PDF
