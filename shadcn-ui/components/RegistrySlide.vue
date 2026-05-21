@@ -1,3 +1,8 @@
+<script setup lang="ts">
+import { Card, CardHeader, CardTitle, CardContent } from '@/components/ui/card'
+import { Badge } from '@/components/ui/badge'
+</script>
+
 <template>
   <div class="h-full w-full bg-zinc-950 text-zinc-100 px-12 py-7 flex flex-col overflow-hidden">
     <SlideHeader
@@ -31,37 +36,61 @@
     </div>
 
     <div class="grid grid-cols-3 gap-2.5 flex-1 min-h-0">
-      <ShadCard v-click title="公司內部設計系統" dot color="blue" size="md">
-        <p class="text-[11px] text-zinc-300 leading-relaxed mb-1.5">
-          把品牌按鈕、表單元件做成 registry。
-        </p>
-        <code class="block text-[10px] font-mono bg-black/40 rounded p-1.5 text-emerald-300">
-          shadcn add @my-co/button
-        </code>
-        <p class="text-[10px] text-zinc-500 mt-1.5">新專案啟動 = 一行指令</p>
-      </ShadCard>
+      <Card v-click class="bg-white/[0.03] border-white/10 gap-2 py-2.5 rounded-lg shadow-none">
+        <CardHeader class="px-3 gap-0.5">
+          <CardTitle class="text-xs flex items-center gap-1.5 text-zinc-100">
+            <span class="size-1.5 rounded-full bg-blue-400" />
+            公司內部設計系統
+          </CardTitle>
+        </CardHeader>
+        <CardContent class="px-3">
+          <p class="text-[11px] text-zinc-300 leading-relaxed mb-1.5">
+            把品牌按鈕、表單元件做成 registry。
+          </p>
+          <code class="block text-[10px] font-mono bg-black/40 rounded p-1.5 text-emerald-300">
+            shadcn add @my-co/button
+          </code>
+          <p class="text-[10px] text-zinc-500 mt-1.5">新專案啟動 = 一行指令</p>
+        </CardContent>
+      </Card>
 
-      <ShadCard v-click title="私有元件 + Auth" dot color="purple" size="md">
-        <p class="text-[11px] text-zinc-300 leading-relaxed mb-1.5">
-          透過環境變數做認證，限定團隊使用。
-        </p>
-        <code class="block text-[10px] font-mono bg-black/40 rounded p-1.5 text-zinc-300">
-          REGISTRY_TOKEN=xxx
-        </code>
-        <p class="text-[10px] text-zinc-500 mt-1.5">不用發 private npm package</p>
-      </ShadCard>
+      <Card v-click class="bg-white/[0.03] border-white/10 gap-2 py-2.5 rounded-lg shadow-none">
+        <CardHeader class="px-3 gap-0.5">
+          <CardTitle class="text-xs flex items-center gap-1.5 text-zinc-100">
+            <span class="size-1.5 rounded-full bg-purple-400" />
+            私有元件 + Auth
+          </CardTitle>
+        </CardHeader>
+        <CardContent class="px-3">
+          <p class="text-[11px] text-zinc-300 leading-relaxed mb-1.5">
+            透過環境變數做認證，限定團隊使用。
+          </p>
+          <code class="block text-[10px] font-mono bg-black/40 rounded p-1.5 text-zinc-300">
+            REGISTRY_TOKEN=xxx
+          </code>
+          <p class="text-[10px] text-zinc-500 mt-1.5">不用發 private npm package</p>
+        </CardContent>
+      </Card>
 
-      <ShadCard v-click title="跨框架重用" dot color="green" size="md">
-        <p class="text-[11px] text-zinc-300 leading-relaxed mb-1.5">
-          Registry 不限 React — 任何框架都能建。
-        </p>
-        <div class="flex flex-wrap gap-1">
-          <ShadBadge variant="outline">React</ShadBadge>
-          <ShadBadge variant="outline">Vue</ShadBadge>
-          <ShadBadge variant="outline">Svelte</ShadBadge>
-        </div>
-        <p class="text-[10px] text-zinc-500 mt-1.5">CLI 只負責「複製檔案」</p>
-      </ShadCard>
+      <Card v-click class="bg-white/[0.03] border-white/10 gap-2 py-2.5 rounded-lg shadow-none">
+        <CardHeader class="px-3 gap-0.5">
+          <CardTitle class="text-xs flex items-center gap-1.5 text-zinc-100">
+            <span class="size-1.5 rounded-full bg-emerald-400" />
+            跨框架重用
+          </CardTitle>
+        </CardHeader>
+        <CardContent class="px-3">
+          <p class="text-[11px] text-zinc-300 leading-relaxed mb-1.5">
+            Registry 不限 React — 任何框架都能建。
+          </p>
+          <div class="flex flex-wrap gap-1">
+            <Badge variant="outline">React</Badge>
+            <Badge variant="outline">Vue</Badge>
+            <Badge variant="outline">Svelte</Badge>
+          </div>
+          <p class="text-[10px] text-zinc-500 mt-1.5">CLI 只負責「複製檔案」</p>
+        </CardContent>
+      </Card>
     </div>
 
     <div v-click class="mt-3 rounded border border-white/10 bg-gradient-to-r from-purple-500/10 to-blue-500/10 px-3 py-2">
