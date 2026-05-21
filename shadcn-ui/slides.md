@@ -10,58 +10,85 @@ info: |
   Open Source · Open Code · 2026 RD Tech Sharing
 transition: fade
 mdc: true
+layout: full
 ---
 
 <TitleSlide />
 
 ---
+layout: full
+---
 
 <PainPointsSlide />
 
+---
+layout: full
 ---
 
 <SolutionSlide />
 
 ---
+layout: full
+---
 
 <CoreMessageSlide />
 
+---
+layout: full
 ---
 
 <PrinciplesSlide />
 
 ---
+layout: full
+---
 
 <TechStackSlide />
 
+---
+layout: full
 ---
 
 <CLISlide />
 
 ---
+layout: full
+---
 
 <ComponentsOverviewSlide />
 
+---
+layout: full
 ---
 
 <BlocksSlide />
 
 ---
+layout: full
+---
 
 <ThemingSlide />
 
+---
+layout: full
 ---
 
 <RegistrySlide />
 
 ---
+layout: full
+---
 
 <MCPSlide />
 
 ---
+layout: full
+---
 
 <LatestUpdatesSlide />
 
+---
+layout: full
 ---
 
 <SummarySlide />
