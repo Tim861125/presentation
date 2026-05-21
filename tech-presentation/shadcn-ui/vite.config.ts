@@ -7,4 +7,9 @@ export default defineConfig({
       '@': path.resolve(__dirname, '.'),
     },
   },
+  slidev: {
+    components: {
+      globsExclude: ['**/components/ui/**/index.ts'],
+    },
+  },
 })

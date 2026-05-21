@@ -9,9 +9,6 @@
     <div class="grid grid-cols-3 gap-2.5 flex-1 min-h-0">
       <ShadCard v-for="group in groups" :key="group.title" v-click
                 :title="group.title" dot :color="group.color" size="md">
-        <template #header>
-          <ShadBadge variant="outline">{{ group.items.length }}</ShadBadge>
-        </template>
         <div class="flex flex-wrap gap-1">
           <span v-for="item in group.items" :key="item"
                 class="text-[9px] font-mono rounded border border-white/5 bg-white/[0.03] px-1.5 py-0.5 text-zinc-300">
@@ -19,15 +16,6 @@
           </span>
         </div>
       </ShadCard>
-    </div>
-
-    <div v-click class="mt-3 flex items-center justify-between rounded-lg border border-white/10 bg-white/[0.02] px-3 py-2">
-      <div class="flex items-center gap-2 text-[11px] text-zinc-400">
-        <span class="text-emerald-400">✦</span>
-        全部一行裝進來：
-        <code class="font-mono text-zinc-200">pnpm dlx shadcn add --all</code>
-      </div>
-      <div class="text-[10px] font-mono text-zinc-500">ui.shadcn.com/docs/components</div>
     </div>
   </div>
 </template>

@@ -15,6 +15,9 @@ export default mergeConfigs([
         'slides.md',
         'pages/**/*.{vue,md}',
       ],
+      pipeline: {
+        exclude: [/node_modules/, /\.(css|json)($|\?)/],
+      },
     },
     theme: {
       colors: {
