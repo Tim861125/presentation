@@ -20,5 +20,12 @@ Thumbs.db
 *.swp
 *.swo
 
+# AI tool local state (per-developer, not shared)
+.claude/
+.gemini/
+.superpowers/
+.aider*
+.cursor/
+
 # Logs
 *.log
