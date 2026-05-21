@@ -64,7 +64,6 @@
         <div
           v-for="cmd in commands"
           :key="cmd.name"
-          v-click
           class="rounded border border-white/10 bg-white/[0.02] px-2 py-1.5 flex items-start gap-2"
         >
           <code class="text-[10px] font-mono text-emerald-300 shrink-0 w-20">{{
