@@ -1,0 +1,24 @@
+# Dependencies
+node_modules/
+
+# Slidev / Vite build output
+dist/
+.vite-inspect/
+.remote-assets/
+components.d.ts
+
+# Local overrides
+*.local
+.env
+.env.*
+
+# Editor / OS
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Logs
+*.log
