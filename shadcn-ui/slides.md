@@ -45,11 +45,11 @@ layout: full
 
 <PrinciplesSlide />
 
----
+<!-- ---
 layout: full
 ---
 
-<TechStackSlide />
+<TechStackSlide /> -->
 
 ---
 layout: full
@@ -81,6 +81,7 @@ layout: full
 
 <RegistrySlide />
 
+<!--
 ---
 layout: full
 ---
@@ -92,6 +93,7 @@ layout: full
 ---
 
 <LatestUpdatesSlide />
+-->
 
 ---
 layout: full

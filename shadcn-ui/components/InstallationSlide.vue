@@ -41,13 +41,18 @@
 
             <div v-click>
               <span class="text-zinc-500"
-                ># 2. 初始化 shadcn（互動式選擇 style / baseColor / CSS 變數）</span
+                ># 2. 初始化 shadcn（互動式選擇 style / baseColor / CSS
+                變數）</span
               ><br />
               <span class="text-emerald-400">$</span>
               <span class="text-zinc-200">bunx --bun shadcn@latest init</span>
-              <div class="text-zinc-600 pl-3">✓ 設定 tailwind.config & globals.css</div>
+              <div class="text-zinc-600 pl-3">
+                ✓ 設定 tailwind.config & globals.css
+              </div>
               <div class="text-zinc-600 pl-3">✓ 建立 components.json</div>
-              <div class="text-zinc-600 pl-3">✓ 建立 lib/utils.ts（cn helper）</div>
+              <div class="text-zinc-600 pl-3">
+                ✓ 建立 lib/utils.ts（cn helper）
+              </div>
             </div>
 
             <div v-click>
@@ -58,14 +63,22 @@
               <span class="text-zinc-200"
                 >bunx --bun shadcn@latest add button card dialog</span
               >
-              <div class="text-zinc-600 pl-3">✓ Created components/ui/button.tsx</div>
-              <div class="text-zinc-600 pl-3">✓ Created components/ui/card.tsx</div>
-              <div class="text-zinc-600 pl-3">✓ Created components/ui/dialog.tsx</div>
+              <div class="text-zinc-600 pl-3">
+                ✓ Created components/ui/button.tsx
+              </div>
+              <div class="text-zinc-600 pl-3">
+                ✓ Created components/ui/card.tsx
+              </div>
+              <div class="text-zinc-600 pl-3">
+                ✓ Created components/ui/dialog.tsx
+              </div>
             </div>
 
             <div v-click>
               <span class="text-zinc-500"># 4. 直接 import 來用</span><br />
-              <span class="text-zinc-400">import &#123; Button &#125; from</span>
+              <span class="text-zinc-400"
+                >import &#123; Button &#125; from</span
+              >
               <span class="text-emerald-300">'@/components/ui/button'</span>
             </div>
           </div>
@@ -80,28 +93,15 @@
           class="rounded-lg border border-white/10 bg-white/[0.03] px-3 py-2"
         >
           <div class="flex items-center gap-2 mb-1">
-            <span
-              class="text-[10px] font-mono text-emerald-400 shrink-0"
-            >0{{ i + 1 }}</span>
+            <span class="text-[10px] font-mono text-emerald-400 shrink-0"
+              >0{{ i + 1 }}</span
+            >
             <div class="text-[11px] font-semibold text-zinc-100">
               {{ step.title }}
             </div>
           </div>
           <p class="text-[10px] text-zinc-400 leading-snug">
             {{ step.desc }}
-          </p>
-        </div>
-
-        <div
-          v-click
-          class="rounded-lg border border-emerald-500/20 bg-emerald-500/[0.05] px-3 py-2 mt-auto"
-        >
-          <div class="text-[10px] font-mono uppercase tracking-wider text-emerald-400 mb-0.5">
-            Tip
-          </div>
-          <p class="text-[10px] text-zinc-300 leading-snug">
-            支援 Next.js · Vite · Remix · Astro · Laravel · TanStack Start 等框架；
-            CLI 會自動偵測並套用對應設定。
           </p>
         </div>
       </div>
