@@ -37,13 +37,19 @@ layout: full
 layout: full
 ---
 
-<PrinciplesSlide />
+<InstallationSlide />
 
 ---
 layout: full
 ---
 
-<TechStackSlide />
+<PrinciplesSlide />
+
+<!-- ---
+layout: full
+---
+
+<TechStackSlide /> -->
 
 ---
 layout: full
@@ -75,6 +81,7 @@ layout: full
 
 <RegistrySlide />
 
+<!--
 ---
 layout: full
 ---
@@ -86,6 +93,7 @@ layout: full
 ---
 
 <LatestUpdatesSlide />
+-->
 
 ---
 layout: full

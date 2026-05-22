@@ -31,14 +31,14 @@
                 ># 初始化專案（視覺化建立 preset）</span
               ><br />
               <span class="text-emerald-400">$</span>
-              <span class="text-zinc-200">pnpm dlx shadcn@latest create</span>
+              <span class="text-zinc-200">bunx --bun shadcn@latest create</span>
             </div>
             <div v-click>
               <span class="text-zinc-500"># 加入元件 — 單個 / 多個 / 全部</span
               ><br />
               <span class="text-emerald-400">$</span>
               <span class="text-zinc-200"
-                >pnpm dlx shadcn add button card dialog</span
+                >bunx --bun shadcn add button card dialog</span
               >
               <div class="text-zinc-600 pl-3">
                 ✓ Created components/ui/button.tsx
@@ -54,7 +54,7 @@
               <span class="text-zinc-500"># 先看原始碼再決定要不要裝</span
               ><br />
               <span class="text-emerald-400">$</span>
-              <span class="text-zinc-200">pnpm dlx shadcn view button</span>
+              <span class="text-zinc-200">bunx --bun shadcn view button</span>
             </div>
           </div>
         </div>
