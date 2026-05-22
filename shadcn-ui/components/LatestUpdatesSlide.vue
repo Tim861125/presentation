@@ -21,11 +21,11 @@
           <div class="flex-1 rounded-lg border border-white/10 bg-white/[0.03] p-2.5">
             <div class="flex items-center gap-2 mb-1">
               <h3 class="text-xs font-semibold text-white">{{ item.title }}</h3>
-              <ShadBadge v-if="item.badge" :variant="item.badgeVariant ?? 'success'">{{ item.badge }}</ShadBadge>
+              <Badge v-if="item.badge" :variant="item.badgeVariant ?? 'success'">{{ item.badge }}</Badge>
             </div>
             <p class="text-[11px] text-zinc-400 leading-relaxed">{{ item.desc }}</p>
             <div v-if="item.tags" class="flex flex-wrap gap-1 mt-1.5">
-              <ShadBadge v-for="t in item.tags" :key="t" variant="outline">{{ t }}</ShadBadge>
+              <Badge v-for="t in item.tags" :key="t" variant="outline">{{ t }}</Badge>
             </div>
           </div>
         </div>
@@ -35,6 +35,8 @@
 </template>
 
 <script setup lang="ts">
+import { Badge } from '@/components/ui/badge'
+
 const timeline = [
   {
     date: '2026 / 05',

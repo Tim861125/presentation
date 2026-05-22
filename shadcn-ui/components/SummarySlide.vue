@@ -11,21 +11,45 @@
       />
 
       <div class="grid grid-cols-3 gap-2.5 mb-4">
-        <ShadCard v-click title="1 · Own your components" dot color="green" size="md">
-          <p class="text-[11px] text-zinc-300 leading-relaxed">
-            元件 = 你的程式碼。沒有 vendor lock-in。
-          </p>
-        </ShadCard>
-        <ShadCard v-click title="2 · Tokens > Components" dot color="blue" size="md">
-          <p class="text-[11px] text-zinc-300 leading-relaxed">
-            CSS Variables 是真正的 design system 載體。
-          </p>
-        </ShadCard>
-        <ShadCard v-click title="3 · Registry > NPM" dot color="purple" size="md">
-          <p class="text-[11px] text-zinc-300 leading-relaxed">
-            被低估的散佈協定 — 公司設計系統的最佳載體。
-          </p>
-        </ShadCard>
+        <Card v-click class="bg-white/[0.03] border-white/10 gap-2 py-2.5 rounded-lg shadow-none">
+          <CardHeader class="px-3 gap-0.5">
+            <CardTitle class="text-xs flex items-center gap-1.5 text-zinc-100">
+              <span class="size-1.5 rounded-full bg-emerald-400" />
+              1 · Own your components
+            </CardTitle>
+          </CardHeader>
+          <CardContent class="px-3">
+            <p class="text-[11px] text-zinc-300 leading-relaxed">
+              元件 = 你的程式碼。沒有 vendor lock-in。
+            </p>
+          </CardContent>
+        </Card>
+        <Card v-click class="bg-white/[0.03] border-white/10 gap-2 py-2.5 rounded-lg shadow-none">
+          <CardHeader class="px-3 gap-0.5">
+            <CardTitle class="text-xs flex items-center gap-1.5 text-zinc-100">
+              <span class="size-1.5 rounded-full bg-blue-400" />
+              2 · Tokens > Components
+            </CardTitle>
+          </CardHeader>
+          <CardContent class="px-3">
+            <p class="text-[11px] text-zinc-300 leading-relaxed">
+              CSS Variables 是真正的 design system 載體。
+            </p>
+          </CardContent>
+        </Card>
+        <Card v-click class="bg-white/[0.03] border-white/10 gap-2 py-2.5 rounded-lg shadow-none">
+          <CardHeader class="px-3 gap-0.5">
+            <CardTitle class="text-xs flex items-center gap-1.5 text-zinc-100">
+              <span class="size-1.5 rounded-full bg-purple-400" />
+              3 · Registry > NPM
+            </CardTitle>
+          </CardHeader>
+          <CardContent class="px-3">
+            <p class="text-[11px] text-zinc-300 leading-relaxed">
+              被低估的散佈協定 — 公司設計系統的最佳載體。
+            </p>
+          </CardContent>
+        </Card>
       </div>
 
       <div v-click class="flex-1 min-h-0">
@@ -58,6 +82,8 @@
 </template>
 
 <script setup lang="ts">
+import { Card, CardHeader, CardTitle, CardContent } from '@/components/ui/card'
+
 const links = [
   { title: '官網',         url: 'ui.shadcn.com' },
   { title: '元件總覽',     url: 'ui.shadcn.com/docs/components' },

@@ -1,3 +1,8 @@
+<script setup lang="ts">
+import { Card, CardHeader, CardTitle, CardContent } from '@/components/ui/card'
+import { Badge } from '@/components/ui/badge'
+</script>
+
 <template>
   <div class="h-full w-full bg-zinc-950 text-zinc-100 px-12 py-7 flex flex-col overflow-hidden">
     <SlideHeader
@@ -11,7 +16,7 @@
         <div class="px-2.5 py-1.5 border-b border-white/10 bg-white/[0.02] flex items-center gap-2">
           <div class="size-1.5 rounded-full bg-emerald-400" />
           <div class="text-[10px] font-mono text-zinc-400">Claude Code</div>
-          <ShadBadge variant="outline">MCP connected</ShadBadge>
+          <Badge variant="outline">MCP connected</Badge>
         </div>
         <div class="p-3 space-y-2 flex-1">
           <div v-click class="flex gap-2">
@@ -40,39 +45,63 @@
       </div>
 
       <div class="col-span-2 flex flex-col gap-2 min-h-0">
-        <ShadCard v-click title="一鍵設定" dot color="blue" size="md">
-          <code class="block text-[10px] font-mono bg-black/40 rounded p-1.5 text-emerald-300 leading-relaxed">
-            pnpm dlx shadcn@latest<br/>
-            &nbsp;&nbsp;mcp init --client claude
-          </code>
-        </ShadCard>
+        <Card v-click class="bg-white/[0.03] border-white/10 gap-2 py-2.5 rounded-lg shadow-none">
+          <CardHeader class="px-3 gap-0.5">
+            <CardTitle class="text-xs flex items-center gap-1.5 text-zinc-100">
+              <span class="size-1.5 rounded-full bg-blue-400" />
+              一鍵設定
+            </CardTitle>
+          </CardHeader>
+          <CardContent class="px-3">
+            <code class="block text-[10px] font-mono bg-black/40 rounded p-1.5 text-emerald-300 leading-relaxed">
+              pnpm dlx shadcn@latest<br/>
+              &nbsp;&nbsp;mcp init --client claude
+            </code>
+          </CardContent>
+        </Card>
 
-        <ShadCard v-click title="支援的 client" dot color="purple" size="md">
-          <div class="space-y-1 text-[10px]">
-            <div class="flex justify-between font-mono">
-              <span class="text-zinc-300">Claude Code</span>
-              <span class="text-zinc-500">.mcp.json</span>
+        <Card v-click class="bg-white/[0.03] border-white/10 gap-2 py-2.5 rounded-lg shadow-none">
+          <CardHeader class="px-3 gap-0.5">
+            <CardTitle class="text-xs flex items-center gap-1.5 text-zinc-100">
+              <span class="size-1.5 rounded-full bg-purple-400" />
+              支援的 client
+            </CardTitle>
+          </CardHeader>
+          <CardContent class="px-3">
+            <div class="space-y-1 text-[10px]">
+              <div class="flex justify-between font-mono">
+                <span class="text-zinc-300">Claude Code</span>
+                <span class="text-zinc-500">.mcp.json</span>
+              </div>
+              <div class="flex justify-between font-mono">
+                <span class="text-zinc-300">Cursor</span>
+                <span class="text-zinc-500">.cursor/mcp.json</span>
+              </div>
+              <div class="flex justify-between font-mono">
+                <span class="text-zinc-300">VS Code</span>
+                <span class="text-zinc-500">.vscode/mcp.json</span>
+              </div>
+              <div class="flex justify-between font-mono">
+                <span class="text-zinc-300">Codex</span>
+                <span class="text-zinc-500">~/.codex/config.toml</span>
+              </div>
             </div>
-            <div class="flex justify-between font-mono">
-              <span class="text-zinc-300">Cursor</span>
-              <span class="text-zinc-500">.cursor/mcp.json</span>
-            </div>
-            <div class="flex justify-between font-mono">
-              <span class="text-zinc-300">VS Code</span>
-              <span class="text-zinc-500">.vscode/mcp.json</span>
-            </div>
-            <div class="flex justify-between font-mono">
-              <span class="text-zinc-300">Codex</span>
-              <span class="text-zinc-500">~/.codex/config.toml</span>
-            </div>
-          </div>
-        </ShadCard>
+          </CardContent>
+        </Card>
 
-        <ShadCard v-click title="多 registry 串接" dot color="green" size="md">
-          <p class="text-[10px] text-zinc-300 leading-relaxed">
-            一次接 <span class="text-white">官方</span> + <span class="text-white">公司私有</span> registry。
-          </p>
-        </ShadCard>
+        <Card v-click class="bg-white/[0.03] border-white/10 gap-2 py-2.5 rounded-lg shadow-none">
+          <CardHeader class="px-3 gap-0.5">
+            <CardTitle class="text-xs flex items-center gap-1.5 text-zinc-100">
+              <span class="size-1.5 rounded-full bg-emerald-400" />
+              多 registry 串接
+            </CardTitle>
+          </CardHeader>
+          <CardContent class="px-3">
+            <p class="text-[10px] text-zinc-300 leading-relaxed">
+              一次接 <span class="text-white">官方</span> + <span class="text-white">公司私有</span> registry。
+            </p>
+          </CardContent>
+        </Card>
       </div>
     </div>
   </div>

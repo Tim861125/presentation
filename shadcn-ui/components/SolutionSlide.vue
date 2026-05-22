@@ -19,7 +19,7 @@ import { Badge } from '@/components/ui/badge'
         </div>
         <div class="rounded-lg border border-red-500/20 bg-red-500/[0.03] p-3 space-y-2 flex-1">
           <div class="flex items-center gap-2">
-            <ShadBadge variant="destructive">npm</ShadBadge>
+            <Badge variant="destructive">npm</Badge>
             <code class="text-xs text-zinc-300">npm i some-ui-lib</code>
           </div>
           <div class="rounded bg-black/40 p-2 font-mono text-[10px] leading-relaxed">
