@@ -30,12 +30,12 @@
       <div v-click class="mt-8 flex items-center gap-3 text-xs font-mono">
         <div class="flex items-center gap-1.5 text-zinc-500">
           <span class="text-red-400">✗</span>
-          <code>npm install @shadcn/button</code>
+          <code>bun add @shadcn/button</code>
         </div>
         <div class="text-zinc-700">→</div>
         <div class="flex items-center gap-1.5 text-emerald-300">
           <span class="text-emerald-400">✓</span>
-          <code>npx shadcn add button</code>
+          <code>bunx shadcn add button</code>
           <span class="text-zinc-500 text-[10px]">// 把原始碼複製到專案</span>
         </div>
       </div>

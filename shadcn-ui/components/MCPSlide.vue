@@ -35,7 +35,7 @@ import { Badge } from '@/components/ui/badge'
               </div>
               <div>📦 安裝中...</div>
               <div class="font-mono text-zinc-500 pl-2">
-                $ pnpm dlx shadcn add input-otp login-04 dashboard-01<br/>
+                $ bunx --bun shadcn add input-otp login-04 dashboard-01<br/>
                 ✓ Created 12 files
               </div>
               <div class="text-emerald-300">✦ 都裝好了，可以開 dev server 看了。</div>
@@ -54,7 +54,7 @@ import { Badge } from '@/components/ui/badge'
           </CardHeader>
           <CardContent class="px-3">
             <code class="block text-[10px] font-mono bg-black/40 rounded p-1.5 text-emerald-300 leading-relaxed">
-              pnpm dlx shadcn@latest<br/>
+              bunx --bun shadcn@latest<br/>
               &nbsp;&nbsp;mcp init --client claude
             </code>
           </CardContent>

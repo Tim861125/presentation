@@ -37,6 +37,12 @@ layout: full
 layout: full
 ---
 
+<InstallationSlide />
+
+---
+layout: full
+---
+
 <PrinciplesSlide />
 
 ---
