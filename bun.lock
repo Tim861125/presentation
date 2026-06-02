@@ -74,6 +74,15 @@
     "month264": {
       "name": "month264",
     },
+    "month265": {
+      "name": "month265",
+      "dependencies": {
+        "@slidev/cli": "^52.15.2",
+        "@slidev/theme-default": "latest",
+        "@slidev/theme-seriph": "latest",
+        "vue": "^3.5.33",
+      },
+    },
     "ppt26415": {
       "name": "ppt26415",
     },
@@ -1167,6 +1176,8 @@
     "month263": ["month263@workspace:month263"],
 
     "month264": ["month264@workspace:month264"],
+
+    "month265": ["month265@workspace:month265"],
 
     "mrmime": ["mrmime@2.0.1", "", {}, "sha512-Y3wQdFg2Va6etvQ5I82yUhGdsKrcYox6p7FfL1LbK2J4V01F9TGlepTIhnK24t7koZibmg82KGglhA1XK5IsLQ=="],
 
