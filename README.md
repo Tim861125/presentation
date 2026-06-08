@@ -54,3 +54,23 @@ bun run export  # export to PDF
 ## Deployment
 
 Each deck deploys independently via `netlify.toml` / `vercel.json` pointing at its own `dist/`. No aggregate build.
+
+### GitHub Pages（classroom-upgrade）
+
+`classroom-upgrade` 透過 GitHub Actions 自動部署到 GitHub Pages，設定檔在 [`.github/workflows/deploy.yml`](./.github/workflows/deploy.yml)。
+
+**第一次設定（只需做一次）：**
+
+1. 進入 repo 的 **Settings → Pages**
+2. 在 **Build and deployment → Source** 選擇 **GitHub Actions**
+
+**部署方式：**
+
+- 推送到 `main` 分支時會自動觸發 build 並部署
+- 也可在 **Actions** 分頁手動執行（workflow 有開 `workflow_dispatch`）
+
+部署完成後，簡報網址為：
+
+**https://tim861125.github.io/presentation/**
+
+> **注意：** build 時必須加上 `--base /presentation/`（已寫在 workflow 內），因為網址帶有 repo 名稱的子路徑；少了它會載不到資源而變成白畫面。GitHub Pages 一個 repo 只發佈一個站台，目前發佈的是 `classroom-upgrade`。
