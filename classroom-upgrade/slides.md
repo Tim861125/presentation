@@ -33,7 +33,13 @@ class: px-12
 
 # 升級項目總覽
 
-<div class="grid grid-cols-5 gap-3 mt-8">
+<div class="grid grid-cols-6 gap-3 mt-8">
+  <div class="rounded-xl bg-white/5 border border-white/10 p-4 text-center">
+    <div class="text-3xl">🧱</div>
+    <div class="font-semibold mt-2 text-sm">輕隔間</div>
+    <div class="text-xs opacity-60 mt-1">隔出獨立空間</div>
+    <div class="text-teal-300 font-mono font-bold mt-3 text-sm">約 $50,000</div>
+  </div>
   <div class="rounded-xl bg-white/5 border border-white/10 p-4 text-center">
     <div class="text-3xl">💡</div>
     <div class="font-semibold mt-2 text-sm">天花板升級</div>
@@ -68,18 +74,68 @@ class: px-12
 
 <div class="flex justify-end items-baseline gap-4 mt-8 pr-2">
   <div class="text-lg opacity-70">總計約</div>
-  <div class="text-3xl font-bold text-teal-300 font-mono">$40,226 ~ 46,864</div>
+  <div class="text-3xl font-bold text-teal-300 font-mono">$90,226 ~ 96,864</div>
 </div>
 
 <!--
-整體升級估價報告，包含照明、天花板與通風三大項目。
+整體升級估價報告，包含輕隔間、照明、天花板與通風等項目。
 -->
 
 ---
 layout: section
 ---
 
-# 一、天花板升級
+# 一、輕隔間
+<div class="opacity-60 mt-2">隔出獨立空間 ‧ 空間規劃基礎</div>
+
+---
+layout: two-cols
+layoutClass: gap-8
+---
+
+# 輕隔間空間示意
+
+<v-clicks>
+
+- 🧱 以 **輕隔間**隔出獨立、完整的使用空間
+- 📺 牆面整合 **電視螢幕、白板**，兼顧教學與展示
+- ✨ 作為後續天花板、設備等升級的**空間基礎**
+
+</v-clicks>
+
+<div v-click class="mt-6 text-sm opacity-60">
+右圖為輕隔間隔出後的整體空間效果示意。
+</div>
+
+::right::
+
+<img :src="'/partition.jpg'" class="rounded-xl w-full max-h-105 object-contain mt-12" />
+
+---
+layout: center
+class: px-12
+---
+
+# 輕隔間 — 估價明細
+
+<div class="flex flex-col gap-3 mt-6">
+  <CostItem :index="1" name="輕隔間工程（隔出獨立空間）"
+    spec="輕鋼架骨架 ‧ 雙面封板 ‧ 含獨立拉門，隔出完整使用空間"
+    image="/partition.jpg" cost="約 $50,000" />
+</div>
+
+<div class="flex justify-end items-baseline gap-4 mt-8 pr-2">
+  <div class="text-lg opacity-70">小計約</div>
+  <div class="text-4xl font-bold text-teal-300 font-mono">$50,000</div>
+</div>
+
+<div class="text-xs opacity-40 text-center mt-6">※ 輕隔間為工材費估列，含骨架、封板與拉門，實際以現場丈量尺寸為準。</div>
+
+---
+layout: section
+---
+
+# 二、天花板升級
 <div class="opacity-60 mt-2">照明 ‧ 輕鋼架石膏板 ‧ 節能循環扇</div>
 
 ---
@@ -215,7 +271,7 @@ layoutClass: gap-8
 layout: section
 ---
 
-# 二、門外改善
+# 三、門外改善
 <div class="opacity-60 mt-2">門面形象 ‧ 照明 ‧ 鐵門美化</div>
 
 ---
@@ -272,7 +328,7 @@ class: px-12
 layout: section
 ---
 
-# 三、門內改善
+# 四、門內改善
 <div class="opacity-60 mt-2">公布欄白板牆 ‧ 置物空間整潔</div>
 
 ---
@@ -316,7 +372,7 @@ class: px-8
 layout: section
 ---
 
-# 四、設備
+# 五、設備
 <div class="opacity-60 mt-2">影音功放機櫃</div>
 
 ---
@@ -347,7 +403,7 @@ layoutClass: gap-8
 layout: section
 ---
 
-# 五、咖啡廳
+# 六、咖啡廳
 <div class="opacity-60 mt-2">座椅 ‧ 影音 ‧ 牆面收納與佈置</div>
 
 ---
@@ -467,6 +523,11 @@ class: text-center
     </thead>
     <tbody>
       <tr class="border-t border-white/10">
+        <td class="py-3">輕隔間</td>
+        <td class="py-3 text-sm opacity-70">隔出獨立空間 ‧ 骨架 ‧ 封板 ‧ 拉門</td>
+        <td class="py-3 text-right font-mono">約 50,000</td>
+      </tr>
+      <tr class="border-t border-white/10">
         <td class="py-3">天花板升級</td>
         <td class="py-3 text-sm opacity-70">LED 平板燈 ‧ 石膏板 ‧ 循環扇</td>
         <td class="py-3 text-right font-mono">14,120</td>
@@ -493,10 +554,10 @@ class: text-center
       </tr>
       <tr class="border-t-2 border-teal-400/50 text-teal-300 text-xl font-bold">
         <td class="py-4" colspan="2">總計約</td>
-        <td class="py-4 text-right font-mono">$40,226 ~ 46,864</td>
+        <td class="py-4 text-right font-mono">$90,226 ~ 96,864</td>
       </tr>
     </tbody>
   </table>
 </div>
 
-<div class="text-xs opacity-40 mt-6">※ 門外與門內為工材費估列、部分為區間估價；天花板與設備為材料估價，未含安裝施工費用，實際以現場丈量為準。</div>
+<div class="text-xs opacity-40 mt-6">※ 輕隔間、門外與門內為工材費估列、部分為區間估價；天花板與設備為材料估價，未含安裝施工費用，實際以現場丈量為準。</div>
