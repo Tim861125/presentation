@@ -33,36 +33,42 @@ class: px-12
 
 # 升級項目總覽
 
-<div class="grid grid-cols-4 gap-4 mt-8">
-  <div class="rounded-xl bg-white/5 border border-white/10 p-5 text-center">
+<div class="grid grid-cols-5 gap-3 mt-8">
+  <div class="rounded-xl bg-white/5 border border-white/10 p-4 text-center">
     <div class="text-3xl">💡</div>
-    <div class="font-semibold mt-2">天花板升級</div>
+    <div class="font-semibold mt-2 text-sm">天花板升級</div>
     <div class="text-xs opacity-60 mt-1">照明 ‧ 石膏板 ‧ 循環扇</div>
-    <div class="text-teal-300 font-mono font-bold mt-3">$14,120</div>
+    <div class="text-teal-300 font-mono font-bold mt-3 text-sm">$14,120</div>
   </div>
-  <div class="rounded-xl bg-white/5 border border-white/10 p-5 text-center">
+  <div class="rounded-xl bg-white/5 border border-white/10 p-4 text-center">
     <div class="text-3xl">🚪</div>
-    <div class="font-semibold mt-2">門外改善</div>
+    <div class="font-semibold mt-2 text-sm">門外改善</div>
     <div class="text-xs opacity-60 mt-1">軌道燈 ‧ logo ‧ 鐵門美化</div>
-    <div class="text-teal-300 font-mono font-bold mt-3">約 $4,000</div>
+    <div class="text-teal-300 font-mono font-bold mt-3 text-sm">約 $4,000</div>
   </div>
-  <div class="rounded-xl bg-white/5 border border-white/10 p-5 text-center">
+  <div class="rounded-xl bg-white/5 border border-white/10 p-4 text-center">
     <div class="text-3xl">📋</div>
-    <div class="font-semibold mt-2">門內改善</div>
+    <div class="font-semibold mt-2 text-sm">門內改善</div>
     <div class="text-xs opacity-60 mt-1">白板牆 ‧ 置物整潔</div>
-    <div class="text-teal-300 font-mono font-bold mt-3">$2,000~3,000</div>
+    <div class="text-teal-300 font-mono font-bold mt-3 text-sm">$2,000~3,000</div>
   </div>
-  <div class="rounded-xl bg-white/5 border border-white/10 p-5 text-center">
+  <div class="rounded-xl bg-white/5 border border-white/10 p-4 text-center">
     <div class="text-3xl">🔊</div>
-    <div class="font-semibold mt-2">設備</div>
+    <div class="font-semibold mt-2 text-sm">設備</div>
     <div class="text-xs opacity-60 mt-1">功放機櫃</div>
-    <div class="text-teal-300 font-mono font-bold mt-3">$3,234</div>
+    <div class="text-teal-300 font-mono font-bold mt-3 text-sm">$3,234</div>
+  </div>
+  <div class="rounded-xl bg-white/5 border border-white/10 p-4 text-center">
+    <div class="text-3xl">☕</div>
+    <div class="font-semibold mt-2 text-sm">咖啡廳</div>
+    <div class="text-xs opacity-60 mt-1">座椅 ‧ 影音 ‧ 牆面佈置</div>
+    <div class="text-teal-300 font-mono font-bold mt-3 text-sm">$16,872~22,510</div>
   </div>
 </div>
 
 <div class="flex justify-end items-baseline gap-4 mt-8 pr-2">
   <div class="text-lg opacity-70">總計約</div>
-  <div class="text-3xl font-bold text-teal-300 font-mono">$23,354 ~ 24,354</div>
+  <div class="text-3xl font-bold text-teal-300 font-mono">$40,226 ~ 46,864</div>
 </div>
 
 <!--
@@ -341,6 +347,106 @@ layoutClass: gap-8
 layout: section
 ---
 
+# 五、咖啡廳
+<div class="opacity-60 mt-2">座椅 ‧ 影音 ‧ 牆面收納與佈置</div>
+
+---
+layout: center
+class: px-12
+---
+
+# 咖啡廳 — 估價明細
+
+<div class="mx-auto max-w-3xl mt-4">
+  <table class="w-full text-left">
+    <thead class="opacity-60 text-sm">
+      <tr>
+        <th class="py-2">品項</th>
+        <th class="py-2 text-right">數量</th>
+        <th class="py-2 text-right">單價</th>
+        <th class="py-2 text-right">小計</th>
+      </tr>
+    </thead>
+    <tbody class="font-mono">
+      <tr class="border-t border-white/10">
+        <td class="py-2.5 font-sans">升降椅</td>
+        <td class="py-2.5 text-right">6</td>
+        <td class="py-2.5 text-right">618</td>
+        <td class="py-2.5 text-right">3,708</td>
+      </tr>
+      <tr class="border-t border-white/10">
+        <td class="py-2.5 font-sans">電視螢幕<span class="text-xs opacity-50"> HERSUN 43" FHD</span></td>
+        <td class="py-2.5 text-right">1</td>
+        <td class="py-2.5 text-right">4,490</td>
+        <td class="py-2.5 text-right">4,490</td>
+      </tr>
+      <tr class="border-t border-white/10">
+        <td class="py-2.5 font-sans">掛牆置物架</td>
+        <td class="py-2.5 text-right">1</td>
+        <td class="py-2.5 text-right">3,479~7,017</td>
+        <td class="py-2.5 text-right">3,479~7,017</td>
+      </tr>
+      <tr class="border-t border-white/10">
+        <td class="py-2.5 font-sans">木質相框</td>
+        <td class="py-2.5 text-right">5</td>
+        <td class="py-2.5 text-right">799</td>
+        <td class="py-2.5 text-right">3,995</td>
+      </tr>
+      <tr class="border-t border-white/10">
+        <td class="py-2.5 font-sans">磁吸板<span class="text-xs opacity-50"> 客製化</span></td>
+        <td class="py-2.5 text-right">5</td>
+        <td class="py-2.5 text-right">240~660</td>
+        <td class="py-2.5 text-right">1,200~3,300</td>
+      </tr>
+      <tr class="border-t-2 border-teal-400/50 text-teal-300 text-lg font-bold">
+        <td class="py-3 font-sans" colspan="3">小計約</td>
+        <td class="py-3 text-right">16,872 ~ 22,510</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+---
+layout: center
+class: px-8
+---
+
+# 咖啡廳 — 商品一覽
+
+<div class="grid grid-cols-5 gap-4 mt-6">
+  <div class="text-center">
+    <img :src="'/cafe-chair.jpg'" class="rounded-lg h-36 w-full object-cover bg-white" />
+    <div class="text-sm mt-2">升降椅</div>
+    <div class="text-xs opacity-50">×6</div>
+  </div>
+  <div class="text-center">
+    <img :src="'/cafe-tv.jpg'" class="rounded-lg h-36 w-full object-cover bg-white" />
+    <div class="text-sm mt-2">電視螢幕 43"</div>
+    <div class="text-xs opacity-50">×1</div>
+  </div>
+  <div class="text-center">
+    <img :src="'/cafe-shelf.jpg'" class="rounded-lg h-36 w-full object-cover bg-white" />
+    <div class="text-sm mt-2">掛牆置物架</div>
+    <div class="text-xs opacity-50">×1</div>
+  </div>
+  <div class="text-center">
+    <img :src="'/cafe-frame.jpg'" class="rounded-lg h-36 w-full object-cover bg-white" />
+    <div class="text-sm mt-2">木質相框</div>
+    <div class="text-xs opacity-50">×5</div>
+  </div>
+  <div class="text-center">
+    <img :src="'/cafe-magnet.jpg'" class="rounded-lg h-36 w-full object-cover bg-white" />
+    <div class="text-sm mt-2">磁吸板</div>
+    <div class="text-xs opacity-50">×5</div>
+  </div>
+</div>
+
+<div class="text-xs opacity-50 text-center mt-6">座椅、影音與牆面佈置整合，打造舒適交流的咖啡廳空間。</div>
+
+---
+layout: section
+---
+
 # 總估價
 
 ---
@@ -380,9 +486,14 @@ class: text-center
         <td class="py-3 text-sm opacity-70">功放機櫃</td>
         <td class="py-3 text-right font-mono">3,234</td>
       </tr>
+      <tr class="border-t border-white/10">
+        <td class="py-3">咖啡廳</td>
+        <td class="py-3 text-sm opacity-70">升降椅 ‧ 電視 ‧ 置物架 ‧ 相框 ‧ 磁吸板</td>
+        <td class="py-3 text-right font-mono">16,872~22,510</td>
+      </tr>
       <tr class="border-t-2 border-teal-400/50 text-teal-300 text-xl font-bold">
         <td class="py-4" colspan="2">總計約</td>
-        <td class="py-4 text-right font-mono">$23,354 ~ 24,354</td>
+        <td class="py-4 text-right font-mono">$40,226 ~ 46,864</td>
       </tr>
     </tbody>
   </table>
