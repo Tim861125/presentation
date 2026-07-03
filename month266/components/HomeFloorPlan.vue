@@ -3,8 +3,8 @@
 // type 對應配色；render 順序：走廊/大空間先畫，套房衛浴最後疊上
 const rooms = [
   // 走廊（原圖未畫好，依左右鏡像補齊）
-  { x: 30,  y: 60,  w: 190, h: 160, label: '走廊', type: 'hall' },
-  { x: 480, y: 60,  w: 190, h: 160, label: '走廊', type: 'hall' },
+  { x: 30,  y: 60,  w: 190, h: 160, label: '', type: 'hall' },
+  { x: 480, y: 60,  w: 190, h: 160, label: '', type: 'hall' },
 
   // 客廳
   { x: 0,   y: 220, w: 220, h: 190, label: '客廳', type: 'living' },
@@ -59,7 +59,6 @@ const legend = [
   { label: '廚房', type: 'kitchen' },
   { label: '衛浴', type: 'bath' },
   { label: '陽台', type: 'balcony' },
-  { label: '走廊', type: 'hall' },
 ]
 
 const fontFor = (r) => Math.min(18, Math.max(10, Math.min(r.w, r.h) * 0.26))
