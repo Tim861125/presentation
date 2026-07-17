@@ -29,31 +29,31 @@ const cols = [
 
     <div class="grid grid-cols-2 gap-5 flex-1">
       <div v-for="c in cols" :key="c.key"
-           class="rounded-xl border border-white/10 bg-white/[0.03] p-5 flex flex-col">
-        <div class="flex items-center gap-2 mb-1">
+           class="rounded-xl border border-white/10 bg-white/[0.03] p-4 flex flex-col">
+        <div class="flex items-center gap-2 mb-3">
           <span class="size-2 rounded-full" :class="c.dot" />
-          <span class="text-xl font-bold text-white">{{ c.key }}</span>
+          <span class="text-lg font-bold text-white">{{ c.key }}</span>
+          <span class="text-xs text-zinc-500">{{ c.desc }}</span>
           <span class="text-[10px] font-mono uppercase tracking-widest text-zinc-500 ml-auto">{{ c.tag }}</span>
         </div>
-        <p class="text-xs text-zinc-400 mb-4">{{ c.desc }}</p>
 
         <div class="text-[11px] font-mono uppercase tracking-wider text-emerald-400/80 mb-1.5">優勢</div>
-        <ul class="space-y-1 mb-4">
-          <li v-for="g in c.good" :key="g" class="flex gap-2 text-sm text-zinc-200">
+        <ul class="space-y-1 mb-3">
+          <li v-for="g in c.good" :key="g" class="flex gap-2 text-[13px] text-zinc-200">
             <span class="text-emerald-400">＋</span>{{ g }}
           </li>
         </ul>
 
         <div class="text-[11px] font-mono uppercase tracking-wider text-rose-400/80 mb-1.5">盲點</div>
         <ul class="space-y-1">
-          <li v-for="b in c.bad" :key="b" class="flex gap-2 text-sm text-zinc-400">
+          <li v-for="b in c.bad" :key="b" class="flex gap-2 text-[13px] text-zinc-400">
             <span class="text-rose-400">－</span>{{ b }}
           </li>
         </ul>
       </div>
     </div>
 
-    <div class="mt-5 rounded-xl border border-emerald-500/20 bg-emerald-500/[0.06] px-5 py-4">
+    <div class="mt-3 rounded-xl border border-emerald-500/20 bg-emerald-500/[0.06] px-5 py-3">
       <div class="flex items-center gap-3">
         <span class="text-[10px] font-mono uppercase tracking-widest text-emerald-400">Hybrid</span>
         <p class="text-sm text-zinc-200">

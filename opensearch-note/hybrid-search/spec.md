@@ -115,6 +115,16 @@ PUT /_search/pipeline/rrf-pipeline
   4. 灌文件（自動產生 embedding）
   5. 用 hybrid query 搜尋
 
+#### Search pipeline 生命週期（建立 / 掛載 / 驗證）
+
+來源：`_search-plugins/search-pipelines/creating-search-pipeline.md`、`using-search-pipeline.md`
+
+- **建立**：`PUT /_search/pipeline/<name>`，body 含 `request_processors` / `response_processors` / `phase_results_processors`（hybrid 用 `phase_results_processors`）。pipeline **存於 cluster state**，建一次即可重用。
+- **掛上查詢（二選一）**：
+  - 單次：`GET|POST /<index>/_search?search_pipeline=<name>`（也可放進 request body 的 `search_pipeline`）。
+  - 索引預設：`PUT /<index>/_settings { "index.search.default_pipeline": "<name>" }`；單次要跳過用 `?search_pipeline=_none`，移除設回 `null`。
+- **驗證 / 查看**：`GET /_search/pipeline/<name>`。
+
 ### 7. 貫穿範例 — 專利搜尋 pipeline（來自筆記）
 
 ```json
@@ -184,7 +194,7 @@ POST /patent/_search?search_pipeline=patent-hybrid
 
 ---
 
-## 投影片計畫（約 11 張）
+## 投影片計畫（約 12 張）
 
 1. **TitleSlide** — 封面。eyebrow「RD 技術分享 · 2026」，主標 Hybrid Search on OpenSearch，副標一句，標籤：BM25 + Neural / min_max / RRF / Patent Search。
 2. **WhyHybridSlide** — 為什麼要 hybrid：BM25 vs 向量的優缺點對比（兩欄），帶出互補。用專利場景。
@@ -193,10 +203,11 @@ POST /patent/_search?search_pipeline=patent-hybrid
 5. **NormalizationSlide** — normalization 技術 + combination 技術 + weights 規則 + 調校提醒。
 6. **ScoreRankerSlide** — RRF 原理圖解 + rank_constant + 何時選 RRF。
 7. **SetupSlide** — Automated workflow vs Manual setup 五步驟。
-8. **PipelineConfigSlide** — 實作①：建 `patent-hybrid` pipeline，程式碼 + 逐欄說明。
-9. **QuerySlide** — 實作②：下 hybrid query，三路 subquery ↔ 三個 weight 對應。
-10. **FilteringSlide** — pre-filtering vs post-filtering 對比 + 範例。
-11. **SummarySlide** — 重點回顧 + 決策清單。
+8. **BuildPipelineSlide** — 建立 Search Pipeline 三步驟：① `PUT /_search/pipeline/patent-hybrid` 建立（存 cluster state、可重用）② 掛上查詢（單次 `?search_pipeline=` 或索引預設 `index.search.default_pipeline`）③ `GET /_search/pipeline/patent-hybrid` 驗證。
+9. **PipelineConfigSlide** — 實作①：`patent-hybrid` pipeline 完整 config + 逐欄說明。
+10. **QuerySlide** — 實作②：下 hybrid query，三路 subquery ↔ 三個 weight 對應。
+11. **FilteringSlide** — pre-filtering vs post-filtering 對比 + 範例。
+12. **SummarySlide** — 重點回顧 + 決策清單。
 
 ## 元件與技術約定
 

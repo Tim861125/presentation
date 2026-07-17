@@ -55,6 +55,12 @@ layout: full
 layout: full
 ---
 
+<BuildPipelineSlide />
+
+---
+layout: full
+---
+
 <PipelineConfigSlide />
 
 ---

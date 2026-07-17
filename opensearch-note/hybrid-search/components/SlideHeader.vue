@@ -7,7 +7,7 @@ defineProps<{
 </script>
 
 <template>
-  <div class="mb-6">
+  <div class="mb-4">
     <div v-if="eyebrow" class="flex items-center gap-2 text-[10px] font-mono uppercase tracking-widest text-emerald-400/80 mb-2">
       <span class="size-1.5 rounded-full bg-emerald-400" />
       {{ eyebrow }}

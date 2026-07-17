@@ -11,7 +11,7 @@ withDefaults(defineProps<{ center?: boolean }>(), { center: false })
     <div class="absolute -top-40 -right-40 size-[420px] rounded-full bg-emerald-500/10 blur-3xl" />
     <div class="absolute -bottom-40 -left-40 size-[420px] rounded-full bg-blue-500/10 blur-3xl" />
 
-    <div class="relative h-full flex flex-col px-14 py-10" :class="center ? 'justify-center' : ''">
+    <div class="relative h-full flex flex-col px-14 py-5" :class="center ? 'justify-center' : ''">
       <slot />
     </div>
   </div>
