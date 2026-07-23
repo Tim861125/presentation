@@ -9,9 +9,10 @@ description: Use when creating a new Slidev deck in the presentation monorepo �
 
 Slides in the `presentation` monorepo are **Slidev decks**, one directory per deck. The core flow:
 
-1. Collect/consolidate content → `spec.md` (source of truth)
-2. **Distill** spec into a concise `slides.md`
-3. Verify no page overflow
+1. **Read & organize** source content → refined spec
+2. Write refined content → `spec.md` (source of truth)
+3. **Distill** spec into a concise `slides.md`
+4. Verify no page overflow
 
 Slides are the distilled highlights, not a verbatim copy of the spec.
 
@@ -32,24 +33,39 @@ create-slidev <topic> <spec-source>              # Tech deep-dive / general pres
 
 ---
 
-## Step 0: Gather Spec Content
+## Step 0: Read Source & Organize Spec Content
 
-Regardless of the source, produce a clean `spec.md`.
+**Before writing spec.md, always read the source content and distill it.**
+
+Workflow:
+
+1. **Fetch/resolve source** — `spec/*.md`, file path, URL, or raw text
+2. **Read the content fully** — understand all material before distilling
+3. **Organize & refine** — structure, rephrase, remove noise, keep key points
+4. **Write organized content** into the deck's `spec.md`
 
 ```
-Source ──→ Fetch/organize ──→ spec.md (stored in deck directory)
+Source ──→ Fetch/organize → Edit/Refine ──→ spec.md (stored in deck directory)
 ```
 
-- **spec/*.md** — resolve to `<repo>/spec/<filename>` (e.g. `create-slidev dify-backend dify-backend.md` reads `spec/dify-backend.md`)
-- **File path** — read directly, format
+- **spec/\*.md** — resolve to `<repo>/spec/<filename>` (e.g. `create-slidev dify-backend dify-backend.md` reads `spec/dify-backend.md`)
+- **File path** — read directly, organize, format
 - **URL** — fetch via `webfetch` (if SPA, fetch the GitHub raw version instead)
-- **Raw text** — write directly
+- **Raw text** — structure the text into organized content
+
+**Organizing principles:**
+
+- Group related items together
+- Remove redundancy and noise
+- Keep essential details, rephrase clearly
+- Preserve source links / references
+- Use consistent structure and formatting
 
 ## Step 1: Scaffold Deck from Template
 
 **Never** run `npx slidev create` — it produces a standalone project that conflicts with the workspace. Use the built-in template instead.
 
-Template location: `.opencode/skills/create-slidev/templates/` (project) or `~/.config/opencode/skills/create-slidev/templates/` (global)
+Template location: `.opencode/skills/create-slidev/templates/` or `.claude/skills/create-slidev/templates/`
 
 ### Monthly: copy `templates/monthly/`
 
@@ -58,10 +74,9 @@ Template location: `.opencode/skills/create-slidev/templates/` (project) or `~/.
 # month261 = Jan 2026
 # month25a = Oct 2025; 25b = Nov; 25c = Dec
 
-cd /home/tim/githubRepo/presentation
 TEMPLATE_BASE="/home/tim/githubRepo/presentation/.opencode/skills/create-slidev/templates/monthly"
-cp -r $TEMPLATE_BASE <new-deck>
-rm -rf <new-deck>/node_modules <new-deck>/dist <new-deck>/components <new-deck>/pages <new-deck>/snippets
+cp -r $TEMPLATE_BASE ./<new-deck>
+rm -rf ./<new-deck>/node_modules ./<new-deck>/dist ./<new-deck>/components ./<new-deck>/pages ./<new-deck>/snippets
 # Replace <deck-name> in package.json with <new-deck>
 bun install
 ```
@@ -69,15 +84,16 @@ bun install
 ### Topic: copy `templates/topic/`
 
 ```bash
-cd /home/tim/githubRepo/presentation
 TEMPLATE_BASE="/home/tim/githubRepo/presentation/.opencode/skills/create-slidev/templates/topic"
-cp -r $TEMPLATE_BASE <topic>
-rm -rf <topic>/node_modules <topic>/dist <topic>/components <topic>/pages <topic>/snippets
+cp -r $TEMPLATE_BASE ./<topic>
+rm -rf ./<topic>/node_modules ./<topic>/dist ./<topic>/components ./<topic>/pages ./<topic>/snippets
 # Replace <deck-name> in package.json with <topic>
 bun install
 ```
 
-Replace the `<deck-name>` placeholder string in `package.json` with the actual deck directory name.
+Replace the `<deck-name>` placeholder in `package.json` with the actual deck directory name.
+
+**Note:** All commands run from the repo root (`/home/tim/githubRepo/presentation`). Do NOT `cd` into the deck directory. `bun install` must run at the root.
 
 ## Step 2: Write spec.md
 
@@ -110,13 +126,16 @@ Organize content and write it into the deck's `spec.md`.
 # <topic> 技術深剖
 
 ## 來源文件 / 參考連結
+
 - <link 1>
 - <link 2>
 
 ## 摘要
+
 <簡短技術摘要>
 
 ## 大綱 (Slide Plan)
+
 1. ...
 2. ...
 ```
@@ -144,14 +163,17 @@ class: text-center lineNumbers: false
 ---
 
 # <主題／產品>
+
 <副標，如 IPTECH / WEBPAT>
 
 - 重點一
 - 重點二
 
 ---
+
 layout: center
 class: text-center
+
 ---
 
 # End
@@ -175,8 +197,10 @@ title: <topic>
 <slide content...>
 
 ---
+
 layout: center
 class: text-center
+
 ---
 
 # End
@@ -212,7 +236,7 @@ Styling uses **UnoCSS** (presetWind3, same syntax as Tailwind classes). Go **dar
 ### UnoCSS Gotchas
 
 - **Do NOT add real Tailwind** — `@tailwindcss/vite` intercepts Slidev's theme CSS and breaks the build.
-- **No dynamic class names** — `` :class="`bg-${c.color}-400`" `` produces nothing (UnoCSS scans statically).
+- **No dynamic class names** — ``:class="`bg-${c.color}-400`"`` produces nothing (UnoCSS scans statically).
 
 ---
 
@@ -222,26 +246,30 @@ Slidev renders each slide on a **fixed-size canvas** (~980×551px, 16:9). Conten
 
 ### Method 1: Chrome DevTools MCP
 
-1. Start dev server: `cd <deck> && bun run dev` (default `http://localhost:3030`, auto-rotates if in use).
+1. Start dev server (run from repo root): `bun run dev --root <deck>` (default `http://localhost:3030`, auto-rotates if in use).
 2. Open `/export/` route — stacks all slides into a scrollable view:
    `navigate_page` → `http://localhost:<port>/export/`
 3. Run overflow check:
 
    ```js
-   () => Array.from(document.querySelectorAll('.slidev-page'))
-     .map((el, i) => ({ slide: i + 1, overflowPx: el.scrollHeight - el.clientHeight }))
-     .filter(s => s.overflowPx > 2)
+   () =>
+     Array.from(document.querySelectorAll(".slidev-page"))
+       .map((el, i) => ({
+         slide: i + 1,
+         overflowPx: el.scrollHeight - el.clientHeight,
+       }))
+       .filter((s) => s.overflowPx > 2);
    ```
 
    Empty array = OK. Any value = that many pixels of overflow on that slide.
+
 4. Fix overflows: split pages, reduce bullets, reduce text size, or switch `layout: two-cols`.
 5. End with `take_screenshot` for visual confirmation on suspicious slides.
 
 ### Method 2: Headless Chrome Screenshot
 
 ```bash
-bun run build
-bun run dev --port 3999 &
+bun run dev --root <deck> --port 3999 &
 google-chrome --headless=new --disable-gpu --no-sandbox \
   --user-data-dir=/tmp/chrome-profile \
   --window-size=1280,720 \
@@ -278,13 +306,11 @@ Defenses:
 - Dynamic class names (`bg-${x}`) → UnoCSS static scan produces nothing.
 - Writing slides without a spec.md first (always produce spec → distill).
 
-## Local Preview / Build
+## Local Preview
 
 ```bash
-cd <deck>
-bun run dev        # dev server with live reload, opens browser
-bun run build      # static output to dist/
-bun run export     # export to PDF
+cd /home/tim/githubRepo/presentation
+bun run dev --root <deck>        # dev server with live reload, opens browser
 ```
 
 ## Template Structure
