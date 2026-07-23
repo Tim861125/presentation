@@ -2,10 +2,17 @@
   "name": "presentation-decks",
   "private": true,
   "workspaces": ["*"],
+  "scripts": {
+    "dev": "node scripts/dev.js",
+    "build": "slidev build",
+    "export": "slidev export"
+  },
   "dependencies": {
     "@slidev/cli": "^52.16.0",
     "@slidev/theme-default": "latest",
     "@slidev/theme-seriph": "latest",
-    "vue": "^3.5.33"
+    "vue": "^3.5.33",
+    "element-plus": "^2.12.0",
+    "zod": "^4.1.12"
   }
 }
