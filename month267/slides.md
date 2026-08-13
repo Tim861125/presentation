@@ -20,8 +20,8 @@ class: text-center
 
 - <span class="text-cyan-400">Patent Embedding Search</span> — 研究到正式站台上線
 - <span class="text-cyan-400">快檢通</span> — WEBPAT 上線與點數機制
-- <span class="text-cyan-400">EP / KR / CN</span> — 新增完整資料管線 File → RAW → L1 → L3 → OS
-- <span class="text-cyan-400">SEP diff tool</span> — 新增 publunique 快速比較
+- <span class="text-cyan-400">EP / KR / CN</span> — 新增 File → RAW → L1 → L3 → OS
+- <span class="text-cyan-400">SEP diff tool</span>
 - <span class="text-cyan-400">TipoMusic</span> — 比對欄位擴充
 
 ---
@@ -54,7 +54,7 @@ class: text-center
 - 學習站台建置，接 WEBPAT 檢索結果
 - IPTECH 首頁新增 patent embedding search 入口
 - embedding 資料搬到 server
-- 學習 <span class="text-cyan-400">health check 與 CI/CD</span>
+- 學習 CI/CD
 - dify 修正並更新正式站台
 - 登入機制：無登入不可使用，只能從 IPTECH 登入
 - 點數機制：WEBPAT / IPTECH / PatentPilot-service / Dify 全站更新
