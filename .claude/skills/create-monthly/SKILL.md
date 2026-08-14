@@ -1,9 +1,9 @@
 ---
-name: create-slidev
-description: Use when creating a new Slidev deck in the presentation monorepo — either `create-slidev monthly [YYYY-MM] <spec-source>` for a monthly work report or `create-slidev <topic> <spec-source>` for a tech deep-dive / general presentation. Supports spec sources: a file path containing notes/tasks, a URL, or raw text. Covers scaffold from templates, spec.md → slides.md distillation, tech-look styling, verification, and common pitfalls.
+name: create-monthly
+description: Use when creating a new monthly work report Slidev deck in the presentation monorepo — `create-monthly [YYYY-MM] <spec-source>`. Supports spec sources: a file path containing notes/tasks, a URL, or raw text. Covers scaffold from monthly template, spec.md → slides.md distillation, tech-look styling, verification, and common pitfalls.
 ---
 
-# Create Slidev Deck
+# Create Monthly Work Report Slidev Deck
 
 ## Overview
 
@@ -18,12 +18,14 @@ Slides are the distilled highlights, not a verbatim copy of the spec.
 
 Write slide content in **Traditional Chinese** (keep technical terms in their original language).
 
-## Modes
+## Usage
 
 ```
-create-slidev monthly [YYYY-MM] <spec-source>    # Monthly work report (month deck)
-create-slidev <topic> <spec-source>              # Tech deep-dive / general presentation (topic deck)
+create-monthly [YYYY-MM] <spec-source>    # Monthly work report (month deck)
 ```
+
+Example: `create-monthly 2026-08` followed by the user providing raw text.
+Example: `create-monthly 2026-08 /path/to/spec.md`
 
 **`<spec-source>`** accepts:
 
@@ -48,7 +50,7 @@ Workflow:
 Source ──→ Fetch/organize → Edit/Refine ──→ spec.md (stored in deck directory)
 ```
 
-- **spec/\*.md** — resolve to `<repo>/spec/<filename>` (e.g. `create-slidev dify-backend dify-backend.md` reads `spec/dify-backend.md`)
+- **spec/\*.md** — resolve to `<repo>/spec/<filename>` (e.g. `create-monthly dify-backend dify-backend.md` reads `spec/dify-backend.md`)
 - **File path** — read directly, organize, format
 - **URL** — fetch via `webfetch` (if SPA, fetch the GitHub raw version instead)
 - **Raw text** — structure the text into organized content
@@ -65,29 +67,21 @@ Source ──→ Fetch/organize → Edit/Refine ──→ spec.md (stored in dec
 
 **Never** run `npx slidev create` — it produces a standalone project that conflicts with the workspace. Use the built-in template instead.
 
-Template location: `.claude/skills/create-slidev/templates/`
+Template location: `.claude/skills/create-monthly/templates/monthly/`
 
-### Monthly: copy `templates/monthly/`
+### Determine deck name
+
+```
+month261 = Jan 2026
+month262 = Feb 2026
+month25a = Oct 2025; 25b = Nov; 25c = Dec
+```
 
 ```bash
-# Determine deck name first
-# month261 = Jan 2026
-# month25a = Oct 2025; 25b = Nov; 25c = Dec
-
-TEMPLATE_BASE="/home/tim/githubRepo/presentation/.claude/skills/create-slidev/templates/monthly"
+TEMPLATE_BASE="/home/tim/githubRepo/presentation/.claude/skills/create-monthly/templates/monthly"
 cp -r $TEMPLATE_BASE ./<new-deck>
 rm -rf ./<new-deck>/node_modules ./<new-deck>/dist ./<new-deck>/components ./<new-deck>/pages ./<new-deck>/snippets
 # Replace <deck-name> in package.json with <new-deck>
-bun install
-```
-
-### Topic: copy `templates/topic/`
-
-```bash
-TEMPLATE_BASE="/home/tim/githubRepo/presentation/.claude/skills/create-slidev/templates/topic"
-cp -r $TEMPLATE_BASE ./<topic>
-rm -rf ./<topic>/node_modules ./<topic>/dist ./<topic>/components ./<topic>/pages ./<topic>/snippets
-# Replace <deck-name> in package.json with <topic>
 bun install
 ```
 
@@ -118,26 +112,6 @@ Organize content and write it into the deck's `spec.md`.
 # 以下為本月工作內容
 
 <貼上整理後的 task 清單 / 條列規格>
-```
-
-**Topic deck spec** format:
-
-```markdown
-# <topic> 技術深剖
-
-## 來源文件 / 參考連結
-
-- <link 1>
-- <link 2>
-
-## 摘要
-
-<簡短技術摘要>
-
-## 大綱 (Slide Plan)
-
-1. ...
-2. ...
 ```
 
 ## Step 3: Distill slides.md from spec
@@ -181,36 +155,11 @@ class: text-center
 
 Replace `YYYY-MM` with the actual month.
 
-### Topic slides.md skeleton
-
-```markdown
----
-theme: default
-background: https://cover.sli.dev
-class: text-center
-highlighter: shiki
-title: <topic>
----
-
-# <topic>
-
-<slide content...>
-
----
-
-layout: center
-class: text-center
-
----
-
-# End
-```
-
 ---
 
 ## Slide Writing Conventions
 
-- **Group by product/topic** — Monthly decks group by `IPTECH`, `WEBPAT`, `TipoMusic`, `AI`; topic decks group by technical sub-topics.
+- **Group by product/topic** — Monthly decks group by `IPTECH`, `WEBPAT`, `TipoMusic`, `AI`.
 - **Title + subtitle + bullets** — `# Title` with subtitle on the next line, then `-` bullets. Use backticks for API names / code.
 - **One topic per slide, no overflow** — Split pages or use `layout: two-cols` when content is lengthy.
 - **No icons** — Only use checkmarks / crosses to indicate done / pending.
@@ -251,17 +200,17 @@ Slidev renders each slide on a **fixed-size canvas** (~980×551px, 16:9). Conten
    `navigate_page` → `http://localhost:<port>/export/`
 3. Run overflow check:
 
-   ```js
-   () =>
-     Array.from(document.querySelectorAll(".slidev-page"))
-       .map((el, i) => ({
-         slide: i + 1,
-         overflowPx: el.scrollHeight - el.clientHeight,
-       }))
-       .filter((s) => s.overflowPx > 2);
-   ```
+    ```js
+    () =>
+      Array.from(document.querySelectorAll(".slidev-page"))
+        .map((el, i) => ({
+          slide: i + 1,
+          overflowPx: el.scrollHeight - el.clientHeight,
+        }))
+        .filter((s) => s.overflowPx > 2);
+    ```
 
-   Empty array = OK. Any value = that many pixels of overflow on that slide.
+    Empty array = OK. Any value = that many pixels of overflow on that slide.
 
 4. Fix overflows: split pages, reduce bullets, reduce text size, or switch `layout: two-cols`.
 5. End with `take_screenshot` for visual confirmation on suspicious slides.
@@ -303,18 +252,13 @@ bun run dev --root <deck>        # dev server with live reload, opens browser
 ## Template Structure
 
 ```
-.claude/skills/create-slidev/
+.claude/skills/create-monthly/
 ├── SKILL.md
-├── templates/
-│   ├── monthly/          # Monthly report template (seriph theme, dark, gradient title)
-│   │   ├── slides.md
-│   │   ├── spec.md
-│   │   ├── package.json
-│   │   ├── netlify.toml
-│   │   └── vercel.json
-│   └── topic/            # General topic template (default theme, clean)
-│       ├── slides.md
-│       ├── package.json
-│       ├── netlify.toml
-│       └── vercel.json
+└── templates/
+    └── monthly/          # Monthly report template (seriph theme, dark, gradient title)
+        ├── slides.md
+        ├── spec.md
+        ├── package.json
+        ├── netlify.toml
+        └── vercel.json
 ```
