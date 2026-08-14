@@ -102,3 +102,104 @@ layout: full
 2. 但 BM25 仍只看字面；以「智慧辦公室」與「智能工作空間」為例，它無法自行知道兩者意思相近。
 3. 因此 Hybrid Search 結合 BM25 的精準關鍵字能力與向量搜尋的語意理解能力。
 -->
+
+---
+layout: full
+---
+
+<ProcessorsOverviewSlide />
+
+<!--
+講者備忘錄 (Presenter Notes):
+1. Search Pipeline (搜尋管道) 執行時機：介入於 Query Phase (查詢階段) 各路獨立打分結束後，與 Fetch Phase (抓取 Document 內文) 開始之前。
+2. 比較兩大 Phase Results Processors (階段結果處理器)：
+   - Normalization Processor (OpenSearch 2.10+): 基於分數 (Score-Based)，進行 Min-Max / L2 / Z-Score 正規化 + 加權平均。
+   - Score Ranker Processor (OpenSearch 2.19+): 基於排名 (Rank-Based)，採用 RRF (Reciprocal Rank Fusion, 倒數排名融合)。
+-->
+
+---
+layout: full
+---
+
+<NormalizationProcessorSlide />
+
+<!--
+講者備忘錄 (Presenter Notes):
+1. Normalization Processor 兩階段處理：First-Stage Normalization (分數縮放) ➔ Second-Stage Combination (分數融合)。
+2. 展示 Search Pipeline 的 REST (Representational State Transfer) API (Application Programming Interface) 定義 JSON。
+3. 強調 weights 權重配置三大金律：長度匹配、總和等於 1.0、省略時為全路均分。
+-->
+
+---
+layout: full
+---
+
+<ScoreRankerSlide />
+
+<!--
+講者備忘錄 (Presenter Notes):
+1. RRF (Reciprocal Rank Fusion, 倒數排名融合) 公式：RRF_score(d) = Σ [ 1 / ( k + rank_i(d) ) ]。
+2. rank_constant (k) 參數調校：k=60 為最常見預設值，能平滑兼顧首頁與前 20 名結果。
+3. 實例試算：展示排名與最終 RRF 得分計算邏輯。
+-->
+
+---
+layout: full
+---
+
+<NormalizationTechniqueSlide />
+
+<!--
+講者備忘錄 (Presenter Notes):
+1. 三種分數正規化技術 (Normalization Techniques) 數學比較：
+   - min_max: Min-Max (最小最大值縮放)，將分數映射至 [0, 1] 區間，支援 bounds 截斷。
+   - l2: L2 Norm (Euclidean Norm, 歐幾里得範數/歐氏長度)，保持得分相對比例。
+   - z_score: Z-Score (Standard Score, 標準分數)，以 μ (平均數 Mean) 為中心、σ (標準差 Standard Deviation) 為單位轉換，極度抗離群值。
+2. 注意事項：z_score 硬性約束僅能搭配 arithmetic_mean (算術平均)。
+-->
+
+---
+layout: full
+---
+
+<CombinationTechniqueSlide />
+
+<!--
+講者備忘錄 (Presenter Notes):
+1. 三種分數合併技術 (Combination Techniques)：
+   - arithmetic_mean (Arithmetic Mean, 算術/加權平均)：對低分寬鬆，單路高分可補足其他路，首選 Baseline。
+   - geometric_mean (Geometric Mean, 幾何平均)：一票否決，單路得分為 0 則總分歸零。
+   - harmonic_mean (Harmonic Mean, 調和平均)：對低分最敏感，極度懲罰單路低分。
+2. 實務調校順序建議：先固定 arithmetic_mean 建立 Baseline ➔ 選取 normalization ➔ 微調 weights。
+-->
+
+---
+layout: full
+---
+
+<PatentMultiVectorSlide />
+
+<!--
+講者備忘錄 (Presenter Notes):
+1. 台灣專利貫穿實測：結合 TAC (Title, Abstract, Claims, 專利名稱/摘要/請求項) 向量、人名/申請人向量與 CJK (Chinese, Japanese, Korean, 中日韓) BM25 檢索。
+2. 三種架構比較與 MRR (Mean Reciprocal Rank, 平均倒數排名) 評測：
+   - Twofield 模式：3 臂查詢，MRR 約 0.860。
+   - Nested 模式 (最佳解)：2 臂查詢 (Nested k-NN 搭配 score_mode: "max")，MRR 突破 0.907~0.921，架構最簡潔。
+   - MultiDoc 模式：多文件拆分搭配 OpenSearch collapse (結果折疊)，空間膨脹且損害召回，不推薦。
+3. k-NN (k-Nearest Neighbors, k-近鄰演算法) 向量檢索在 Nested 結構中的優勢。
+-->
+
+---
+layout: full
+---
+
+<SummarySlide />
+
+<!--
+講者備忘錄 (Presenter Notes):
+1. 生產環境落地四大決策清單：
+   - BM25 扎根：k1=1.2, b=0.75 + CJK (Chinese, Japanese, Korean) 分詞。
+   - Processor 選型：精確權重選 Normalization Processor，異質尺度選 Score Ranker (RRF)。
+   - 正規化組合：min_max + arithmetic_mean 為最佳起手式。
+   - 台灣專利最佳解：Nested 2 臂架構 (MRR > 0.90)。
+-->

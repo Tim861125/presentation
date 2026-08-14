@@ -7,82 +7,80 @@ import SlideHeader from './SlideHeader.vue'
   <SlideShell>
     <SlideHeader
       eyebrow="Part 1 · BM25 演算法"
-      title="BM25 vs TF-IDF 比較與 BM25 限制"
-      subtitle="為何單靠 BM25 不夠？字面匹配的天然盲點與 Hybrid (混合搜尋) 雙引擎需求"
+      title="BM25 很會找字，但不懂字的意思"
+      subtitle="它改善了早期關鍵字排名的公平性，卻仍需要向量搜尋補足語意理解"
     />
 
     <div class="grid grid-cols-1 lg:grid-cols-12 gap-4 mt-2">
-      <!-- Left Column: Comparison Table (6 cols) -->
       <div class="lg:col-span-6 space-y-3">
         <div class="text-xs font-mono font-bold text-emerald-400 uppercase tracking-wider">
-          BM25 (Best Matching 25) vs TF-IDF (Term Frequency - Inverse Document Frequency) 演算法對比
+          為何 BM25 取代傳統 TF-IDF？
         </div>
         <div class="rounded-xl border border-white/10 overflow-hidden bg-black/40 text-xs">
           <table class="w-full text-left border-collapse">
             <thead>
               <tr class="border-b border-white/10 bg-white/[0.04] text-zinc-300 font-mono">
-                <th class="p-2.5">比較維度</th>
-                <th class="p-2.5 text-zinc-400">TF-IDF (舊版)</th>
-                <th class="p-2.5 text-emerald-400">BM25 (現代預設)</th>
+                <th class="p-2.5">比較問題</th>
+                <th class="p-2.5 text-zinc-400">TF-IDF（舊方式）</th>
+                <th class="p-2.5 text-emerald-400">BM25（現代預設）</th>
               </tr>
             </thead>
             <tbody class="divide-y divide-white/5 text-zinc-300">
               <tr>
-                <td class="p-2.5 font-medium text-white">TF (Term Frequency) 飽和</td>
-                <td class="p-2.5 text-rose-400/90">無，線性無限成長</td>
-                <td class="p-2.5 text-emerald-300">有，k₁ 控制上限</td>
+                <td class="p-2.5 font-medium text-white">同一詞重複出現</td>
+                <td class="p-2.5 text-rose-400/90">出現愈多，加分愈多</td>
+                <td class="p-2.5 text-emerald-300">會加分，但效果逐漸變小</td>
               </tr>
               <tr>
-                <td class="p-2.5 font-medium text-white">Document Length Normalization (長度正規化)</td>
-                <td class="p-2.5 text-rose-400/90">無（或僅向量模長）</td>
-                <td class="p-2.5 text-emerald-300">有，b 依 avgdl 正規化</td>
+                <td class="p-2.5 font-medium text-white">文件很長</td>
+                <td class="p-2.5 text-rose-400/90">較容易因詞多而占優勢</td>
+                <td class="p-2.5 text-emerald-300">會適度校正篇幅差異</td>
               </tr>
               <tr>
-                <td class="p-2.5 font-medium text-white">可調參數</td>
-                <td class="p-2.5 text-zinc-400">無（固化）</td>
-                <td class="p-2.5 text-emerald-300 font-mono">k₁ (1.2), b (0.75)</td>
+                <td class="p-2.5 font-medium text-white">調整排名行為</td>
+                <td class="p-2.5 text-zinc-400">彈性有限</td>
+                <td class="p-2.5 text-emerald-300">可調整重複與篇幅的影響</td>
               </tr>
               <tr>
-                <td class="p-2.5 font-medium text-white">預設時期</td>
-                <td class="p-2.5 text-zinc-400">ES (Elasticsearch) 2.x / Lucene 5 之前</td>
-                <td class="p-2.5 text-emerald-300 font-semibold">OpenSearch & ES 5.x+</td>
+                <td class="p-2.5 font-medium text-white">目前定位</td>
+                <td class="p-2.5 text-zinc-400">較早期的基礎做法</td>
+                <td class="p-2.5 text-emerald-300 font-semibold">OpenSearch 的常用預設</td>
               </tr>
             </tbody>
           </table>
         </div>
       </div>
 
-      <!-- Right Column: Limitations & Hybrid Need (6 cols) -->
       <div class="lg:col-span-6 space-y-3">
         <div class="text-xs font-mono font-bold text-amber-400 uppercase tracking-wider">
-          BM25 的 4 大盲點 (為何需要 Hybrid 混合搜尋)
+          BM25 的盲點：只看字面，不理解語意
         </div>
 
         <div class="space-y-2 text-xs">
           <div class="p-3 rounded-xl border border-rose-500/20 bg-rose-500/5 space-y-1">
             <div class="font-bold text-rose-400 flex items-center gap-1.5">
-              <span>❌ 1. 嚴格字面依賴 (Lexical Gap / 字面鴻溝)</span>
+              <span>❌ 同義說法可能完全錯過</span>
             </div>
             <p class="text-zinc-300 leading-relaxed text-[11px]">
-              專利查詢 <code class="text-amber-300 font-mono">"smart office"</code> 查不到寫著「智慧辦公室」或「智能工作空間」的台灣專利，完全無詞頻重疊。
+              搜尋 <code class="text-amber-300 font-mono">「智慧辦公室」</code>，未必找得到描述「智能工作空間」的專利，因為兩者沒有相同的字。
             </p>
           </div>
 
           <div class="p-3 rounded-xl border border-rose-500/20 bg-rose-500/5 space-y-1">
             <div class="font-bold text-rose-400 flex items-center gap-1.5">
-              <span>❌ 2. 缺乏語意概念理解 (Lack of Semantic Understanding)</span>
+              <span>❌ 無法判斷概念是否相近</span>
             </div>
             <p class="text-zinc-300 leading-relaxed text-[11px]">
-              無法識別「半導體封裝技術」與「晶片立體整合」在概念上的近義關係。
+              它不知道「半導體封裝技術」與「晶片立體整合」在技術概念上可能高度相關。
             </p>
           </div>
 
           <div class="p-3 rounded-xl border border-amber-500/20 bg-amber-500/5 space-y-1">
             <div class="font-bold text-amber-400 flex items-center gap-1.5">
-              <span>💡 雙引擎互補 (Hybrid Solution / 混合搜尋解法)</span>
+              <span>💡 因此需要 Hybrid Search（混合搜尋）</span>
             </div>
             <p class="text-zinc-300 leading-relaxed text-[11px]">
-              <strong class="text-emerald-400">BM25 關鍵字 (精確度)</strong> + <strong class="text-blue-400">Neural 向量 (泛化與語意)</strong>，由 OpenSearch Pipeline 結合打分！
+              <strong class="text-emerald-400">BM25</strong> 負責精準關鍵字，<strong class="text-blue-400">向量搜尋</strong> 補上同義詞與語意關聯；兩者融合後兼顧精確度與召回率。
             </p>
           </div>
         </div>
