@@ -32,19 +32,19 @@ import SlideShell from "./SlideShell.vue";
       <!-- Feature Pill Grid -->
       <div class="grid grid-cols-2 md:grid-cols-4 gap-3 pt-2">
         <div
-          class="p-3.5 rounded-xl border border-white/10 bg-white/[0.03] backdrop-blur-sm space-y-1"
+          class="p-3.5 rounded-xl border border-emerald-400/60 bg-emerald-500/15 shadow-lg shadow-emerald-500/10 backdrop-blur-sm space-y-1"
         >
-          <div class="text-xs font-mono text-emerald-400 font-bold">
+          <div class="text-xs font-mono text-emerald-300 font-bold">
             01. BM25 (Best Matching 25) 核心
           </div>
-          <div class="text-xs text-zinc-300">
+          <div class="text-xs text-zinc-100">
             IDF (Inverse Document Frequency) · TF (Term Frequency) 飽和 ·
             長度正規化
           </div>
         </div>
 
         <div
-          class="p-3.5 rounded-xl border border-white/10 bg-white/[0.03] backdrop-blur-sm space-y-1"
+          class="p-3.5 rounded-xl border border-white/5 bg-black/20 opacity-40 space-y-1"
         >
           <div class="text-xs font-mono text-blue-400 font-bold">
             02. Processors
@@ -55,7 +55,7 @@ import SlideShell from "./SlideShell.vue";
         </div>
 
         <div
-          class="p-3.5 rounded-xl border border-white/10 bg-white/[0.03] backdrop-blur-sm space-y-1"
+          class="p-3.5 rounded-xl border border-white/5 bg-black/20 opacity-40 space-y-1"
         >
           <div class="text-xs font-mono text-teal-400 font-bold">
             03. 融合與正規化
@@ -66,7 +66,7 @@ import SlideShell from "./SlideShell.vue";
         </div>
 
         <div
-          class="p-3.5 rounded-xl border border-white/10 bg-white/[0.03] backdrop-blur-sm space-y-1"
+          class="p-3.5 rounded-xl border border-white/5 bg-black/20 opacity-40 space-y-1"
         >
           <div class="text-xs font-mono text-indigo-400 font-bold">
             04. 台灣專利實戰
