@@ -1,47 +1,61 @@
 # Presentation Decks
 
-A mono-repo of independent [Slidev](https://sli.dev/) decks. Each deck sits directly at the repo root as a self-contained project (its own `package.json`, `bun.lock`, deployment config). For architecture and conventions, see [CLAUDE.md](./CLAUDE.md).
+A Slidev monorepo for technical sharing and monthly work reports. For architecture guidelines and conventions, see [AGENTS.md](./AGENTS.md).
 
 ## Quick start
 
 ```bash
-# Once after cloning (at repo root):
+# 1. 安裝依賴（在根目錄執行一次即可）：
 bun install
 
-# In any deck directory:
-cd <deck>
-bun run dev     # dev server with live reload
-bun run build   # static build to dist/
-bun run export  # export to PDF
+# 2. 列出所有可用的簡報：
+bun run dev
+
+# 3. 啟動指定簡報（會自動開啟瀏覽器）：
+bun run dev <deck名稱>
+# 例如：
+bun run dev debounce
+bun run dev shadcn-ui
+bun run dev month267
+
+# 4. 構建或匯出 PDF：
+bunx --bun slidev build <deck名稱>/slides.md
+bunx --bun slidev export <deck名稱>/slides.md
 ```
 
-## Decks
+## Decks 清單
 
-### 技術分享 / Technical deep-dives
+### 💡 技術分享 (22 個)
 
-| Deck | Topic |
-|------|-------|
+| Deck | 主題 |
+|---|---|
 | [`ChromeDevTool`](./ChromeDevTool) | Google Chrome DevTools |
-| [`chromeDevToolsMcp`](./chromeDevToolsMcp) | Chrome DevTools MCP — 工具介紹與實戰 |
+| [`chromeDevToolsMcp`](./chromeDevToolsMcp) | Chrome DevTools MCP — 工具介紹與實戰展示 |
+| [`citus`](./citus) | Citus `create_distributed_table` |
+| [`citus-v2`](./citus-v2) | Citus create_distributed_table (Part 2) |
 | [`csp`](./csp) | CSP 知識分享 |
-| [`debunce`](./debunce) | JavaScript Debounce & Throttle |
+| [`debounce`](./debounce) | JavaScript Debounce & Throttle |
 | [`dify`](./dify) | Dify — LLM Node & Workflow API |
-| [`eventDelegation`](./eventDelegation) | Event Delegation |
+| [`eventDelegation`](./eventDelegation) | Event Delegation 知識分享 |
+| [`FTO-ai-meeting`](./FTO-ai-meeting) | FTO × AI 產品比對功能 |
 | [`httpyac`](./httpyac) | httpYac Technical Overview |
 | [`intersectionObserver`](./intersectionObserver) | IntersectionObserver API |
 | [`mcp`](./mcp) | Model Context Protocol |
 | [`mcp2`](./mcp2) | MCP Transport |
 | [`mjml`](./mjml) | MJML 技術分享 |
 | [`OAuth2`](./OAuth2) | OAuth 2.0 技術分享 |
+| [`opensearch-hybrid-search`](./opensearch-hybrid-search) | Hybrid Search on OpenSearch |
+| [`opensearch-hybrid-search-part2`](./opensearch-hybrid-search-part2) | OpenSearch Hybrid Search 技術深潛 (Part 2) |
+| [`ppt26415`](./ppt26415) | 2026-03 特殊報告 |
 | [`rAF`](./rAF) | requestAnimationFrame 深入解析 |
-| [`rIC`](./rIC) | requestIdleCallback |
-| [`shadcn-ui`](./shadcn-ui) | shadcn/ui — Foundation for your design system |
-| [`zod`](./zod) | Zod — TypeScript schema validation |
+| [`rIC`](./rIC) | requestIdleCallback 知識分享 |
+| [`shadcn-ui`](./shadcn-ui) | shadcn/ui — The Foundation for your Design System |
+| [`zod`](./zod) | Zod - TypeScript Schema Validation |
 
-### 月度工作報告 / Monthly reports
+### 📅 月度工作報告 (10 個)
 
-| Deck | Period |
-|------|--------|
+| Deck | 期間 |
+|---|---|
 | [`month25a`](./month25a) | 2025-10 |
 | [`month25b`](./month25b) | 2025-11 |
 | [`month25c`](./month25c) | 2025-12 |
@@ -49,28 +63,12 @@ bun run export  # export to PDF
 | [`month262`](./month262) | 2026-02 |
 | [`month263`](./month263) | 2026-03 |
 | [`month264`](./month264) | 2026-04 |
-| [`ppt26415`](./ppt26415) | 2026-04-15 special |
+| [`month265`](./month265) | 2026-05 |
+| [`month266`](./month266) | 2026-06 |
+| [`month267`](./month267) | 2026-07 |
 
-## Deployment
+## 新增簡報
 
-Each deck deploys independently via `netlify.toml` / `vercel.json` pointing at its own `dist/`. No aggregate build.
-
-### GitHub Pages（classroom-upgrade）
-
-`classroom-upgrade` 透過 GitHub Actions 自動部署到 GitHub Pages，設定檔在 [`.github/workflows/deploy.yml`](./.github/workflows/deploy.yml)。
-
-**第一次設定（只需做一次）：**
-
-1. 進入 repo 的 **Settings → Pages**
-2. 在 **Build and deployment → Source** 選擇 **GitHub Actions**
-
-**部署方式：**
-
-- 推送到 `main` 分支時會自動觸發 build 並部署
-- 也可在 **Actions** 分頁手動執行（workflow 有開 `workflow_dispatch`）
-
-部署完成後，簡報網址為：
-
-**https://tim861125.github.io/presentation/**
-
-> **注意：** build 時必須加上 `--base /presentation/`（已寫在 workflow 內），因為網址帶有 repo 名稱的子路徑；少了它會載不到資源而變成白畫面。GitHub Pages 一個 repo 只發佈一個站台，目前發佈的是 `classroom-upgrade`。
+1. 建立目錄 `<deck名稱>`
+2. 在目錄內建立 `slides.md`（可參考既有簡報）與選用的 `spec.md`
+3. 執行 `bun run dev <deck名稱>` 即可開始開發

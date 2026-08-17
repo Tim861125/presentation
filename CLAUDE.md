@@ -6,30 +6,34 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Repository shape
 
-A **bun workspace monorepo** of Slidev decks. The root `package.json` declares `workspaces: ["*"]` and owns the four shared deps (`@slidev/cli`, `@slidev/theme-default`, `@slidev/theme-seriph`, `vue`) at a single pinned version. Each deck has its own `package.json` for deck-specific deps and shares the root `node_modules` via bun hoisting. There is one lockfile at the root.
+A **Slidev monorepo** managed at the root. The root `package.json` owns the shared deps (`@slidev/cli`, `@slidev/theme-default`, `@slidev/theme-seriph`, `vue`, `element-plus`, `zod`). Decks are lightweight directories containing `slides.md`, `spec.md`, and optional `components/`. There is a single root `bun.lock`.
 
 Two kinds of decks, distinguished by directory name:
 
-- **Technical deep-dives** — topic-named directories (e.g. `dify`, `shadcn-ui`, `chromeDevToolsMcp`, `zod`)
+- **Technical deep-dives** — topic-named directories (e.g. `dify`, `shadcn-ui`, `chromeDevToolsMcp`, `zod`, `opensearch-hybrid-search`)
 - **Monthly work reports** — `month<YYMM>` directories (e.g. `month264` for 2026-04)
 
 A single root `.gitignore` covers build output, dependencies, and editor/OS noise for every deck.
 
-**First setup:** run `bun install` once at the repo root. After that, `cd` into a deck and use its scripts as usual.
+**First setup:** run `bun install` once at the repo root.
 
 ## Commands
 
 Bun is the package manager. Only the repo root has `bun.lock`.
 
 ```bash
-# At repo root, once after cloning:
+# At repo root:
 bun install
 
-# Inside any deck directory:
-cd <deck>
-bun run dev        # dev server with live reload, opens browser
-bun run build      # static build to dist/
-bun run export     # export to PDF
+# List all available decks:
+bun run dev
+
+# Start a specific deck (opens browser):
+bun run dev <deck>
+
+# Build or export a specific deck:
+bunx --bun slidev build <deck>/slides.md
+bunx --bun slidev export <deck>/slides.md
 ```
 
 ## Deck architecture
@@ -50,17 +54,13 @@ Optional per-deck directories:
 
 **Stack:** Slidev + Vue 3 + UnoCSS + Shiki (syntax highlighting).
 
-## Deployment
-
-Each deck deploys independently. `netlify.toml` and `vercel.json` in the deck directory both point at `dist/` produced by `bun run build`. There is no aggregate deployment.
-
 ## Conventions when adding a new deck
 
-Do **not** run `npx slidev create` — it produces a standalone project that conflicts with the workspace. Instead:
+Do **not** run `npx slidev create` — it produces a standalone project that conflicts with the monorepo. Instead:
 
-1. `cp -r shadcn-ui <new-deck>` (or `month264` for a monthly report)
-2. Edit `<new-deck>/package.json`: set `name` to `<new-deck>`, and remove any stray `bun.lock` inside the deck if the copy brought one
-3. Run `bun install` at the repo root to wire the new deck into the workspace
+1. Create a new directory `<deck>` (or copy from an existing simple deck like `month264` or `shadcn-ui`)
+2. Add `<deck>/slides.md` and optional `<deck>/spec.md`
+3. Run `bun run dev <deck>` to start developing
 
 Then:
 

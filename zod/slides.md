@@ -489,7 +489,7 @@ const loginSchema = z.object({
 
 ---
 
-<test />
+<ZodRegistryDemo />
 
 ---
 layout: two-cols
