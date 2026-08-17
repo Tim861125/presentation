@@ -54,6 +54,8 @@ if (!deck) {
   process.exit(0);
 }
 
+import { rmSync } from "fs";
+
 // Deck specified → launch slidev pointing at that deck's slides.md
 const deckPath = join(root, deck);
 const slidesPath = join(deckPath, "slides.md");
@@ -64,9 +66,36 @@ if (!existsSync(slidesPath)) {
   process.exit(1);
 }
 
-console.log(`\n🚀 啟動 ${deck}\n`);
-execSync(`${slidevBin} slides.md`, {
-  cwd: deckPath,
-  stdio: "inherit",
-  shell: "/bin/bash",
+const clean = () => {
+  const nm = join(deckPath, "node_modules");
+  if (existsSync(nm)) {
+    try {
+      rmSync(nm, { recursive: true, force: true });
+    } catch {}
+  }
+};
+
+process.on("SIGINT", () => {
+  clean();
+  process.exit(0);
 });
+process.on("SIGTERM", () => {
+  clean();
+  process.exit(0);
+});
+process.on("exit", () => {
+  clean();
+});
+
+console.log(`\n🚀 啟動 ${deck}\n`);
+try {
+  execSync(`${slidevBin} slides.md`, {
+    cwd: deckPath,
+    stdio: "inherit",
+    shell: "/bin/bash",
+  });
+} catch {
+  // Graceful exit on Ctrl+C
+} finally {
+  clean();
+}

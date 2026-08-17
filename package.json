@@ -1,9 +1,11 @@
 {
   "name": "presentation-decks",
+  "type": "module",
   "private": true,
   "workspaces": ["*"],
   "scripts": {
     "dev": "node scripts/dev.js",
+    "clean": "node scripts/clean.js",
     "build": "slidev build",
     "export": "slidev export"
   },
