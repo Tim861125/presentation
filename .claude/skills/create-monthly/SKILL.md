@@ -1,6 +1,6 @@
 ---
 name: create-monthly
-description: Use when creating a new monthly work report Slidev deck in the presentation monorepo — `create-monthly [YYYY-MM] <spec-source>`. Supports spec sources: a file path containing notes/tasks, a URL, or raw text. Covers scaffold from monthly template, spec.md → slides.md distillation, tech-look styling, verification, and common pitfalls.
+description: Use when creating a new monthly work report Slidev deck in the presentation monorepo — `create-monthly [YYYY-MM] <spec-source>`. Supports spec sources: a file path containing notes/tasks, a URL, or raw text. Covers scaffold from monthly template, spec.md → slides.md distillation, slidev-theme-tech dark tech styling, verification, and common pitfalls.
 ---
 
 # Create Monthly Work Report Slidev Deck
@@ -20,7 +20,7 @@ Write slide content in **Traditional Chinese** (keep technical terms in their or
 
 ## Usage
 
-```
+```bash
 create-monthly [YYYY-MM] <spec-source>    # Monthly work report (month deck)
 ```
 
@@ -63,6 +63,8 @@ Source ──→ Fetch/organize → Edit/Refine ──→ spec.md (stored in dec
 - Preserve source links / references
 - Use consistent structure and formatting
 
+---
+
 ## Step 1: Scaffold Deck from Template
 
 **Never** run `npx slidev create` — it produces a standalone project that conflicts with the workspace. Use the built-in template instead.
@@ -72,8 +74,7 @@ Template location: `.claude/skills/create-monthly/templates/monthly/`
 ### Determine deck name
 
 ```
-month261 = Jan 2026
-month262 = Feb 2026
+month261 = Jan 2026 ... month269 = Sep 2026
 month25a = Oct 2025; 25b = Nov; 25c = Dec
 ```
 
@@ -88,6 +89,8 @@ bun install
 Replace the `<deck-name>` placeholder string in `package.json` with the actual deck directory name.
 
 **Note:** All commands run from the repo root (`/home/tim/githubRepo/presentation`). Do NOT `cd` into the deck directory. `bun install` must run at the root.
+
+---
 
 ## Step 2: Write spec.md
 
@@ -104,50 +107,63 @@ Organize content and write it into the deck's `spec.md`.
 
 - 不要使用 icon, 只在必要時用打勾或叉叉讓版面清晰，不需要的話就不用
 - 注意每一頁的高度不要超過螢幕高度
-- 科技感（見 skill 的「科技感」）
+- 科技感（使用 slidev-theme-tech 或深色漸層）
 - 完成後要確認畫面，確認沒有頁面下方被切掉
 - 用繁體中文
-- 首頁背景 background: https://cover.sli.dev
 
 # 以下為本月工作內容
 
 <貼上整理後的 task 清單 / 條列規格>
 ```
 
+---
+
 ## Step 3: Distill slides.md from spec
 
-Condense the bulk of spec.md into presentation slides.
-
-### Monthly slides.md skeleton
+### Monthly slides.md skeleton (with `theme: tech`)
 
 ```markdown
 ---
-theme: seriph
+theme: tech
 colorSchema: dark
-background: https://cover.sli.dev
 highlighter: shiki
 title: YYYY-MM
-class: text-center lineNumbers: false
 ---
 
-# <span class="bg-gradient-to-r from-cyan-400 to-blue-500 bg-clip-text text-transparent">YYYY-MM 工作報告</span>
-
-丁吾心
-
+---
+layout: tech-cover
+title: YYYY-MM 工作報告
+highlight: 月度總結
+subtitle: 產品研發與系統維護進度
+author: 丁吾心
+date: YYYY-MM
+tags: [IPTECH, WEBPAT, AI]
 ---
 
-# <主題／產品>
-
-<副標，如 IPTECH / WEBPAT>
-
-- 重點一
-- 重點二
-
+---
+layout: tech-content
+eyebrow: Summary
+title: 本月概覽
+subtitle: 核心產出與重大更新
 ---
 
+- **Patent Embedding Search** — 研究到正式站台上線
+- **快檢通** — WEBPAT 上線與點數機制
+- **TipoMusic** — 比對欄位擴充
+
+---
+layout: tech-content
+eyebrow: WEBPAT / IPTECH
+title: 核心系統維護
+subtitle: 功能更新與優化
+---
+
+- 重點工作一
+- 重點工作二
+
+---
 layout: center
 class: text-center
-
 ---
 
 # End
@@ -160,32 +176,11 @@ Replace `YYYY-MM` with the actual month.
 ## Slide Writing Conventions
 
 - **Group by product/topic** — Monthly decks group by `IPTECH`, `WEBPAT`, `TipoMusic`, `AI`.
-- **Title + subtitle + bullets** — `# Title` with subtitle on the next line, then `-` bullets. Use backticks for API names / code.
-- **One topic per slide, no overflow** — Split pages or use `layout: two-cols` when content is lengthy.
+- **Title + subtitle + bullets** — Keep 3–8 bullets per slide.
+- **One topic per slide, no overflow** — Split pages or use `layout: tech-two-cols` when content is lengthy.
 - **No icons** — Only use checkmarks / crosses to indicate done / pending.
-- **Distill, don't copy** — The spec is the full list; slides keep only 3–8 bullets per slide.
+- **Distill, don't copy** — The spec is the full list; slides keep only key highlights.
 - **Closing slide** — Always `layout: center` + `class: text-center` + `# End` or `# Thanks`.
-
----
-
-## Tech Aesthetic
-
-Styling uses **UnoCSS** (presetWind3, same syntax as Tailwind classes). Go **dark + cool tones + restrained**.
-
-- **Dark background** — `colorSchema: dark`, `highlighter: shiki` in frontmatter.
-- **Gradient title** — cyan→blue gradient text:
-  ```
-  class="bg-gradient-to-r from-cyan-400 to-blue-500 bg-clip-text text-transparent"
-  ```
-- **Subtle subtitle** — product/classification subtitle: `class="text-sm opacity-60 font-mono"`.
-- **Key emphasis** — keywords in `text-cyan-400`; divider line: `<div class="h-px w-16 bg-cyan-400/50 my-3" />`.
-- **Background** — use `background: https://cover.sli.dev` on the title slide.
-- **Restraint** — one accent color per slide max; keep body text at normal weight.
-
-### UnoCSS Gotchas
-
-- **Do NOT add real Tailwind** — `@tailwindcss/vite` intercepts Slidev's theme CSS and breaks the build.
-- **No dynamic class names** — ``:class="`bg-${c.color}-400`"`` produces nothing (UnoCSS scans statically).
 
 ---
 
@@ -212,21 +207,21 @@ Slidev renders each slide on a **fixed-size canvas** (~980×551px, 16:9). Conten
 
     Empty array = OK. Any value = that many pixels of overflow on that slide.
 
-4. Fix overflows: split pages, reduce bullets, reduce text size, or switch `layout: two-cols`.
+4. Fix overflows: split pages, reduce bullets, reduce text size, or switch `layout: tech-two-cols`.
 5. End with `take_screenshot` for visual confirmation on suspicious slides.
 
 ---
 
 ## Canvas-height Trap (Most Common Bug)
 
-Slidev renders on a fixed **~980×551 unit canvas** (16:9), not the browser window. Even pixel counts that look fine can be cut off at the bottom — only ~551px is available after padding.
+Slidev renders on a fixed **~980×551 unit canvas** (16:9), not the browser window. Only ~551px is available after padding.
 
 Defenses:
 
-- Keep padding modest (`py-6`, `p-4`), tight `gap`
+- Keep padding modest (`py-5`, `p-4`), tight `gap`
 - Use `justify-start` instead of `justify-center` for tall content
 - Move a bulky side note into a full-width footer bar to shorten column height
-- If still overflowing, cut content (fold a line into the title row, drop subtitles) — don't just shrink text
+- If still overflowing, cut content — don't just shrink text
 
 ---
 
@@ -237,8 +232,7 @@ Defenses:
 - Copy-pasted spec verbatim into slides → page overflow.
 - Named 10/11/12 months as `month2610` etc. — should be `month25a`/`b`/`c`.
 - Added icons to slides (not allowed in this repo).
-- Overdone tech aesthetic: neon colors, multiple accents → hard to read.
-- Added real Tailwind → build breaks.
+- Added real Tailwind (`@tailwindcss/vite`) → build breaks.
 - Dynamic class names (`bg-${x}`) → UnoCSS static scan produces nothing.
 - Writing slides without a spec.md first (always produce spec → distill).
 
@@ -246,7 +240,7 @@ Defenses:
 
 ```bash
 cd /home/tim/githubRepo/presentation
-bun run dev --root <deck>        # dev server with live reload, opens browser
+bun run dev <deck>        # dev server with live reload, opens browser
 ```
 
 ## Template Structure
@@ -255,7 +249,7 @@ bun run dev --root <deck>        # dev server with live reload, opens browser
 .claude/skills/create-monthly/
 ├── SKILL.md
 └── templates/
-    └── monthly/          # Monthly report template (seriph theme, dark, gradient title)
+    └── monthly/          # Monthly report template (theme: tech, dark tech cover & layouts)
         ├── slides.md
         ├── spec.md
         ├── package.json

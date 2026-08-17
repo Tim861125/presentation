@@ -1,6 +1,6 @@
 ---
 name: create-slidev
-description: Use when creating a new Slidev deck in the presentation monorepo — either `create-slidev monthly [YYYY-MM] <spec-source>` for a monthly work report or `create-slidev <topic> <spec-source>` for a tech deep-dive / general presentation. Supports spec sources: a file path containing notes/tasks, a URL, or raw text. Covers scaffold from templates, spec.md → slides.md distillation, tech-look styling, verification, and common pitfalls.
+description: Use when creating a new Slidev deck in the presentation monorepo — either `create-slidev monthly [YYYY-MM] <spec-source>` for a monthly work report, `create-slidev <topic> <spec-source>` for a tech deep-dive / general presentation, or `create-slidev <topic> --component <spec-source>` for a component-heavy deck. Supports spec sources: a file path containing notes/tasks, a URL, or raw text. Covers scaffold from templates, spec.md → slides.md distillation, slidev-theme-tech shared dark tech aesthetic, verification, and common pitfalls.
 ---
 
 # Create Slidev Deck
@@ -18,17 +18,24 @@ Slides are the distilled highlights, not a verbatim copy of the spec.
 
 Write slide content in **Traditional Chinese** (keep technical terms in their original language).
 
-## Modes
+## Three Modes
 
-```
+| 模式 | 用途 | 產出形式 |
+|---|---|---|
+| `monthly` | 月度工作報告 | 純 markdown slides（搭配 `theme: tech` 或 `seriph`） |
+| `topic` | 技術深剖 / 一般簡報 | 純 markdown slides（搭配 `theme: tech` 與 tech layouts） |
+| `component` | 元件化深色科技風 deck | 每頁一個 Vue 元件（引用共用 `slidev-theme-tech` 元件） |
+
+```bash
 create-slidev monthly [YYYY-MM] <spec-source>    # Monthly work report (month deck)
 create-slidev <topic> <spec-source>              # Tech deep-dive / general presentation (topic deck)
+create-slidev <topic> --component <spec-source>  # Component-heavy deck
 ```
 
 **`<spec-source>`** accepts:
 
 - **File path** — a `.md` file containing notes/tasks
-- **URL** — Google Doc / Azure DevOps / any online content (fetch via `webfetch`)
+- **URL** — Google Doc / Azure DevOps / any online content (fetch via `webfetch` / GitHub raw)
 - **Raw text** — provided directly in the conversation; the skill will auto-generate the spec
 
 ---
@@ -61,20 +68,22 @@ Source ──→ Fetch/organize → Edit/Refine ──→ spec.md (stored in dec
 - Preserve source links / references
 - Use consistent structure and formatting
 
+---
+
 ## Step 1: Scaffold Deck from Template
 
 **Never** run `npx slidev create` — it produces a standalone project that conflicts with the workspace. Use the built-in template instead.
 
-Template location: `.Codex/skills/create-slidev/templates/`
+Template location: `.agents/skills/create-slidev/templates/`
 
 ### Monthly: copy `templates/monthly/`
 
 ```bash
 # Determine deck name first
-# month261 = Jan 2026
+# month261 = Jan 2026 ... month269 = Sep 2026
 # month25a = Oct 2025; 25b = Nov; 25c = Dec
 
-TEMPLATE_BASE="/home/tim/githubRepo/presentation/.Codex/skills/create-slidev/templates/monthly"
+TEMPLATE_BASE="/home/tim/githubRepo/presentation/.agents/skills/create-slidev/templates/monthly"
 cp -r $TEMPLATE_BASE ./<new-deck>
 rm -rf ./<new-deck>/node_modules ./<new-deck>/dist ./<new-deck>/components ./<new-deck>/pages ./<new-deck>/snippets
 # Replace <deck-name> in package.json with <new-deck>
@@ -84,7 +93,7 @@ bun install
 ### Topic: copy `templates/topic/`
 
 ```bash
-TEMPLATE_BASE="/home/tim/githubRepo/presentation/.Codex/skills/create-slidev/templates/topic"
+TEMPLATE_BASE="/home/tim/githubRepo/presentation/.agents/skills/create-slidev/templates/topic"
 cp -r $TEMPLATE_BASE ./<topic>
 rm -rf ./<topic>/node_modules ./<topic>/dist ./<topic>/components ./<topic>/pages ./<topic>/snippets
 # Replace <deck-name> in package.json with <topic>
@@ -94,6 +103,8 @@ bun install
 Replace the `<deck-name>` placeholder string in `package.json` with the actual deck directory name.
 
 **Note:** All commands run from the repo root (`/home/tim/githubRepo/presentation`). Do NOT `cd` into the deck directory. `bun install` must run at the root.
+
+---
 
 ## Step 2: Write spec.md
 
@@ -110,10 +121,9 @@ Organize content and write it into the deck's `spec.md`.
 
 - 不要使用 icon, 只在必要時用打勾或叉叉讓版面清晰，不需要的話就不用
 - 注意每一頁的高度不要超過螢幕高度
-- 科技感（見 skill 的「科技感」）
+- 科技感（使用 slidev-theme-tech 或深色漸層）
 - 完成後要確認畫面，確認沒有頁面下方被切掉
 - 用繁體中文
-- 首頁背景 background: https://cover.sli.dev
 
 # 以下為本月工作內容
 
@@ -140,103 +150,206 @@ Organize content and write it into the deck's `spec.md`.
 2. ...
 ```
 
+---
+
 ## Step 3: Distill slides.md from spec
 
-Condense the bulk of spec.md into presentation slides.
+### Shared Theme: `slidev-theme-tech` (`theme: tech`)
 
-### Monthly slides.md skeleton
+The repository provides a shared Dark Tech Theme at `packages/slidev-theme-tech` (registered as `slidev-theme-tech` in workspace).
+
+- **Theme identifier:** `theme: tech` (or `theme: slidev-theme-tech`)
+- **Auto-registered Components (no manual imports needed):**
+  - `<SlideShell center? px? py?>` — Universal dark container with 40px grid and corner glows
+  - `<SlideHeader eyebrow? title subtitle? dotColor?>` — Header with status dot, mono eyebrow, bold title, and subtitle
+  - `<JsonCard method? path? title? code>` — Code/JSON payload card
+  - `<TechCard variant? title? tag?>` — Glassmorphism dark card (variants: default, emerald, blue, rose, amber)
+  - `<TechBadge label color? dot? pulse?>` — Tech pill badge
+- **Available Layouts:**
+  - `layout: full` — Full-bleed zero-padding container for custom Vue SFC slide components
+  - `layout: tech-cover` — Rich tech cover with tags, author, date, and keyword highlights
+  - `layout: tech-content` — Content slide layout with auto header (`eyebrow`, `title`, `subtitle`)
+  - `layout: tech-two-cols` — 2-column layout with left/right slots
+  - `layout: tech-section` — Chapter/section break slide
+  - `layout: default` — Default tech slide wrapped in `<SlideShell>`
+
+---
+
+### Monthly slides.md skeleton (with `theme: tech`)
 
 ```markdown
 ---
-theme: seriph
+theme: tech
 colorSchema: dark
-background: https://cover.sli.dev
 highlighter: shiki
 title: YYYY-MM
-class: text-center lineNumbers: false
 ---
 
-# <span class="bg-gradient-to-r from-cyan-400 to-blue-500 bg-clip-text text-transparent">YYYY-MM 工作報告</span>
-
-丁吾心
-
+---
+layout: tech-cover
+title: YYYY-MM 工作報告
+highlight: 月度總結
+subtitle: 產品研發與系統維護進度
+author: 丁吾心
+date: YYYY-MM
+tags: [IPTECH, WEBPAT, AI]
 ---
 
-# <主題／產品>
-
-<副標，如 IPTECH / WEBPAT>
-
-- 重點一
-- 重點二
-
+---
+layout: tech-content
+eyebrow: Summary
+title: 本月概覽
+subtitle: 核心產出與重大更新
 ---
 
+- **Patent Embedding Search** — 研究到正式站台上線
+- **快檢通** — WEBPAT 上線與點數機制
+- **TipoMusic** — 比對欄位擴充
+
+---
+layout: tech-content
+eyebrow: AI Products
+title: AI 模組優化
+subtitle: 分類通 / 微分通 / 魚骨通
+---
+
+- 分類通、微分通效能調優
+- 魚骨通節點專利筆數上限擴展至 500
+
+---
 layout: center
 class: text-center
-
 ---
 
 # End
 ```
 
-Replace `YYYY-MM` with the actual month.
+---
 
-### Topic slides.md skeleton
+### Topic slides.md skeleton (Markdown-heavy)
 
 ```markdown
 ---
-theme: default
-background: https://cover.sli.dev
-class: text-center
+theme: tech
+colorSchema: dark
 highlighter: shiki
 title: <topic>
 ---
 
-# <topic>
-
-<slide content...>
-
+---
+layout: tech-cover
+title: <topic>
+highlight: 核心架構
+subtitle: 深度技術分享
+tag: RD 技術分享 · 2026
+author: 丁吾心
+date: 2026
+tags: [架構設計, 效能優化, 實戰落地]
 ---
 
+---
+layout: tech-content
+eyebrow: Background
+title: 問題背景與痛點
+subtitle: 為什麼需要重新設計？
+---
+
+- 現有架構瓶頸與限制
+- 資料同步延遲與資源消耗
+
+---
+layout: tech-two-cols
+eyebrow: Architecture
+title: 方案架構比較
+---
+
+### 方案 A (舊架構)
+- 實作簡單但擴展性差
+- 資源佔用高
+
+::right::
+
+### 方案 B (新架構)
+- 模組化且支援水平擴展
+- 吞吐量提升 3 倍
+
+---
+layout: tech-section
+section: "02"
+title: 核心實作與調校
+subtitle: 關鍵程式碼與參數設定
+---
+
+---
 layout: center
 class: text-center
-
 ---
 
 # End
 ```
+
+---
+
+### Component-heavy Deck Structure (e.g. `opensearch-hybrid-search`)
+
+`slides.md` is a thin shell; each slide is implemented as a Vue SFC in `components/` named `<Topic>Slide.vue` and referenced with `layout: full`:
+
+```markdown
+---
+theme: tech
+colorSchema: dark
+highlighter: shiki
+title: <topic>
+layout: full
+---
+
+<TitleSlide />
+
+---
+layout: full
+---
+
+<ConceptSlide />
+
+---
+layout: full
+---
+
+<SummarySlide />
+```
+
+Inside slide components (e.g. `components/ConceptSlide.vue`):
+```vue
+<template>
+  <SlideShell>
+    <SlideHeader
+      eyebrow="Core Concept"
+      title="核心原理與流程"
+      subtitle="結合 BM25 與向量語意搜尋的混合檢索流程"
+    />
+    <div class="grid grid-cols-2 gap-4 flex-1">
+      <TechCard variant="emerald" title="BM25 關鍵字">
+        <p class="text-xs text-zinc-300">精確詞命中率高、計算成本低</p>
+      </TechCard>
+      <TechCard variant="blue" title="Neural 向量">
+        <p class="text-xs text-zinc-300">理解同義詞、跨語言語意檢索</p>
+      </TechCard>
+    </div>
+  </SlideShell>
+</template>
+```
+*(No manual imports of `SlideShell`, `SlideHeader`, `TechCard`, or `JsonCard` are needed — all are auto-registered by `slidev-theme-tech`!)*
 
 ---
 
 ## Slide Writing Conventions
 
 - **Group by product/topic** — Monthly decks group by `IPTECH`, `WEBPAT`, `TipoMusic`, `AI`; topic decks group by technical sub-topics.
-- **Title + subtitle + bullets** — `# Title` with subtitle on the next line, then `-` bullets. Use backticks for API names / code.
-- **One topic per slide, no overflow** — Split pages or use `layout: two-cols` when content is lengthy.
+- **Title + subtitle + bullets** — Keep 3–8 bullets per slide.
+- **One topic per slide, no overflow** — Split pages or use `layout: tech-two-cols` when content is lengthy.
 - **No icons** — Only use checkmarks / crosses to indicate done / pending.
-- **Distill, don't copy** — The spec is the full list; slides keep only 3–8 bullets per slide.
+- **Distill, don't copy** — The spec is the full list; slides keep only key highlights.
 - **Closing slide** — Always `layout: center` + `class: text-center` + `# End` or `# Thanks`.
-
----
-
-## Tech Aesthetic
-
-Styling uses **UnoCSS** (presetWind3, same syntax as Tailwind classes). Go **dark + cool tones + restrained**.
-
-- **Dark background** — `colorSchema: dark`, `highlighter: shiki` in frontmatter.
-- **Gradient title** — cyan→blue gradient text:
-  ```
-  class="bg-gradient-to-r from-cyan-400 to-blue-500 bg-clip-text text-transparent"
-  ```
-- **Subtle subtitle** — product/classification subtitle: `class="text-sm opacity-60 font-mono"`.
-- **Key emphasis** — keywords in `text-cyan-400`; divider line: `<div class="h-px w-16 bg-cyan-400/50 my-3" />`.
-- **Background** — use `background: https://cover.sli.dev` on the title slide.
-- **Restraint** — one accent color per slide max; keep body text at normal weight.
-
-### UnoCSS Gotchas
-
-- **Do NOT add real Tailwind** — `@tailwindcss/vite` intercepts Slidev's theme CSS and breaks the build.
-- **No dynamic class names** — ``:class="`bg-${c.color}-400`"`` produces nothing (UnoCSS scans statically).
 
 ---
 
@@ -263,21 +376,21 @@ Slidev renders each slide on a **fixed-size canvas** (~980×551px, 16:9). Conten
 
    Empty array = OK. Any value = that many pixels of overflow on that slide.
 
-4. Fix overflows: split pages, reduce bullets, reduce text size, or switch `layout: two-cols`.
+4. Fix overflows: split pages, reduce bullets, reduce text size, or switch `layout: tech-two-cols`.
 5. End with `take_screenshot` for visual confirmation on suspicious slides.
 
 ---
 
 ## Canvas-height Trap (Most Common Bug)
 
-Slidev renders on a fixed **~980×551 unit canvas** (16:9), not the browser window. Even pixel counts that look fine can be cut off at the bottom — only ~551px is available after padding.
+Slidev renders on a fixed **~980×551 unit canvas** (16:9), not the browser window. Only ~551px is available after padding.
 
 Defenses:
 
-- Keep padding modest (`py-6`, `p-4`), tight `gap`
+- Keep padding modest (`py-5`, `p-4`), tight `gap`
 - Use `justify-start` instead of `justify-center` for tall content
-- Move a bulky side note into a full-width footer bar to shorten column height
-- If still overflowing, cut content (fold a line into the title row, drop subtitles) — don't just shrink text
+- Move bulky notes into a full-width footer bar to shorten column height
+- If still overflowing, cut content — don't just shrink text
 
 ---
 
@@ -288,8 +401,7 @@ Defenses:
 - Copy-pasted spec verbatim into slides → page overflow.
 - Named 10/11/12 months as `month2610` etc. — should be `month25a`/`b`/`c`.
 - Added icons to slides (not allowed in this repo).
-- Overdone tech aesthetic: neon colors, multiple accents → hard to read.
-- Added real Tailwind → build breaks.
+- Added real Tailwind (`@tailwindcss/vite`) → build breaks Slidev theme.
 - Dynamic class names (`bg-${x}`) → UnoCSS static scan produces nothing.
 - Writing slides without a spec.md first (always produce spec → distill).
 
@@ -297,24 +409,24 @@ Defenses:
 
 ```bash
 cd /home/tim/githubRepo/presentation
-bun run dev --root <deck>        # dev server with live reload, opens browser
+bun run dev <deck>        # dev server with live reload, opens browser
 ```
 
 ## Template Structure
 
 ```
-.Codex/skills/create-slidev/
+.agents/skills/create-slidev/
 ├── SKILL.md
-├── templates/
-│   ├── monthly/          # Monthly report template (seriph theme, dark, gradient title)
-│   │   ├── slides.md
-│   │   ├── spec.md
-│   │   ├── package.json
-│   │   ├── netlify.toml
-│   │   └── vercel.json
-│   └── topic/            # General topic template (default theme, clean)
-│       ├── slides.md
-│       ├── package.json
-│       ├── netlify.toml
-│       └── vercel.json
+└── templates/
+    ├── monthly/          # Monthly report template (theme: tech, dark tech cover & layouts)
+    │   ├── slides.md
+    │   ├── spec.md
+    │   ├── package.json
+    │   ├── netlify.toml
+    │   └── vercel.json
+    └── topic/            # Tech topic template (theme: tech, tech layouts)
+        ├── slides.md
+        ├── package.json
+        ├── netlify.toml
+        └── vercel.json
 ```
