@@ -50,6 +50,20 @@ Optional per-deck directories:
 - `snippets/` — external code files imported into slides via Slidev's `<<< @/snippets/...` syntax
 - `spec.md` or `<topic>-notes.md` — background research and source material the deck was built from. **Read this first** when editing a deck's content; it's the source of truth, slides are the distillation.
 
+## Shared Theme (slidev-theme-tech)
+
+The repository provides a shared Dark Tech Theme at `packages/slidev-theme-tech` (linked as `slidev-theme-tech` in workspace).
+
+- **Theme identifier:** `theme: tech` (or `theme: slidev-theme-tech`)
+- **Auto-registered Components:** `<SlideShell>`, `<SlideHeader>`, `<JsonCard>`, `<TechCard>`, `<TechBadge>` (no manual imports needed in slide Vue components).
+- **Available Layouts:**
+  - `layout: full` — Full-bleed zero-padding container for custom Vue SFC slide components
+  - `layout: tech-cover` — Rich tech cover with tags, author, date, and keyword highlights
+  - `layout: tech-content` — Content slide layout with auto header (`eyebrow`, `title`, `subtitle`)
+  - `layout: tech-two-cols` — 2-column layout with left/right slots
+  - `layout: tech-section` — Chapter/section break slide
+  - `layout: default` — Default tech slide wrapped in `<SlideShell>`
+
 **Styling:** UnoCSS (Tailwind-compatible utility classes used directly inline in `.vue` files and markdown). Dark `colorSchema` is the common default.
 
 **Stack:** Slidev + Vue 3 + UnoCSS + Shiki (syntax highlighting).

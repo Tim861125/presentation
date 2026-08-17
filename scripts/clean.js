@@ -6,7 +6,7 @@ const root = resolve(process.cwd());
 let cleanedCount = 0;
 
 for (const d of readdirSync(root)) {
-  if (d.startsWith(".") || d === "node_modules" || d === "dist" || d === "scripts" || d === "docs") continue;
+  if (d.startsWith(".") || d === "node_modules" || d === "dist" || d === "scripts" || d === "docs" || d === "packages") continue;
   const fullPath = join(root, d);
   try {
     if (!statSync(fullPath).isDirectory()) continue;

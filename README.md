@@ -23,6 +23,14 @@ bunx --bun slidev build <deck名稱>/slides.md
 bunx --bun slidev export <deck名稱>/slides.md
 ```
 
+## 共用主題 (Dark Tech Theme)
+
+專案在 `packages/slidev-theme-tech` 提供全域暗黑科技風主題：
+
+- **啟用方式**：在 `slides.md` 的 frontmatter 設定 `theme: tech`
+- **全域自動註冊元件**：`<SlideShell>`, `<SlideHeader>`, `<JsonCard>`, `<TechCard>`, `<TechBadge>`
+- **共用 Layouts**：`layout: full`（全版客製元件）、`layout: tech-cover`（科技封面）、`layout: tech-content`（標準內文）、`layout: tech-two-cols`（雙欄比較）、`layout: tech-section`（章節轉折）
+
 ## Decks 清單
 
 ### 💡 技術分享 (22 個)

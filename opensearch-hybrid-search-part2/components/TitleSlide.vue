@@ -1,5 +1,4 @@
 <script setup lang="ts">
-import SlideShell from "./SlideShell.vue";
 </script>
 
 <template>

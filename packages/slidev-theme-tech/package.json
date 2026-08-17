@@ -1,0 +1,15 @@
+{
+  "name": "slidev-theme-tech",
+  "version": "1.0.0",
+  "private": true,
+  "keywords": [
+    "slidev-theme",
+    "slidev"
+  ],
+  "slidev": {
+    "defaults": {
+      "colorSchema": "dark",
+      "highlighter": "shiki"
+    }
+  }
+}

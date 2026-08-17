@@ -1,7 +1,4 @@
 <script setup lang="ts">
-import SlideShell from './SlideShell.vue'
-import SlideHeader from './SlideHeader.vue'
-import JsonCard from './JsonCard.vue'
 
 const pipelineJson = `{
   "description": "Patent hybrid search pipeline",

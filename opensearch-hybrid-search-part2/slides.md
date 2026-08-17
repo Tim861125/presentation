@@ -1,5 +1,5 @@
 ---
-theme: default
+theme: tech
 colorSchema: dark
 highlighter: shiki
 css: unocss
