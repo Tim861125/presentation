@@ -13,70 +13,70 @@ mdc: true
 layout: full
 ---
 
-<TitleSlide />
+<Slide1Title />
 
 ---
 layout: full
 ---
 
-<WhyHybridSlide />
+<Slide2WhyHybrid />
 
 ---
 layout: full
 ---
 
-<ConceptSlide />
+<Slide3Concept />
 
 ---
 layout: full
 ---
 
-<ProcessorsSlide />
+<Slide4Processors />
 
 ---
 layout: full
 ---
 
-<NormalizationSlide />
+<Slide5Normalization />
 
 ---
 layout: full
 ---
 
-<ScoreRankerSlide />
+<Slide6ScoreRanker />
 
 ---
 layout: full
 ---
 
-<SetupSlide />
+<Slide7Setup />
 
 ---
 layout: full
 ---
 
-<BuildPipelineSlide />
+<Slide8BuildPipeline />
 
 ---
 layout: full
 ---
 
-<PipelineConfigSlide />
+<Slide9PipelineConfig />
 
 ---
 layout: full
 ---
 
-<QuerySlide />
+<Slide10Query />
 
 ---
 layout: full
 ---
 
-<FilteringSlide />
+<Slide11Filtering />
 
 ---
 layout: full
 ---
 
-<SummarySlide />
+<Slide12Summary />

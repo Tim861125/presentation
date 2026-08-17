@@ -1,240 +1,69 @@
 ---
-theme: seriph
-background: https://cover.sli.dev
-class: text-center
+theme: tech
+colorSchema: dark
 highlighter: shiki
-lineNumbers: true
-info: |
-  ## requestAnimationFrame 深入解析
-  探索瀏覽器動畫的最佳實踐
-drawings:
-  persist: false
-transition: slide-left
+css: unocss
 title: requestAnimationFrame 深入解析
+info: |
+  requestAnimationFrame 深入解析
+  探索瀏覽器動畫的最佳實踐
+transition: fade
 mdc: true
+layout: full
 ---
 
-# requestAnimationFrame
+<Slide1Cover />
 
 ---
-layout: two-cols
+layout: full
 ---
 
-# 什麼是 requestAnimationFrame？
-
-`requestAnimationFrame`（簡稱 rAF）是瀏覽器提供的 API，用於優化動畫與視覺更新。
-
-## 核心特點
-
-- **與瀏覽器重繪同步**：在下一次重繪前執行
-- **自動優化**：背景分頁會暫停，節省資源
-- **流暢體驗**：通常 60fps（約每 16.67ms 一次）
-- **遞迴呼叫**：需要手動在回調中再次呼叫
-
-::right::
-
-## 基本語法
-
-```js
-function animate() {
-  // 更新動畫狀態
-
-  // 遞迴呼叫
-  requestAnimationFrame(animate);
-}
-
-// 啟動動畫
-requestAnimationFrame(animate);
-```
-
-```js
-// 取消動畫
-const id = requestAnimationFrame(animate);
-cancelAnimationFrame(id);
-```
+<Slide2WhatIsRaf />
 
 ---
-layout: default
+layout: full
 ---
 
-# 為什麼需要 requestAnimationFrame？
-
-<div class="grid grid-cols-2 gap-8">
-
-<div>
-
-## 傳統方法：setTimeout / setInterval
-
-```js
-// 嘗試 60fps = 16.67ms
-setInterval(() => {
-  updateAnimation();
-}, 16.67);
-```
-
-### 問題：
-- 不與瀏覽器重繪週期同步
-- 可能造成掉幀或重複渲染
-- 背景分頁仍持續執行，浪費資源
-- 執行時間不精確
-
-</div>
-
-<div>
-
-## rAF 的優勢
-
-```js
-function animate(timestamp) {
-  updateAnimation();
-  requestAnimationFrame(animate);
-}
-requestAnimationFrame(animate);
-```
-
-### 優點：
-- 與瀏覽器渲染同步
-- 背景分頁自動暫停
-- 提供高精度時間戳
-- 更好的性能與流暢度
-
-</div>
-
-</div>
+<Slide3WhyNeedRaf />
 
 ---
-layout: default
+layout: full
 ---
 
-# 瀏覽器渲染週期與 rAF
-
-
-```mermaid
-graph LR
-    A[JavaScript 執行] --> B[requestAnimationFrame 回調]
-    B --> C[樣式計算]
-    C --> D[Layout 佈局]
-    D --> E[Paint 繪製]
-    E --> F[Composite 合成]
-    F --> G[顯示到螢幕]
-    G --> A
-
-    style B fill:#42b883
-    style G fill:#35495e,color:#fff
-```
-
-
-
-**關鍵時機：** rAF 在重繪之前執行，確保所有 DOM 修改都在同一幀內完成
+<Slide4RenderPipeline />
 
 ---
-layout: default
+layout: full
 ---
 
-<div class="flex justify-center items-center">
-  <AnimationDemo />
-</div>
+<Slide5AnimationDemo />
 
 ---
-layout: default
+layout: full
 ---
 
-# 最佳實踐
-
-
-## 避免在回調中進行大量計算
-
-```js
-// 不好：計算可能超過 16ms，造成掉幀
-function animate() {
-  heavyComputation();
-  updateDOM();
-  requestAnimationFrame(animate);
-}
-
-// 好：只做必要的 DOM 更新
-function animate() {
-  updateDOM(); // 計算移到 Web Worker 或非同步處理
-  requestAnimationFrame(animate);
-}
-```
+<Slide6ComputationBestPractice />
 
 ---
-layout: default
+layout: full
 ---
 
-## 記得取消動畫（避免記憶體洩漏）
-
-```js
-let animationId;
-
-function startAnimation() {
-  animationId = requestAnimationFrame(animate);
-}
-
-function stopAnimation() {
-  if (animationId) cancelAnimationFrame(animationId);
-}
-```
+<Slide7CancelAnimation />
 
 ---
-layout: two-cols
+layout: full
 ---
 
-# 應用場景
-
-
-
-## 1. 平滑滾動
-
-
-
-
-## 2. Canvas 動畫與遊戲
-
-- 粒子系統
-- 物理模擬
-- 遊戲循環
-
-## 3. 視差滾動效果
-
-## 4. 載入進度動畫
-
-## 5. 資料視覺化
+<Slide8UseCases />
 
 ---
-layout: center
-class: text-center
+layout: full
 ---
 
-# 總結
-
-<v-clicks>
-
-## requestAnimationFrame 的核心優勢
-
-與瀏覽器渲染週期同步，避免掉幀
-
-自動優化性能，背景分頁暫停
-
-提供高精度時間戳，便於計算
-
-是現代 Web 動畫的標準解決方案
-
-<div class="mt-8 text-xl">
-
-**在瀏覽器中進行任何視覺更新時**
-
-**優先考慮 requestAnimationFrame**
-
-</div>
-
-</v-clicks>
+<Slide9Summary />
 
 ---
-layout: end
+layout: full
 ---
 
-# 謝謝觀看！
-
-有任何問題嗎？
+<Slide10End />

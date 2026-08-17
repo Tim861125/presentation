@@ -1,5 +1,5 @@
 ---
-theme: default
+theme: tech
 colorSchema: dark
 highlighter: shiki
 css: unocss
@@ -13,90 +13,70 @@ mdc: true
 layout: full
 ---
 
-<TitleSlide />
+<Slide1Title />
 
 ---
 layout: full
 ---
 
-<PainPointsSlide />
+<Slide2PainPoints />
 
 ---
 layout: full
 ---
 
-<SolutionSlide />
+<Slide3Solution />
 
 ---
 layout: full
 ---
 
-<CoreMessageSlide />
+<Slide4CoreMessage />
 
 ---
 layout: full
 ---
 
-<InstallationSlide />
+<Slide5Installation />
 
 ---
 layout: full
 ---
 
-<PrinciplesSlide />
-
-<!-- ---
-layout: full
----
-
-<TechStackSlide /> -->
+<Slide6Principles />
 
 ---
 layout: full
 ---
 
-<CLISlide />
+<Slide8CLI />
 
 ---
 layout: full
 ---
 
-<ComponentsOverviewSlide />
+<Slide9ComponentsOverview />
 
 ---
 layout: full
 ---
 
-<BlocksSlide />
+<Slide10Blocks />
 
 ---
 layout: full
 ---
 
-<ThemingSlide />
+<Slide11Theming />
 
 ---
 layout: full
 ---
 
-<RegistrySlide />
-
-<!--
----
-layout: full
----
-
-<MCPSlide />
+<Slide12Registry />
 
 ---
 layout: full
 ---
 
-<LatestUpdatesSlide />
--->
-
----
-layout: full
----
-
-<SummarySlide />
+<Slide15Summary />

@@ -1,39 +1,33 @@
 ---
-theme: seriph
-background: https://cover.sli.dev
-title: 2026-04
-class: text-center
+theme: tech
+colorSchema: dark
+highlighter: shiki
+css: unocss
+title: 2026-04 工作報告
+info: |
+  2026-04 工作報告
+  丁吾心
+transition: fade
+mdc: true
+layout: full
 ---
 
-# 2026-04 工作報告
+<Slide1Cover />
 
 ---
-
-# AI - 分類通 ＆ 微分通 & 魚骨通
-IPTECH / WEBPAT
-
-- 分類通、微分通優化
-- 魚骨通 - 節點專利筆數 10~500
-
+layout: full
 ---
 
-## Dify API
-IPTECH / WEBPAT
-
-- 洞察通、魚骨通、分類通
-- 接 patentpilot service
-
-<br>
-
-## IPTECH WEBPAT 資轉等等修正
-
-<br>
-
-## TipoMusic 年度資轉
+<Slide2AiFeatures />
 
 ---
-layout: center
-class: text-center
+layout: full
 ---
 
-# End
+<Slide3DifyAndData />
+
+---
+layout: full
+---
+
+<Slide4End />

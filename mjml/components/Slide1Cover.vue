@@ -1,0 +1,28 @@
+<script setup lang="ts">
+</script>
+
+<template>
+  <SlideShell :center="true" px="px-16">
+    <div class="flex flex-col justify-center">
+      <div class="flex items-center gap-2 mb-6">
+        <div class="flex items-center gap-2 rounded-full border border-white/10 bg-white/5 px-3 py-1">
+          <span class="size-1.5 rounded-full bg-rose-400 animate-pulse" />
+          <span class="text-[10px] font-mono uppercase tracking-widest text-zinc-400">RD 技術分享 · 2026</span>
+        </div>
+      </div>
+      <h1 class="text-5xl font-bold tracking-tight mb-3">
+        <span class="text-white">MJML · </span>
+        <span class="text-rose-400">響應式郵件設計</span>
+      </h1>
+      <p class="text-lg font-light text-zinc-300 mb-6 max-w-3xl leading-snug">
+        Mailjet Markup Language — 解決跨郵件客戶端相容性痛點與現代 Email 排版實踐
+      </p>
+      <div class="flex items-center gap-6 text-[10px] text-zinc-500 font-mono">
+        <div class="flex items-center gap-2">
+          <div class="size-1 rounded-full bg-rose-400" />
+          <span>MJML · Email Design · Outlook Engine · Responsive HTML · 丁吾心</span>
+        </div>
+      </div>
+    </div>
+  </SlideShell>
+</template>

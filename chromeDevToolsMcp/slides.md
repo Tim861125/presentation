@@ -1,253 +1,51 @@
 ---
-theme: seriph
-background: https://cover.sli.dev
-class: text-center
+theme: tech
+colorSchema: dark
 highlighter: shiki
-lineNumbers: false
-drawings:
-  persist: false
-transition: slide-left
+css: unocss
 title: Chrome DevTools MCP - 工具介紹與實戰展示
----
-
-# Chrome DevTools MCP
-
-<h2 class="text-blue-400 opacity-80">工具介紹與實戰展示</h2>
-
-<div class="mt-8 text-gray-400 text-lg">
+info: |
+  Chrome DevTools MCP - 工具介紹與實戰展示
   27 個工具 · 初階到進階 · 直接可用的 Prompt
-</div>
-
-<div class="absolute bottom-10 left-0 right-0 text-sm text-gray-500">
-  Presenter: Your Name · 2026 Tech Sharing
-</div>
-
----
-layout: default
+transition: fade
+mdc: true
+layout: full
 ---
 
-# 什麼是 Chrome DevTools MCP?
-
-<div class="grid grid-cols-2 gap-6 mt-6">
-  <div class="bg-slate-800/50 p-5 rounded-xl border border-blue-500/20">
-    <p class="text-blue-300 font-mono italic text-sm">"Bridge between LLMs and the browser's engine."</p>
-    <ul class="mt-4 space-y-2 text-sm">
-      <li>✅ <strong>Google 官方維護</strong>：基於 MCP 開放標準</li>
-      <li>✅ <strong>深度存取</strong>：直接調用 27+ 個 CDP 核心工具</li>
-      <li>✅ <strong>保留 Session</strong>：可連接現有 Chrome 實例</li>
-    </ul>
-  </div>
-  <div class="flex flex-col gap-3">
-    <div class="text-xs text-slate-400 mb-1">claude_desktop_config.json</div>
-    <div class="bg-slate-900/80 rounded-lg p-3 font-mono text-xs text-green-300 border border-slate-600/30 leading-relaxed">
-      {<br>
-      &nbsp;&nbsp;"mcpServers": {<br>
-      &nbsp;&nbsp;&nbsp;&nbsp;"chrome-devtools": {<br>
-      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"command": "npx",<br>
-      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"args": ["@chrome-devtools/mcp"]<br>
-      &nbsp;&nbsp;&nbsp;&nbsp;}<br>
-      &nbsp;&nbsp;}<br>
-      }
-    </div>
-    <div class="text-xs text-slate-400 mt-1">
-      連接現有 Chrome：啟動時加上
-      <code class="text-slate-300 bg-slate-800 px-1 rounded">--remote-debugging-port=9222</code>
-    </div>
-  </div>
-</div>
+<Slide1Cover />
 
 ---
-layout: default
+layout: full
 ---
 
-# 🆕 最新功能更新
-
-<div class="grid grid-cols-3 gap-4 mt-4">
-  <div class="bg-slate-800/50 border border-green-500/20 rounded-xl p-4">
-    <code class="text-green-300 font-bold text-sm">--auto-connect</code>
-    <p class="text-xs text-slate-400 mt-2 mb-3">自動探索並附加到運行中的 Chrome 實例，不再需要手動複製 WebSocket URL。</p>
-    <div class="bg-slate-900/60 rounded-lg p-3 font-mono text-yellow-200/90 text-xs leading-relaxed">
-      使用 auto-connect 連接本機 Chrome
-    </div>
-    <div class="text-xs text-slate-500 mt-2">
-      💡 啟動時加上 <code class="text-slate-300 bg-slate-800 px-1 rounded">--auto-connect</code> 即可
-    </div>
-  </div>
-  <div class="bg-slate-800/50 border border-purple-500/20 rounded-xl p-4">
-    <code class="text-purple-300 font-bold text-sm">emulate</code>
-    <span class="text-xs text-slate-500 ml-1">統一模擬工具</span>
-    <p class="text-xs text-slate-400 mt-2 mb-3">整合地理位置、網路節流 (offline/3G)、CPU 節流、User Agent 覆寫為單一工具。</p>
-    <div class="bg-slate-900/60 rounded-lg p-3 font-mono text-yellow-200/90 text-xs leading-relaxed">
-      模擬 3G 網路 + 4x CPU 節流
-    </div>
-  </div>
-  <div class="bg-slate-800/50 border border-orange-500/20 rounded-xl p-4">
-    <code class="text-orange-300 font-bold text-sm">Preserve Logs</code>
-    <span class="text-xs text-slate-500 ml-1">跨頁面保留</span>
-    <p class="text-xs text-slate-400 mt-2 mb-3">跨頁面保留 console messages 和 network requests，如同 DevTools 的 Preserve log 功能。</p>
-    <div class="bg-slate-900/60 rounded-lg p-3 font-mono text-yellow-200/90 text-xs leading-relaxed">
-      保留 logs 後到下一頁，檢查所有 network 請求
-    </div>
-  </div>
-</div>
+<Slide2Overview />
 
 ---
-layout: default
+layout: full
 ---
 
-# 核心工具箱：27 種強大能力
-
-<ToolsLibrary />
+<Slide3LatestUpdates />
 
 ---
-layout: default
+layout: full
 ---
 
-# 工具：開啟 + 截圖
-
-<div class="grid grid-cols-2 gap-5 mt-4">
-  <div class="flex flex-col gap-3">
-    <div class="bg-slate-800/50 border border-blue-500/20 rounded-xl p-4">
-      <div class="flex items-center gap-2 mb-3">
-        <code class="text-blue-300 font-bold text-sm">navigate_page</code>
-        <span class="text-xs text-slate-500"></span>
-      </div>
-      <p class="text-xs text-slate-400 mb-3">瀏覽器到指定 URL，支援等待頁面載入完成後再繼續操作。</p>
-      <div class="bg-slate-900/60 rounded-lg p-3 font-mono text-yellow-200/90 text-xs leading-relaxed">
-        打開 https://example.com/login
-      </div>
-    </div>
-    <div class="bg-slate-800/50 border border-green-500/20 rounded-xl p-4">
-      <div class="flex items-center gap-2 mb-3">
-        <code class="text-green-300 font-bold text-sm">take_screenshot</code>
-        <span class="text-xs text-slate-500">截圖記錄</span>
-      </div>
-      <p class="text-xs text-slate-400 mb-3">截取目前頁面的完整畫面，可指定視窗尺寸或特定元素範圍。</p>
-      <div class="bg-slate-900/60 rounded-lg p-3 font-mono text-yellow-200/90 text-xs leading-relaxed">
-        截圖目前頁面，解析度設為 1440×900
-      </div>
-    </div>
-  </div>
-  <div class="bg-slate-800/40 border border-slate-600/20 rounded-xl p-4 flex flex-col gap-3">
-    <div class="text-xs text-slate-400 font-bold">組合使用範例</div>
-    <div class="bg-slate-900/60 rounded-lg p-4 font-mono text-yellow-200/90 text-xs leading-loose flex-1">
-      導航到 https://example.com，<br>
-      等待頁面完全載入，<br>
-      截圖並回傳圖片
-    </div>
-    <div class="text-xs text-slate-500">
-      💡 截圖會直接在對話中顯示，可立即確認頁面狀態
-    </div>
-  </div>
-</div>
+<Slide4ToolsLibrarySlide />
 
 ---
-layout: default
+layout: full
 ---
 
-# 工具：Console + Network
-
-<div class="grid grid-cols-2 gap-5 mt-4">
-  <div class="bg-slate-800/50 border border-orange-500/20 rounded-xl p-4">
-    <div class="flex items-center gap-2 mb-3">
-      <code class="text-orange-300 font-bold text-sm">list_console_messages</code>
-      <span class="text-xs text-slate-500">DevTools 檢查</span>
-    </div>
-    <p class="text-xs text-slate-400 mb-3">取得瀏覽器 Console 中的所有訊息，可依 error / warning / log 層級過濾。</p>
-    <div class="bg-slate-900/60 rounded-lg p-3 font-mono text-yellow-200/90 text-xs leading-relaxed mb-3">
-      列出頁面所有 console error 與 warning
-    </div>
-    <div class="bg-slate-900/40 rounded-lg p-3 text-xs text-slate-300 border border-slate-600/20">
-      <div class="text-slate-500 mb-1">輸出示意</div>
-      <div class="text-red-400">❌ TypeError: Cannot read 'id' of undefined</div>
-      <div class="text-yellow-400">⚠ [Deprecation] getDisplayMedia requires...</div>
-    </div>
-  </div>
-  <div class="bg-slate-800/50 border border-purple-500/20 rounded-xl p-4">
-    <div class="flex items-center gap-2 mb-3">
-      <code class="text-purple-300 font-bold text-sm">list_network_requests</code>
-      <span class="text-xs text-slate-500">DevTools 檢查</span>
-    </div>
-    <p class="text-xs text-slate-400 mb-3">列出頁面所有網路請求，包含狀態碼、耗時、資源大小，可用於排查 API 異常。</p>
-    <div class="bg-slate-900/60 rounded-lg p-3 font-mono text-yellow-200/90 text-xs leading-relaxed mb-3">
-      列出所有網路請求，找出狀態碼非 200 的項目，以表格呈現 URL / 狀態碼 / 耗時
-    </div>
-    <div class="bg-slate-900/40 rounded-lg p-3 text-xs text-slate-300 border border-slate-600/20">
-      <div class="text-slate-500 mb-1">輸出示意</div>
-      <div class="text-red-400">❌ /api/user 500 · 1.2s</div>
-      <div class="text-green-400">✓ /api/products 200 · 230ms</div>
-    </div>
-  </div>
-</div>
+<Slide5NavigationVision />
 
 ---
-layout: default
+layout: full
 ---
 
-# 工具：頁面互動
-
-<div class="grid grid-cols-3 gap-4 mt-4">
-  <div class="bg-slate-800/50 border border-cyan-500/20 rounded-xl p-4">
-    <code class="text-cyan-300 font-bold text-sm">click</code>
-    <p class="text-xs text-slate-400 mt-2 mb-3">點擊頁面上的指定元素，可用 CSS selector 或描述定位。</p>
-    <div class="bg-slate-900/60 rounded-lg p-3 font-mono text-yellow-200/90 text-xs leading-relaxed">
-      點擊「登入」按鈕
-    </div>
-  </div>
-  <div class="bg-slate-800/50 border border-pink-500/20 rounded-xl p-4">
-    <code class="text-pink-300 font-bold text-sm">fill</code>
-    <p class="text-xs text-slate-400 mt-2 mb-3">在輸入框中填入指定文字，常用於表單自動化測試。</p>
-    <div class="bg-slate-900/60 rounded-lg p-3 font-mono text-yellow-200/90 text-xs leading-relaxed">
-      在 email 欄位填入 test@example.com
-    </div>
-  </div>
-  <div class="bg-slate-800/50 border border-yellow-500/20 rounded-xl p-4">
-    <code class="text-yellow-300 font-bold text-sm">evaluate_script</code>
-    <p class="text-xs text-slate-400 mt-2 mb-3">在頁面上下文執行任意 JavaScript，提取數據或操控 DOM。</p>
-    <div class="bg-slate-900/60 rounded-lg p-3 font-mono text-yellow-200/90 text-xs leading-relaxed">
-      執行 JS 取得目前登入的 user id
-    </div>
-  </div>
-</div>
+<Slide6ConsoleNetwork />
 
 ---
-layout: center
-class: text-center
+layout: full
 ---
 
-# 今天介紹的工具
-
-<div class="grid grid-cols-4 gap-4 mt-8">
-  <div class="p-4 bg-slate-800/50 border border-blue-500/30 rounded-xl">
-    <div class="font-bold text-blue-400 mb-3 text-sm">開啟 + 截圖</div>
-    <div class="flex flex-col gap-1 text-xs font-mono text-slate-400">
-      <span>navigate_page</span>
-      <span>take_screenshot</span>
-    </div>
-  </div>
-  <div class="p-4 bg-slate-800/50 border border-orange-500/30 rounded-xl">
-    <div class="font-bold text-orange-400 mb-3 text-sm">Console + Network</div>
-    <div class="flex flex-col gap-1 text-xs font-mono text-slate-400">
-      <span>list_console_messages</span>
-      <span>list_network_requests</span>
-    </div>
-  </div>
-  <div class="p-4 bg-slate-800/50 border border-cyan-500/30 rounded-xl">
-    <div class="font-bold text-cyan-400 mb-3 text-sm">頁面互動</div>
-    <div class="flex flex-col gap-1 text-xs font-mono text-slate-400">
-      <span>click</span>
-      <span>fill</span>
-      <span>evaluate_script</span>
-    </div>
-  </div>
-  <div class="p-4 bg-slate-800/50 border border-green-500/30 rounded-xl">
-    <div class="font-bold text-green-400 mb-3 text-sm">🆕 新功能</div>
-    <div class="flex flex-col gap-1 text-xs font-mono text-slate-400">
-      <span>--auto-connect</span>
-      <span>emulate</span>
-      <span>Preserve Logs</span>
-    </div>
-  </div>
-</div>
-
-<div class="mt-6 text-slate-500 text-sm">還有 20+ 個工具等你探索 → 完整清單見工具箱頁</div>
+<Slide7InteractionAndSummary />

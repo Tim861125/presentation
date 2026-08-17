@@ -12,7 +12,7 @@ mdc: true
 layout: full
 ---
 
-<TitleSlide />
+<Slide1Title />
 
 <!--
 講者備忘錄 (Presenter Notes):
@@ -24,7 +24,7 @@ layout: full
 layout: full
 ---
 
-<TFIDFSlide />
+<Slide2TFIDF />
 
 <!--
 講者備忘錄 (Presenter Notes):
@@ -38,7 +38,7 @@ layout: full
 layout: full
 ---
 
-<BM25OverviewSlide />
+<Slide3BM25Overview />
 
 <!--
 講者備忘錄 (Presenter Notes):
@@ -52,7 +52,7 @@ layout: full
 layout: full
 ---
 
-<BM25FormulaSlide />
+<Slide4BM25Formula />
 
 <!--
 講者備忘錄 (Presenter Notes):
@@ -66,7 +66,7 @@ layout: full
 layout: full
 ---
 
-<BM25ParameterFormulaSlide />
+<Slide5BM25ParameterFormula />
 
 <!--
 講者備忘錄 (Presenter Notes):
@@ -80,7 +80,7 @@ layout: full
 layout: full
 ---
 
-<BM25ParamsSlide />
+<Slide6BM25Params />
 
 <!--
 講者備忘錄 (Presenter Notes):
@@ -94,7 +94,7 @@ layout: full
 layout: full
 ---
 
-<BM25LimitsSlide />
+<Slide7BM25Limits />
 
 <!--
 講者備忘錄 (Presenter Notes):
@@ -107,7 +107,7 @@ layout: full
 layout: full
 ---
 
-<ProcessorsOverviewSlide />
+<Slide8ProcessorsOverview />
 
 <!--
 講者備忘錄 (Presenter Notes):
@@ -121,7 +121,7 @@ layout: full
 layout: full
 ---
 
-<NormalizationProcessorSlide />
+<Slide9NormalizationProcessor />
 
 <!--
 講者備忘錄 (Presenter Notes):
@@ -134,7 +134,7 @@ layout: full
 layout: full
 ---
 
-<ScoreRankerSlide />
+<Slide10ScoreRanker />
 
 <!--
 講者備忘錄 (Presenter Notes):
@@ -147,7 +147,7 @@ layout: full
 layout: full
 ---
 
-<NormalizationTechniqueSlide />
+<Slide11NormalizationTechnique />
 
 <!--
 講者備忘錄 (Presenter Notes):
@@ -162,7 +162,7 @@ layout: full
 layout: full
 ---
 
-<CombinationTechniqueSlide />
+<Slide12CombinationTechnique />
 
 <!--
 講者備忘錄 (Presenter Notes):
@@ -177,7 +177,7 @@ layout: full
 layout: full
 ---
 
-<PatentMultiVectorSlide />
+<Slide13PatentMultiVector />
 
 <!--
 講者備忘錄 (Presenter Notes):
@@ -193,7 +193,7 @@ layout: full
 layout: full
 ---
 
-<SummarySlide />
+<Slide14Summary />
 
 <!--
 講者備忘錄 (Presenter Notes):

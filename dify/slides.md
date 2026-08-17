@@ -1,5 +1,5 @@
 ---
-theme: default
+theme: tech
 title: Dify — LLM Node & Workflow API
 highlighter: shiki
 drawings:
@@ -11,34 +11,34 @@ css: unocss
 layout: full
 ---
 
-<LLMAPITitleSlide />
+<Slide1LLMAPITitle />
 
 ---
 layout: full
 ---
 
-<LLMNodeSlide />
+<Slide2LLMNode />
 
 ---
 layout: full
 ---
 
-<APICodeSlide />
+<Slide3APICode />
 
 ---
 layout: full
 ---
 
-<APIManageSlide />
+<Slide4APIManage />
 
 ---
 layout: full
 ---
 
-<APIResponseSlide />
+<Slide5APIResponse />
 
 ---
 layout: full
 ---
 
-<APISummarySlide />
+<Slide6APISummary />
