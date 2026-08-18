@@ -55,10 +55,11 @@ Optional per-deck directories:
 The repository provides a shared Dark Tech Theme at `packages/slidev-theme-tech` (linked as `slidev-theme-tech` in workspace).
 
 - **Theme identifier:** `theme: tech` (or `theme: slidev-theme-tech`)
-- **Auto-registered Components:** `<SlideShell>`, `<SlideHeader>`, `<JsonCard>`, `<TechCard>`, `<TechBadge>` (no manual imports needed in slide Vue components).
+- **Auto-registered Components:** `<SlideShell>`, `<SlideHeader>`, `<CoverSlide>`, `<TechCover>`, `<EndSlide>`, `<TechEnd>`, `<JsonCard>`, `<TechCard>`, `<TechBadge>`, `<StatCard>`, `<InfoCard>`, `<Callout>`, `<DiagramNode>`, `<IssueCard>`, `<SectionSlide>` (no manual imports needed in slide Vue components).
 - **Available Layouts:**
   - `layout: full` — Full-bleed zero-padding container for custom Vue SFC slide components
   - `layout: tech-cover` — Rich tech cover with tags, author, date, and keyword highlights
+  - `layout: tech-end` — Standardized End/Thank You/Q&A slide
   - `layout: tech-content` — Content slide layout with auto header (`eyebrow`, `title`, `subtitle`)
   - `layout: tech-two-cols` — 2-column layout with left/right slots
   - `layout: tech-section` — Chapter/section break slide
