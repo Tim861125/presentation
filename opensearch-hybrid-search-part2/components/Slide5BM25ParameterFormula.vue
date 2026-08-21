@@ -5,7 +5,7 @@
   <SlideShell>
     <SlideHeader
       eyebrow="Part 1 · BM25 演算法"
-      title="k1 與 b 在公式中的位置"
+      title=" BM25 算法"
       subtitle="這兩個參數都在「詞頻加分」這一段：k1 控制加分趨緩，b 控制長文件校正"
     />
 

@@ -45,7 +45,7 @@
           長篇專利自然較容易重複出現某個詞。BM25 會適度校正篇幅，避免文件只是因為長，就壓過內容更聚焦的結果。
         </p>
         <div class="p-2.5 rounded-lg bg-black/40 border border-white/5 text-[11px] text-purple-300/90">
-          同一個詞重複很多次會加分，但加分效果會愈來愈小。
+          長文件必須以更高的關鍵詞密度，才能獲得與短文件相同的分數。
         </div>
       </div>
     </div>
