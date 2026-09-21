@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 import { execSync } from "child_process";
-import { readdirSync, readFileSync, statSync, existsSync, rmSync, writeFileSync } from "fs";
+import { readdirSync, readFileSync, statSync, existsSync, rmSync, writeFileSync, mkdirSync } from "fs";
 import { join, resolve } from "path";
 
 const root = resolve(process.cwd());
@@ -46,6 +46,8 @@ if (only.length) {
 }
 
 const toBuild = only.length ? allDecks.filter((d) => only.includes(d.name)) : allDecks;
+
+mkdirSync(outRoot, { recursive: true });
 
 console.log(`\n🔨 將 build ${toBuild.length} 個 deck (base: ${base})\n`);
 
