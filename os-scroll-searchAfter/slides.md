@@ -166,6 +166,43 @@ layout: full
 <Slide19Gotchas />
 
 ---
+layout: tech-content
+eyebrow: References
+title: 參考文獻
+---
+
+<div class="grid grid-cols-2 gap-x-10 gap-y-4 text-lg text-slate-300">
+  <a href="https://docs.opensearch.org/latest/search-plugins/searching-data/paginate/" target="_blank" class="block hover:text-cyan-300">
+    <div class="text-cyan-300 font-semibold">OpenSearch — Paginate search results</div>
+    <div class="text-sm text-slate-400 break-all">https://docs.opensearch.org/latest/search-plugins/searching-data/paginate/</div>
+  </a>
+  <a href="https://docs.opensearch.org/latest/search-plugins/searching-data/point-in-time/" target="_blank" class="block hover:text-cyan-300">
+    <div class="text-cyan-300 font-semibold">OpenSearch — Point in Time</div>
+    <div class="text-sm text-slate-400 break-all">https://docs.opensearch.org/latest/search-plugins/searching-data/point-in-time/</div>
+  </a>
+  <a href="https://docs.opensearch.org/latest/api-reference/search/scroll/" target="_blank" class="block hover:text-cyan-300">
+    <div class="text-cyan-300 font-semibold">OpenSearch — Scroll API</div>
+    <div class="text-sm text-slate-400 break-all">https://docs.opensearch.org/latest/api-reference/search/scroll/</div>
+  </a>
+  <a href="https://opensearch.org/docs/latest/api-reference/search-apis/search/" target="_blank" class="block hover:text-cyan-300">
+    <div class="text-cyan-300 font-semibold">OpenSearch — Search API</div>
+    <div class="text-sm text-slate-400 break-all">https://opensearch.org/docs/latest/api-reference/search-apis/search/</div>
+  </a>
+  <a href="https://www.elastic.co/guide/en/elasticsearch/reference/current/paginate-search-results.html" target="_blank" class="block hover:text-cyan-300">
+    <div class="text-cyan-300 font-semibold">Elasticsearch — Paginate search results</div>
+    <div class="text-sm text-slate-400 break-all">https://www.elastic.co/guide/en/elasticsearch/reference/current/paginate-search-results.html</div>
+  </a>
+  <a href="https://www.elastic.co/guide/en/elasticsearch/reference/current/search-after.html" target="_blank" class="block hover:text-cyan-300">
+    <div class="text-cyan-300 font-semibold">Elasticsearch — search_after</div>
+    <div class="text-sm text-slate-400 break-all">https://www.elastic.co/guide/en/elasticsearch/reference/current/search-after.html</div>
+  </a>
+  <a href="https://www.elastic.co/guide/en/elasticsearch/reference/current/point-in-time-api.html" target="_blank" class="block hover:text-cyan-300">
+    <div class="text-cyan-300 font-semibold">Elasticsearch — Point in time API</div>
+    <div class="text-sm text-slate-400 break-all">https://www.elastic.co/guide/en/elasticsearch/reference/current/point-in-time-api.html</div>
+  </a>
+</div>
+
+---
 layout: full
 ---
 
