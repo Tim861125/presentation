@@ -91,6 +91,20 @@ const notFound = `<!doctype html>
 `;
 writeFileSync(join(outRoot, "404.html"), notFound);
 
+// 索引頁 favicon:漸層圓角方塊 + 笑臉簡報板
+const favicon = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
+<defs><linearGradient id="g" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#34d399"/><stop offset="1" stop-color="#38bdf8"/></linearGradient></defs>
+<rect width="64" height="64" rx="14" fill="url(#g)"/>
+<path d="M52 8l1.6 3.9 3.9 1.6-3.9 1.6L52 19l-1.6-3.9-3.9-1.6 3.9-1.6z" fill="#fff" opacity=".9"/>
+<path d="M32 39v11M22 50h20" stroke="#0b1220" stroke-width="4.5" stroke-linecap="round" fill="none" opacity=".85"/>
+<rect x="13" y="10" width="38" height="29" rx="5" fill="#fff"/>
+<circle cx="20.5" cy="27" r="2.2" fill="#f472b6" opacity=".55"/>
+<circle cx="43.5" cy="27" r="2.2" fill="#f472b6" opacity=".55"/>
+<g stroke="#0b1220" stroke-width="3" stroke-linecap="round" fill="none"><path d="M22.5 23q3-4 6 0M35.5 23q3-4 6 0"/><path d="M27 28.5q5 4.5 10 0"/></g>
+</svg>
+`;
+writeFileSync(join(outRoot, "favicon.svg"), favicon);
+
 // 索引頁永遠列出全部 deck(包含 dist/ 裡之前已 build 過的)
 function deckExists(name) {
   return existsSync(join(outRoot, name, "index.html"));
@@ -119,6 +133,7 @@ const html = `<!doctype html>
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="icon" type="image/svg+xml" href="./favicon.svg">
 <title>簡報總覽</title>
 <style>
   :root { color-scheme: dark; }
