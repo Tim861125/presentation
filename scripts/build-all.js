@@ -64,7 +64,7 @@ for (const deck of toBuild) {
   console.log(`── ${deck.name} → ${outDir}`);
   try {
     execSync(
-      `${slidevBin} build slides.md --base ${deckBase} --out ${outDir}`,
+      `${slidevBin} build slides.md --base ${deckBase} --out ${outDir} --router-mode hash`,
       { cwd: deckPath, stdio: "inherit", shell: "/bin/bash" },
     );
     built.push(deck);
@@ -75,6 +75,21 @@ for (const deck of toBuild) {
     if (existsSync(nm)) rmSync(nm, { recursive: true, force: true });
   }
 }
+
+// GH Pages 只認發佈根的 404.html:把 /<base>/<deck>/<route> 深連結轉進該 deck 的 hash 路由
+const baseSeg = base.replace(/^\/+|\/+$/g, "");
+const notFound = `<!doctype html>
+<html lang="zh-Hant"><head><meta charset="utf-8"><title>轉送中…</title><script>
+(function () {
+  var m = location.pathname.match(/^\\/${baseSeg}\\/([^/]+)\\/(.+)$/);
+  var target = m
+    ? "/${baseSeg}/" + encodeURIComponent(m[1]) + "/#/" + m[2].replace(/\\/+$/, "").replace(/^${baseSeg}\\/[^/]+\\//, "")
+    : "/${baseSeg}/";
+  location.replace(location.origin + target + location.search);
+})();
+</script></head><body></body></html>
+`;
+writeFileSync(join(outRoot, "404.html"), notFound);
 
 // 索引頁永遠列出全部 deck(包含 dist/ 裡之前已 build 過的)
 function deckExists(name) {

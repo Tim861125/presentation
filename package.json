@@ -11,8 +11,8 @@
     "export": "slidev export"
   },
   "dependencies": {
-    "@slidev/cli": "^52.16.0",
-    "@slidev/client": "52.16.0",
+    "@slidev/cli": "^52.20.1",
+    "@slidev/client": "52.20.1",
     "@slidev/theme-default": "latest",
     "@slidev/theme-seriph": "latest",
     "@vueuse/core": "14.3.0",
