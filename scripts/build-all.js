@@ -134,7 +134,7 @@ const html = `<!doctype html>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="icon" type="image/svg+xml" href="./favicon.svg">
-<title>簡報總覽</title>
+<title>presentation</title>
 <style>
   :root { color-scheme: dark; }
   * { box-sizing: border-box; }
