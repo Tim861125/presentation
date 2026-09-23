@@ -146,23 +146,11 @@ eyebrow: References
 title: 參考文獻
 ---
 
-<div class="grid grid-cols-2 gap-x-10 gap-y-4 text-lg text-slate-300">
-  <a href="https://zod.dev" target="_blank" class="block hover:text-cyan-300">
-    <div class="text-cyan-300 font-semibold">Zod 官方文件</div>
-    <div class="text-sm text-slate-400 break-all">https://zod.dev</div>
-  </a>
-  <a href="https://github.com/colinhacks/zod" target="_blank" class="block hover:text-cyan-300">
-    <div class="text-cyan-300 font-semibold">Zod GitHub 原始碼</div>
-    <div class="text-sm text-slate-400 break-all">https://github.com/colinhacks/zod</div>
-  </a>
-  <a href="https://github.com/colinhacks/zod/releases" target="_blank" class="block hover:text-cyan-300">
-    <div class="text-cyan-300 font-semibold">Zod Releases（v4 版本發行）</div>
-    <div class="text-sm text-slate-400 break-all">https://github.com/colinhacks/zod/releases</div>
-  </a>
-  <a href="https://www.typescriptlang.org/docs/" target="_blank" class="block hover:text-cyan-300">
-    <div class="text-cyan-300 font-semibold">TypeScript 官方文件</div>
-    <div class="text-sm text-slate-400 break-all">https://www.typescriptlang.org/docs/</div>
-  </a>
+<div class="grid grid-cols-2 gap-3">
+  <ReferenceCard index="1" title="Zod 官方文件" href="https://zod.dev" />
+  <ReferenceCard index="2" title="Zod GitHub 原始碼" href="https://github.com/colinhacks/zod" />
+  <ReferenceCard index="3" title="Zod Releases（v4 版本發行）" href="https://github.com/colinhacks/zod/releases" />
+  <ReferenceCard index="4" title="TypeScript 官方文件" href="https://www.typescriptlang.org/docs/" />
 </div>
 
 ---

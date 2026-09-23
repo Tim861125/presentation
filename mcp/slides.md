@@ -116,39 +116,15 @@ eyebrow: References
 title: 參考文獻
 ---
 
-<div class="grid grid-cols-2 gap-x-10 gap-y-4 text-lg text-slate-300">
-  <a href="https://modelcontextprotocol.io" target="_blank" class="block hover:text-cyan-300">
-    <div class="text-cyan-300 font-semibold">MCP 官方文件</div>
-    <div class="text-sm text-slate-400 break-all">https://modelcontextprotocol.io</div>
-  </a>
-  <a href="https://github.com/modelcontextprotocol" target="_blank" class="block hover:text-cyan-300">
-    <div class="text-cyan-300 font-semibold">MCP GitHub 組織（規格與 SDK）</div>
-    <div class="text-sm text-slate-400 break-all">https://github.com/modelcontextprotocol</div>
-  </a>
-  <a href="https://modelcontextprotocol.io/docs/learn/architecture" target="_blank" class="block hover:text-cyan-300">
-    <div class="text-cyan-300 font-semibold">MCP 架構說明（Architecture）</div>
-    <div class="text-sm text-slate-400 break-all">https://modelcontextprotocol.io/docs/learn/architecture</div>
-  </a>
-  <a href="https://modelcontextprotocol.io/docs/learn/client-concepts" target="_blank" class="block hover:text-cyan-300">
-    <div class="text-cyan-300 font-semibold">MCP Client 概念</div>
-    <div class="text-sm text-slate-400 break-all">https://modelcontextprotocol.io/docs/learn/client-concepts</div>
-  </a>
-  <a href="https://modelcontextprotocol.io/docs/learn/server-concepts" target="_blank" class="block hover:text-cyan-300">
-    <div class="text-cyan-300 font-semibold">MCP Server 概念</div>
-    <div class="text-sm text-slate-400 break-all">https://modelcontextprotocol.io/docs/learn/server-concepts</div>
-  </a>
-  <a href="https://blog.logto.io/zh-HK/what-is-mcp" target="_blank" class="block hover:text-cyan-300">
-    <div class="text-cyan-300 font-semibold">什麼是 MCP？Host、Client、Server 角色介紹（Logto）</div>
-    <div class="text-sm text-slate-400 break-all">https://blog.logto.io/zh-HK/what-is-mcp</div>
-  </a>
-  <a href="https://realnewbie.com/posts/mcp-introduction-part-2-host-client-server-three-major-roles-and-architecture-analysis" target="_blank" class="block hover:text-cyan-300">
-    <div class="text-cyan-300 font-semibold">MCP 三大角色與架構分析（RealNewbie）</div>
-    <div class="text-sm text-slate-400 break-all">https://realnewbie.com/posts/mcp-introduction-part-2-host-client-server-three-major-roles-and-architecture-analysis</div>
-  </a>
-  <a href="https://techblog.lycorp.co.jp/zh-hant/introduction-to-mcp-and-building-mcp-server-using-line-messaging-api" target="_blank" class="block hover:text-cyan-300">
-    <div class="text-cyan-300 font-semibold">MCP 介紹與用 LINE API 建 Server（LY TechBlog）</div>
-    <div class="text-sm text-slate-400 break-all">https://techblog.lycorp.co.jp/zh-hant/introduction-to-mcp-and-building-mcp-server-using-line-messaging-api</div>
-  </a>
+<div class="grid grid-cols-2 gap-3">
+  <ReferenceCard index="1" title="MCP 官方文件" href="https://modelcontextprotocol.io" />
+  <ReferenceCard index="2" title="MCP GitHub 組織（規格與 SDK）" href="https://github.com/modelcontextprotocol" />
+  <ReferenceCard index="3" title="MCP 架構說明（Architecture）" href="https://modelcontextprotocol.io/docs/learn/architecture" />
+  <ReferenceCard index="4" title="MCP Client 概念" href="https://modelcontextprotocol.io/docs/learn/client-concepts" />
+  <ReferenceCard index="5" title="MCP Server 概念" href="https://modelcontextprotocol.io/docs/learn/server-concepts" />
+  <ReferenceCard index="6" title="什麼是 MCP？Host、Client、Server 角色介紹（Logto）" href="https://blog.logto.io/zh-HK/what-is-mcp" />
+  <ReferenceCard index="7" title="MCP 三大角色與架構分析（RealNewbie）" href="https://realnewbie.com/posts/mcp-introduction-part-2-host-client-server-three-major-roles-and-architecture-analysis" />
+  <ReferenceCard index="8" title="MCP 介紹與用 LINE API 建 Server（LY TechBlog）" href="https://techblog.lycorp.co.jp/zh-hant/introduction-to-mcp-and-building-mcp-server-using-line-messaging-api" />
 </div>
 
 ---

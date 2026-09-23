@@ -2,11 +2,15 @@
 import SlideShell from '../components/SlideShell.vue'
 import SlideHeader from '../components/SlideHeader.vue'
 
-defineProps<{
+const props = defineProps<{
   section?: string
   title?: string
   subtitle?: string
+  frontmatter?: Record<string, any>
 }>()
+
+// `title` is a reserved frontmatter field and stripped from layout props
+const resolvedTitle = () => props.title || props.frontmatter?.title || ''
 </script>
 
 <template>
@@ -16,8 +20,8 @@ defineProps<{
         <span class="size-2 rounded-full bg-emerald-400 animate-pulse" />
         <span>SECTION {{ section }}</span>
       </div>
-      <h1 v-if="title" class="text-4xl md:text-5xl font-bold tracking-tight text-white mb-4">
-        {{ title }}
+      <h1 v-if="resolvedTitle()" class="text-4xl md:text-5xl font-bold tracking-tight text-white mb-4">
+        {{ resolvedTitle() }}
       </h1>
       <p v-if="subtitle" class="text-lg text-zinc-400 max-w-2xl leading-relaxed">
         {{ subtitle }}

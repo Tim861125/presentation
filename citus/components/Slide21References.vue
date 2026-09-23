@@ -9,22 +9,22 @@
       subtitle="官方文件與規格指引"
     />
 
-    <div class="flex flex-col gap-3 mt-6">
-      <TechCard accent="cyan" class="p-4">
-        <a href="https://docs.citusdata.com/en/v13.0/develop/reference_ddl.html" target="_blank" class="text-xs font-mono text-cyan-300 hover:underline">
-          docs.citusdata.com/en/v13.0/develop/reference_ddl.html
-        </a>
-      </TechCard>
-      <TechCard accent="blue" class="p-4">
-        <a href="https://docs.citusdata.com/en/stable/get_started/concepts.html" target="_blank" class="text-xs font-mono text-blue-300 hover:underline">
-          docs.citusdata.com/en/stable/get_started/concepts.html
-        </a>
-      </TechCard>
-      <TechCard accent="purple" class="p-4">
-        <a href="https://citus-doc.readthedocs.io/en/latest/develop/reference_ddl.html" target="_blank" class="text-xs font-mono text-purple-300 hover:underline">
-          citus-doc.readthedocs.io/en/latest/develop/reference_ddl.html
-        </a>
-      </TechCard>
+    <div class="grid grid-cols-1 gap-3 mt-2">
+      <ReferenceCard
+        index="1"
+        title="Citus 官方文件：DDL 參考"
+        href="https://docs.citusdata.com/en/v13.0/develop/reference_ddl.html"
+      />
+      <ReferenceCard
+        index="2"
+        title="Citus 官方文件：核心概念"
+        href="https://docs.citusdata.com/en/stable/get_started/concepts.html"
+      />
+      <ReferenceCard
+        index="3"
+        title="Citus 中文文件（Read the Docs）"
+        href="https://citus-doc.readthedocs.io/en/latest/develop/reference_ddl.html"
+      />
     </div>
   </SlideShell>
 </template>

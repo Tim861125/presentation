@@ -116,29 +116,11 @@ eyebrow: References
 title: 參考文獻
 ---
 
-<div class="grid grid-cols-2 gap-x-10 gap-y-4 text-lg text-slate-300">
-  <a href="https://developer.mozilla.org/en-US/docs/Web/HTTP/CSP" target="_blank" class="block hover:text-cyan-300">
-    <div class="text-cyan-300 font-semibold">MDN：Content Security Policy (CSP) 總覽</div>
-    <div class="text-sm text-slate-400 break-all">https://developer.mozilla.org/en-US/docs/Web/HTTP/CSP</div>
-  </a>
-  <a href="https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Content-Security-Policy" target="_blank" class="block hover:text-cyan-300">
-    <div class="text-cyan-300 font-semibold">MDN：Content-Security-Policy 標頭</div>
-    <div class="text-sm text-slate-400 break-all">https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Content-Security-Policy</div>
-  </a>
-  <a href="https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Content-Security-Policy/script-src" target="_blank" class="block hover:text-cyan-300">
-    <div class="text-cyan-300 font-semibold">MDN：script-src 指令</div>
-    <div class="text-sm text-slate-400 break-all">https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Content-Security-Policy/script-src</div>
-  </a>
-  <a href="https://web.dev/articles/strict-csp" target="_blank" class="block hover:text-cyan-300">
-    <div class="text-cyan-300 font-semibold">web.dev：使用 Strict CSP 保護網站</div>
-    <div class="text-sm text-slate-400 break-all">https://web.dev/articles/strict-csp</div>
-  </a>
-  <a href="https://content-security-policy.com/" target="_blank" class="block hover:text-cyan-300">
-    <div class="text-cyan-300 font-semibold">CSP 指令與來源快速參考</div>
-    <div class="text-sm text-slate-400 break-all">https://content-security-policy.com/</div>
-  </a>
-  <a href="https://w3c.github.io/webappsec-csp/" target="_blank" class="block hover:text-cyan-300">
-    <div class="text-cyan-300 font-semibold">W3C：Content Security Policy 規範</div>
-    <div class="text-sm text-slate-400 break-all">https://w3c.github.io/webappsec-csp/</div>
-  </a>
+<div class="grid grid-cols-2 gap-3">
+  <ReferenceCard index="1" title="MDN：Content Security Policy (CSP) 總覽" href="https://developer.mozilla.org/en-US/docs/Web/HTTP/CSP" />
+  <ReferenceCard index="2" title="MDN：Content-Security-Policy 標頭" href="https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Content-Security-Policy" />
+  <ReferenceCard index="3" title="MDN：script-src 指令" href="https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Content-Security-Policy/script-src" />
+  <ReferenceCard index="4" title="web.dev：使用 Strict CSP 保護網站" href="https://web.dev/articles/strict-csp" />
+  <ReferenceCard index="5" title="CSP 指令與來源快速參考" href="https://content-security-policy.com/" />
+  <ReferenceCard index="6" title="W3C：Content Security Policy 規範" href="https://w3c.github.io/webappsec-csp/" />
 </div>

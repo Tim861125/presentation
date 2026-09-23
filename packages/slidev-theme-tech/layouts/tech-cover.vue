@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import CoverSlide from '../components/CoverSlide.vue'
 
-defineProps<{
+const props = defineProps<{
   title?: string
   highlight?: string
   subtitle?: string
@@ -12,12 +12,16 @@ defineProps<{
   date?: string
   footer?: string
   dotColor?: string
+  frontmatter?: Record<string, any>
 }>()
+
+// `title` is a reserved frontmatter field and stripped from layout props
+const resolvedTitle = () => props.title || props.frontmatter?.title || ''
 </script>
 
 <template>
   <CoverSlide
-    :title="title"
+    :title="resolvedTitle()"
     :highlight="highlight"
     :subtitle="subtitle"
     :tag="tag"

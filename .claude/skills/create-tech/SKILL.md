@@ -123,6 +123,7 @@ The repository provides a shared Dark Tech Theme at `packages/slidev-theme-tech`
   - `<JsonCard method? path? title? code>` — Code/JSON payload card
   - `<TechCard variant? title? tag?>` — Glassmorphism dark card (variants: default, emerald, blue, rose, amber)
   - `<TechBadge label color? dot? pulse?>` — Tech pill badge
+  - `<ReferenceCard href title index?>` — Glassmorphic external-link card for References slides (mono index + URL, cyan hover)
 - **Available Layouts:**
   - `layout: full` — Full-bleed zero-padding container for custom Vue SFC slide components
   - `layout: tech-cover` — Rich tech cover with tags, author, date, and keyword highlights
@@ -198,6 +199,17 @@ subtitle: 關鍵收穫與落地指引
 - 重點總結二
 
 ---
+layout: tech-content
+eyebrow: References
+title: 參考文獻
+---
+
+<div class="grid grid-cols-2 gap-3">
+  <ReferenceCard index="1" title="來源標題一" href="https://example.com/first" />
+  <ReferenceCard index="2" title="來源標題二" href="https://example.com/second" />
+</div>
+
+---
 layout: center
 class: text-center
 ---
@@ -245,6 +257,7 @@ layout: full
 - **No icons** — Only use checkmarks / crosses to indicate done / pending.
 - **Distill, don't copy** — The spec is the full list; slides keep only key highlights.
 - **Closing slide** — Always `layout: center` + `class: text-center` + `# End` or `# Thanks`.
+- **References page** — 在 End 前加一頁 `layout: tech-content`（`eyebrow: References`、`title: 參考文獻`），內容用 `<div class="grid grid-cols-2 gap-3">` 包 `<ReferenceCard index title href />`；來源取自 spec.md 的「來源文件 / 參考連結」。不要手刻裸 `<a>` 連結清單或自創 slate/cyan 樣式。
 
 ---
 
@@ -298,6 +311,7 @@ Defenses:
 - Added real Tailwind (`@tailwindcss/vite`) → build breaks.
 - Dynamic class names (`bg-${x}`) → UnoCSS static scan produces nothing.
 - Writing slides without a spec.md first (always produce spec → distill).
+- Hand-rolling the References page with raw `<a>` links / ad-hoc slate styles → clashes with the theme; always use `ReferenceCard`.
 
 ## Local Preview
 

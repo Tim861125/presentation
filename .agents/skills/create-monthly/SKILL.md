@@ -69,7 +69,7 @@ Source ──→ Fetch/organize → Edit/Refine ──→ spec.md (stored in dec
 
 **Never** run `npx slidev create` — it produces a standalone project that conflicts with the workspace. Use the built-in template instead.
 
-Template location: `.Codex/skills/create-monthly/templates/monthly/`
+Template location: `.agents/skills/create-monthly/templates/monthly/`
 
 ### Determine deck name
 
@@ -79,7 +79,7 @@ month25a = Oct 2025; 25b = Nov; 25c = Dec
 ```
 
 ```bash
-TEMPLATE_BASE="/home/tim/githubRepo/presentation/.Codex/skills/create-monthly/templates/monthly"
+TEMPLATE_BASE="/home/tim/githubRepo/presentation/.agents/skills/create-monthly/templates/monthly"
 cp -r $TEMPLATE_BASE ./<new-deck>
 rm -rf ./<new-deck>/node_modules ./<new-deck>/dist ./<new-deck>/components ./<new-deck>/pages ./<new-deck>/snippets
 # Replace <deck-name> in package.json with <new-deck>
@@ -246,7 +246,7 @@ bun run dev <deck>        # dev server with live reload, opens browser
 ## Template Structure
 
 ```
-.Codex/skills/create-monthly/
+.agents/skills/create-monthly/
 ├── SKILL.md
 └── templates/
     └── monthly/          # Monthly report template (theme: tech, dark tech cover & layouts)

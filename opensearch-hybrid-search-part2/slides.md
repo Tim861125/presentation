@@ -210,29 +210,11 @@ eyebrow: References
 title: 參考文獻
 ---
 
-<div class="grid grid-cols-2 gap-x-10 gap-y-4 text-lg text-slate-300">
-  <a href="https://en.wikipedia.org/wiki/Tf_%E2%80%93_idf" target="_blank" class="block hover:text-cyan-300">
-    <div class="text-cyan-300 font-semibold">TF–IDF — Wikipedia</div>
-    <div class="text-sm text-slate-400 break-all">https://en.wikipedia.org/wiki/Tf_%E2%80%93_idf</div>
-  </a>
-  <a href="https://en.wikipedia.org/wiki/Okapi_BM25" target="_blank" class="block hover:text-cyan-300">
-    <div class="text-cyan-300 font-semibold">Okapi BM25 — Wikipedia</div>
-    <div class="text-sm text-slate-400 break-all">https://en.wikipedia.org/wiki/Okapi_BM25</div>
-  </a>
-  <a href="https://lucene.apache.org/core/9_0_0/core/org/apache/lucene/search/similarities/BM25Similarity.html" target="_blank" class="block hover:text-cyan-300">
-    <div class="text-cyan-300 font-semibold">Apache Lucene BM25Similarity 文件</div>
-    <div class="text-sm text-slate-400 break-all">https://lucene.apache.org/core/9_0_0/core/org/apache/lucene/search/similarities/BM25Similarity.html</div>
-  </a>
-  <a href="https://docs.opensearch.org/latest/search-plugins/search-pipelines/normalization-processor/" target="_blank" class="block hover:text-cyan-300">
-    <div class="text-cyan-300 font-semibold">OpenSearch Normalization Processor</div>
-    <div class="text-sm text-slate-400 break-all">https://docs.opensearch.org/latest/search-plugins/search-pipelines/normalization-processor/</div>
-  </a>
-  <a href="https://docs.opensearch.org/latest/search-plugins/search-pipelines/score-ranker-processor/" target="_blank" class="block hover:text-cyan-300">
-    <div class="text-cyan-300 font-semibold">OpenSearch Score Ranker Processor (RRF)</div>
-    <div class="text-sm text-slate-400 break-all">https://docs.opensearch.org/latest/search-plugins/search-pipelines/score-ranker-processor/</div>
-  </a>
-  <a href="https://docs.opensearch.org/latest/vector-search/ai-search/hybrid-search/index/" target="_blank" class="block hover:text-cyan-300">
-    <div class="text-cyan-300 font-semibold">OpenSearch Hybrid Search</div>
-    <div class="text-sm text-slate-400 break-all">https://docs.opensearch.org/latest/vector-search/ai-search/hybrid-search/index/</div>
-  </a>
+<div class="grid grid-cols-2 gap-3">
+  <ReferenceCard index="1" title="TF–IDF — Wikipedia" href="https://en.wikipedia.org/wiki/Tf_%E2%80%93_idf" />
+  <ReferenceCard index="2" title="Okapi BM25 — Wikipedia" href="https://en.wikipedia.org/wiki/Okapi_BM25" />
+  <ReferenceCard index="3" title="Apache Lucene BM25Similarity 文件" href="https://lucene.apache.org/core/9_0_0/core/org/apache/lucene/search/similarities/BM25Similarity.html" />
+  <ReferenceCard index="4" title="OpenSearch Normalization Processor" href="https://docs.opensearch.org/latest/search-plugins/search-pipelines/normalization-processor/" />
+  <ReferenceCard index="5" title="OpenSearch Score Ranker Processor (RRF)" href="https://docs.opensearch.org/latest/search-plugins/search-pipelines/score-ranker-processor/" />
+  <ReferenceCard index="6" title="OpenSearch Hybrid Search" href="https://docs.opensearch.org/latest/vector-search/ai-search/hybrid-search/index/" />
 </div>

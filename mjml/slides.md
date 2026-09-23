@@ -74,23 +74,11 @@ eyebrow: References
 title: 參考文獻
 ---
 
-<div class="grid grid-cols-2 gap-x-10 gap-y-4 text-lg text-slate-300">
-  <a href="https://mjml.io/" target="_blank" class="block hover:text-cyan-300">
-    <div class="text-cyan-300 font-semibold">MJML 官方網站</div>
-    <div class="text-sm text-slate-400 break-all">https://mjml.io/</div>
-  </a>
-  <a href="https://documentation.mjml.io/" target="_blank" class="block hover:text-cyan-300">
-    <div class="text-cyan-300 font-semibold">MJML 官方文件（元件與屬性參考）</div>
-    <div class="text-sm text-slate-400 break-all">https://documentation.mjml.io/</div>
-  </a>
-  <a href="https://github.com/mjmlio/mjml" target="_blank" class="block hover:text-cyan-300">
-    <div class="text-cyan-300 font-semibold">MJML GitHub 原始碼（mjmlio/mjml）</div>
-    <div class="text-sm text-slate-400 break-all">https://github.com/mjmlio/mjml</div>
-  </a>
-  <a href="https://www.campaignmonitor.com/resources/" target="_blank" class="block hover:text-cyan-300">
-    <div class="text-cyan-300 font-semibold">Campaign Monitor 郵件行銷資源</div>
-    <div class="text-sm text-slate-400 break-all">https://www.campaignmonitor.com/resources/</div>
-  </a>
+<div class="grid grid-cols-2 gap-3">
+  <ReferenceCard index="1" title="MJML 官方網站" href="https://mjml.io/" />
+  <ReferenceCard index="2" title="MJML 官方文件（元件與屬性參考）" href="https://documentation.mjml.io/" />
+  <ReferenceCard index="3" title="MJML GitHub 原始碼（mjmlio/mjml）" href="https://github.com/mjmlio/mjml" />
+  <ReferenceCard index="4" title="Campaign Monitor 郵件行銷資源" href="https://www.campaignmonitor.com/resources/" />
 </div>
 
 ---

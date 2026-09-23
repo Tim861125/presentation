@@ -49,21 +49,9 @@ eyebrow: References
 title: 參考文獻
 ---
 
-<div class="grid grid-cols-2 gap-x-10 gap-y-4 text-lg text-slate-300">
-  <a href="https://docs.dify.ai/" target="_blank" class="block hover:text-cyan-300">
-    <div class="text-cyan-300 font-semibold">Dify 官方文件</div>
-    <div class="text-sm text-slate-400 break-all">https://docs.dify.ai/</div>
-  </a>
-  <a href="https://docs.dify.ai/en/use-dify/getting-started/introduction" target="_blank" class="block hover:text-cyan-300">
-    <div class="text-cyan-300 font-semibold">Dify 入門介紹（Getting Started Introduction）</div>
-    <div class="text-sm text-slate-400 break-all">https://docs.dify.ai/en/use-dify/getting-started/introduction</div>
-  </a>
-  <a href="https://github.com/langgenius/dify" target="_blank" class="block hover:text-cyan-300">
-    <div class="text-cyan-300 font-semibold">Dify GitHub 原始碼倉庫</div>
-    <div class="text-sm text-slate-400 break-all">https://github.com/langgenius/dify</div>
-  </a>
-  <a href="https://github.com/langgenius/dify/releases" target="_blank" class="block hover:text-cyan-300">
-    <div class="text-cyan-300 font-semibold">Dify GitHub Releases（歷次發行）</div>
-    <div class="text-sm text-slate-400 break-all">https://github.com/langgenius/dify/releases</div>
-  </a>
+<div class="grid grid-cols-2 gap-3">
+  <ReferenceCard index="1" title="Dify 官方文件" href="https://docs.dify.ai/" />
+  <ReferenceCard index="2" title="Dify 入門介紹（Getting Started Introduction）" href="https://docs.dify.ai/en/use-dify/getting-started/introduction" />
+  <ReferenceCard index="3" title="Dify GitHub 原始碼倉庫" href="https://github.com/langgenius/dify" />
+  <ReferenceCard index="4" title="Dify GitHub Releases（歷次發行）" href="https://github.com/langgenius/dify/releases" />
 </div>

@@ -60,6 +60,18 @@ subtitle: 關鍵收穫與落地指引
 - 重點總結二
 
 ---
+layout: tech-content
+eyebrow: References
+title: 參考文獻
+---
+
+<div class="grid grid-cols-2 gap-3">
+  <ReferenceCard index="1" title="來源標題一" href="https://example.com/first" />
+  <ReferenceCard index="2" title="來源標題二" href="https://example.com/second" />
+  <ReferenceCard index="3" title="來源標題三" href="https://example.com/third" />
+</div>
+
+---
 layout: center
 class: text-center
 ---

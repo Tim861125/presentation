@@ -92,27 +92,12 @@ eyebrow: References
 title: 參考文獻
 ---
 
-<div class="grid grid-cols-2 gap-x-10 gap-y-4 text-lg text-slate-300">
-  <a href="https://modelcontextprotocol.io" target="_blank" class="block hover:text-cyan-300">
-    <div class="text-cyan-300 font-semibold">MCP 官方網站與文件</div>
-    <div class="text-sm text-slate-400 break-all">https://modelcontextprotocol.io</div>
-  </a>
-  <a href="https://github.com/modelcontextprotocol" target="_blank" class="block hover:text-cyan-300">
-    <div class="text-cyan-300 font-semibold">Model Context Protocol GitHub</div>
-    <div class="text-sm text-slate-400 break-all">https://github.com/modelcontextprotocol</div>
-  </a>
-  <a href="https://ai-sdk.dev/docs/ai-sdk-core/mcp-tools" target="_blank" class="block hover:text-cyan-300">
-    <div class="text-cyan-300 font-semibold">AI SDK – MCP Tools（Stdio 範例）</div>
-    <div class="text-sm text-slate-400 break-all">https://ai-sdk.dev/docs/ai-sdk-core/mcp-tools</div>
-  </a>
-  <a href="https://modelcontextprotocol.io/specification/2025-06-18/basic/transports" target="_blank" class="block hover:text-cyan-300">
-    <div class="text-cyan-300 font-semibold">MCP 官方規格：Transports（stdio / HTTP）</div>
-    <div class="text-sm text-slate-400 break-all">https://modelcontextprotocol.io/specification/2025-06-18/basic/transports</div>
-  </a>
-  <a href="https://github.com/modelcontextprotocol/typescript-sdk" target="_blank" class="block hover:text-cyan-300">
-    <div class="text-cyan-300 font-semibold">MCP TypeScript SDK（GitHub）</div>
-    <div class="text-sm text-slate-400 break-all">https://github.com/modelcontextprotocol/typescript-sdk</div>
-  </a>
+<div class="grid grid-cols-2 gap-3">
+  <ReferenceCard index="1" title="MCP 官方網站與文件" href="https://modelcontextprotocol.io" />
+  <ReferenceCard index="2" title="Model Context Protocol GitHub" href="https://github.com/modelcontextprotocol" />
+  <ReferenceCard index="3" title="AI SDK – MCP Tools（Stdio 範例）" href="https://ai-sdk.dev/docs/ai-sdk-core/mcp-tools" />
+  <ReferenceCard index="4" title="MCP 官方規格：Transports（stdio / HTTP）" href="https://modelcontextprotocol.io/specification/2025-06-18/basic/transports" />
+  <ReferenceCard index="5" title="MCP TypeScript SDK（GitHub）" href="https://github.com/modelcontextprotocol/typescript-sdk" />
 </div>
 
 ---

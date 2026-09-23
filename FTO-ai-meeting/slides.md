@@ -51,25 +51,10 @@ eyebrow: References
 title: 參考文獻
 ---
 
-<div class="grid grid-cols-2 gap-x-10 gap-y-4 text-lg text-slate-300">
-  <a href="https://patents.google.com/" target="_blank" class="block hover:text-cyan-300">
-    <div class="text-cyan-300 font-semibold">Google Patents 專利檢索</div>
-    <div class="text-sm text-slate-400 break-all">https://patents.google.com/</div>
-  </a>
-  <a href="https://worldwide.espacenet.com/" target="_blank" class="block hover:text-cyan-300">
-    <div class="text-cyan-300 font-semibold">Espacenet 全球專利檢索系統</div>
-    <div class="text-sm text-slate-400 break-all">https://worldwide.espacenet.com/</div>
-  </a>
-  <a href="https://www.uspto.gov/patents" target="_blank" class="block hover:text-cyan-300">
-    <div class="text-cyan-300 font-semibold">美國專利商標局 USPTO</div>
-    <div class="text-sm text-slate-400 break-all">https://www.uspto.gov/patents</div>
-  </a>
-  <a href="https://www.jpo.go.jp/" target="_blank" class="block hover:text-cyan-300">
-    <div class="text-cyan-300 font-semibold">日本特許廳 JPO</div>
-    <div class="text-sm text-slate-400 break-all">https://www.jpo.go.jp/</div>
-  </a>
-  <a href="https://www.tipo.gov.tw/" target="_blank" class="block hover:text-cyan-300">
-    <div class="text-cyan-300 font-semibold">經濟部智慧財產局 TIPO</div>
-    <div class="text-sm text-slate-400 break-all">https://www.tipo.gov.tw/</div>
-  </a>
+<div class="grid grid-cols-2 gap-3">
+  <ReferenceCard index="1" title="Google Patents 專利檢索" href="https://patents.google.com/" />
+  <ReferenceCard index="2" title="Espacenet 全球專利檢索系統" href="https://worldwide.espacenet.com/" />
+  <ReferenceCard index="3" title="美國專利商標局 USPTO" href="https://www.uspto.gov/patents" />
+  <ReferenceCard index="4" title="日本特許廳 JPO" href="https://www.jpo.go.jp/" />
+  <ReferenceCard index="5" title="經濟部智慧財產局 TIPO" href="https://www.tipo.gov.tw/" />
 </div>
