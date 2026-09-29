@@ -1,6 +1,6 @@
 ---
 name: externalize-monthly
-description: ALWAYS use for making an existing month* deck (month25a、month264… 目錄名以 month 開頭) 看得懂／易懂／看不懂可理解 — 本 repo 所有月報 deck 都是內部視角，使用者對 monthXXX 說任何「看得懂」「看不懂」「改成看得懂的版本」「容易理解」都屬於本 skill，不論有沒有提到外部／面試。其他觸發：「把 monthXXX 改成外部看得懂」「月報去內部化」「面試用月報」「portfolio／履歷用月報」. Verifies each claimed work item against git commits under /home/tim/repo, strips internal identifiers, glosses company jargon, edits the deck in place. NEVER for 非 month* 的技術 deck 教學化改寫（那用 teach-slidev）；Not for creating decks (create-monthly).
+description: ALWAYS use when 使用者對 month* deck 說「優化」（如「month25b 優化」「月報優化」「優化 monthXXX」）或要做看得懂／易懂／看不懂可理解的改版（如「month25a 優化」…目錄名以 month 開頭）— 本 repo 所有月報 deck 都是內部視角，使用者對 monthXXX 說任何「優化」「看得懂」「看不懂」「改成看得懂的版本」「容易理解」都屬於本 skill，不論有沒有提到外部／面試。其他觸發：「把 monthXXX 改成外部看得懂」「月報去內部化」「面試用月報」「portfolio／履歷用月報」. Verifies each claimed work item against git commits under /home/tim/repo, strips internal identifiers, glosses company jargon, edits the deck in place. NEVER for 非 month* 的技術 deck 教學化改寫（那用 teach-slidev）；Not for creating decks (create-monthly).
 ---
 
 # Externalize Monthly Deck
