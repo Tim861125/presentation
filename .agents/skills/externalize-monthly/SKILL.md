@@ -77,8 +77,11 @@ Per slide, the output IS:
 
    Review every match: a genuine number (year 2026, port, count like 52,300,000) may stay; a work-item/PBI/issue ID must go.
 
-3. Overflow check exactly per create-monthly skill: `bun run dev <deck>` → `/export/` → overflowPx script (empty array = pass).
-4. Report to user: which repos/commits backed which slides.
+3. Overflow check exactly per create-monthly skill: `bun run dev <deck>` → `/export/` → overflowPx script (empty array = pass). 無 Chrome DevTools MCP 時：`bun run dev <deck>` 起 server 後，用 puppeteer 開 `/export/` 跑 overflowPx 腳本，`executablePath` 指向 `/usr/bin/google-chrome`。
+
+4. 檔名保持檢查：`git status --porcelain <deck>/` 中原有 `.vue` 只允許 `M`，不得出現 `R`；新增頁（agenda、排查維運頁）另建新檔名，不重排、不改名既有檔案。
+
+5. Report to user: 逐頁列出 deck 全部投影片（含封面、agenda、結尾頁），每頁標註佐證 commits 或「無變動／無 commit 佐證（會議、維運等）」，讓使用者不需開啟 deck 即可確認頁數與結尾頁存在。
 
 ## Common Mistakes
 

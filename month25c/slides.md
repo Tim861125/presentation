@@ -18,6 +18,12 @@ layout: full
 layout: full
 ---
 
+<AgendaSlide />
+
+---
+layout: full
+---
+
 <Slide2DataImporter />
 
 ---
@@ -37,6 +43,12 @@ layout: full
 ---
 
 <Slide5TipoMusicCsp />
+
+---
+layout: full
+---
+
+<IssuesOpsSlide />
 
 ---
 layout: full

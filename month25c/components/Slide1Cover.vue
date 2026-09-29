@@ -15,7 +15,7 @@
         <span class="text-emerald-400"> 工作報告</span>
       </h1>
       <p class="text-lg font-light text-zinc-300 mb-6 max-w-3xl leading-snug">
-        data-importer · AI SSE 串流架構 · TipoMusic CSP 安全性修復
+        專利資料管線 · AI SSE 串流架構 · 速讀通 auto run · CSP 資安修復
       </p>
       <div class="flex items-center gap-6 text-[10px] text-zinc-500 font-mono">
         <div class="flex items-center gap-2">
