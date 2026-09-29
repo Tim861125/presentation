@@ -18,6 +18,12 @@ layout: full
 layout: full
 ---
 
+<AgendaSlide />
+
+---
+layout: full
+---
+
 <Slide2Consistency />
 
 ---
@@ -49,6 +55,12 @@ layout: full
 ---
 
 <Slide7TipoMusicAndIptech />
+
+---
+layout: full
+---
+
+<FixesAndSupportSlide />
 
 ---
 layout: full

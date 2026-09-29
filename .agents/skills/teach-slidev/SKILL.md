@@ -1,6 +1,6 @@
 ---
 name: teach-slidev
-description: Use when an existing tech Slidev deck in this monorepo reads as an expert-level overview and non-experts can't follow it — "讓非專家看完也能理解", "教學化改寫", "this deck is too shallow / jumps too fast", teach-slidev <deck>. Rewrites the deck in place into tutorial form (more pages allowed). Not for monthly report decks.
+description: Use ONLY when a topic-named TECH deck (zod、dify、shadcn-ui 等非 month 開頭目錄) reads as an expert-level overview and non-experts can't follow it — "讓非專家看完也能理解", "教學化改寫", "this deck is too shallow / jumps too fast", teach-slidev <deck>. Rewrites the deck in place into tutorial form (more pages allowed). HARD RULE: deck 目錄名以 month 開頭（month25a、month264…）時一律不得使用本 skill，即使使用者說「看不懂」「看得懂的版本」「改成易懂」— 那屬外部受眾改寫，改用 externalize-monthly.
 ---
 
 # Teach-Slidev：概略_deck 教學化改寫
@@ -11,7 +11,7 @@ description: Use when an existing tech Slidev deck in this monorepo reads as an 
 
 預設讀者：會 deck 程式語言、但完全沒碰過該主題的 junior。判斷讀者其實是純非工程師時，先問使用者再動手。
 
-內容用**繁體中文**（技術名詞保留原文）。僅適用技術 deck，月報 deck 不適用。
+內容用**繁體中文**（技術名詞保留原文）。僅適用技術 deck；month 開頭的月報 deck 一律改用 `externalize-monthly`。
 
 ## Step 0: 讀 deck
 
@@ -75,4 +75,4 @@ Component-heavy deck：新元件用**語意命名**（如 `PrerequisiteSlide.vue
 - 用瀏覽器視窗而非 canvas 查 overflow — 誤判沒溢出
 - 給 theme 元件傳不存在的 props — 寫前查 `packages/slidev-theme-tech/components/` 的 `defineProps`：`TechCard` 是 `variant` 不是 `accent`；`JsonCard` 沒有 `filename`（用 `title`）；`TechBadge` 文字走 `label` prop、沒有 slot，子節點內容不會渲染
 - 改了 slides 沒同步 spec.md — 違反 repo「spec 是 source of truth」慣例
-- 把月報 deck 也教學化 — 不適用
+- 把月報 deck（month 開頭）也教學化 — 不適用，改用 `externalize-monthly`
