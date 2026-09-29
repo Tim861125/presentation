@@ -15,7 +15,7 @@
         <span class="text-emerald-400"> 工作報告</span>
       </h1>
       <p class="text-lg font-light text-zinc-300 mb-6 max-w-3xl leading-snug">
-        PatentPilot Service · 點數扣抵規則 · 中介軟體防護 · 多語系與系統維護
+        扣點規則與透支機制 · 餘額 Middleware · 速讀通 Auto Run · 介面翻譯與英譯資料管線
       </p>
       <div class="flex items-center gap-6 text-[10px] text-zinc-500 font-mono">
         <div class="flex items-center gap-2">

@@ -56,14 +56,20 @@ Per slide, the output IS:
 
 1. Same SFC files with same filenames. 一律不插術語/背景專頁（如 `Slide1BContext.vue`）；名詞解釋只做各頁首現處一句括注。
 2. 封面後一律插入 agenda 頁（語意命名如 `AgendaSlide.vue`）：大標＝本月異動項目，每項一行 mono 小標＝一句話關鍵技術。
-3. Bullets in 繁體中文, company context explained, technical terms kept. 文體一律精簡「技術手段 → 成果」式（如：單次 SQL ORDER BY 完成排序扣減、cron 排程執行扣點）；不寫「問題→做法→影響」長句。
+3. Bullets in 繁體中文, company context explained, technical terms kept. 文體一律精簡「技術手段 → 成果」式（如：單次 SQL ORDER BY 完成排序扣減、cron 排程執行扣點）；不寫「問題→做法→影響」長句。用語一律用台灣慣用語：搜索→搜尋、用戶→使用者、列表→清單、服务器/服務器→伺服器、数据库→資料庫、软件→軟體、内存→記憶體、默认→預設、信息→資訊、反馈→回饋、加载→載入、存储→儲存、調用→呼叫；台灣無慣用譯名者直接留英文：中介層→Middleware、視口→Viewport、上下文→context。
 4. Internal system names (WEBPAT, IPTECH, UPat, 快檢通, 速讀通, L1/L2/L3, 案別…) KEPT, each glossed with one clause at first appearance across the deck（不另做全表專頁）.
 5. Removed entirely: Azure DevOps task numbers `(169359)`, client names (中鋼), machine/server identifiers (50.92), repo paths, branch names.
 6. Kept: scale/outcome numbers (5,230 萬筆、99.4%、182ms、v8.0.218) and stack names (Elasticsearch、Citus、kNN、Dify) — interviewers are technical; numbers are the selling point. 但禁止「某專案（某框架）」式標註——框架／技術名只有在它是達成手段本身時才寫（cron、CSS 變數、Math.ceil、單次 SQL 排序扣減），逐專案掛框架標籤顯刻意，非技術讀者也讀不懂。
 
 ## Step 5: Verify (mandatory)
 
-1. Leak scan, must return empty (broad 6-digit task numbers — IDs grow over time, do not pin a 15x/16x/17x prefix):
+1. 用語掃描（陸式中文用詞），逐條檢視命中处，改台灣慣用語或英文，最後必須為空：
+
+   ```bash
+   grep -rnoE "搜索|用戶|列表|服务器|服務器|数据库|软件|硬件|内存|默认|信息|反馈|加载|存储|视频|中介層|視口|調用|上下文|調研|落地|维度" <deck>/slides.md <deck>/components/
+   ```
+
+2. Leak scan, must return empty (broad 6-digit task numbers — IDs grow over time, do not pin a 15x/16x/17x prefix):
 
    ```bash
    grep -rEno "1[0-9]{5}|#[0-9]{5,}|中鋼|50\.92" <deck>/slides.md <deck>/components/
@@ -71,8 +77,8 @@ Per slide, the output IS:
 
    Review every match: a genuine number (year 2026, port, count like 52,300,000) may stay; a work-item/PBI/issue ID must go.
 
-2. Overflow check exactly per create-monthly skill: `bun run dev <deck>` → `/export/` → overflowPx script (empty array = pass).
-3. Report to user: which repos/commits backed which slides.
+3. Overflow check exactly per create-monthly skill: `bun run dev <deck>` → `/export/` → overflowPx script (empty array = pass).
+4. Report to user: which repos/commits backed which slides.
 
 ## Common Mistakes
 
@@ -84,4 +90,4 @@ Per slide, the output IS:
 | Loading teach-slidev / create-monthly for this task | This skill is the one for externalizing an existing month deck |
 | Glossing every repeated term | Gloss once, at first appearance; no glossary page |
 | Adding achievements not found in commits/spec | Only re-express what commits prove |
-| Claiming done without overflow check + leak scan | Both are mandatory gates |
+| Claiming done without term scan + leak scan + overflow check | All three are mandatory gates |

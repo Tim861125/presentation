@@ -18,6 +18,12 @@ layout: full
 layout: full
 ---
 
+<AgendaSlide />
+
+---
+layout: full
+---
+
 <Slide2BillingRules />
 
 ---
@@ -37,3 +43,9 @@ layout: full
 ---
 
 <Slide5PlatformMaintenance />
+
+---
+layout: full
+---
+
+<OpsSlide />
