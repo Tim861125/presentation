@@ -15,7 +15,7 @@
         <span class="text-emerald-400"> 工作報告</span>
       </h1>
       <p class="text-lg font-light text-zinc-300 mb-6 max-w-3xl leading-snug">
-        AI 與架構 · Dify 測試站 · 點數扣抵機制 · 檢索通穩定性優化
+        AI 模型流程與 Dify 聯調 · 分類頁多分類樹 · 點數機制 · 公告與維運
       </p>
       <div class="flex items-center gap-6 text-[10px] text-zinc-500 font-mono">
         <div class="flex items-center gap-2">

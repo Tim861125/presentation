@@ -18,7 +18,19 @@ layout: full
 layout: full
 ---
 
+<AgendaSlide />
+
+---
+layout: full
+---
+
 <Slide2AiArchitecture />
+
+---
+layout: full
+---
+
+<MultiTreeSlide />
 
 ---
 layout: full
