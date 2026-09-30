@@ -15,12 +15,12 @@
           <TechBadge color="rose">分類樹操作修復</TechBadge>
         </div>
         <ul class="text-xs text-zinc-300 space-y-1.5 list-disc list-inside leading-relaxed">
-          <li>專利跨域分類後頁面刷新找不到專利問題</li>
-          <li>新建專案分類頁持續 Loading 轉圈無法顯示</li>
-          <li>修復無分類分類樹展示異常</li>
-          <li>需點擊兩次才切換至目標節點清單問題</li>
-          <li>點擊空白處選取分類未高亮該分類樹</li>
-          <li>跨樹移動誤高亮相同 Node ID 節點</li>
+          <li>專利跨樹分類後頁面刷新、找不到專利問題修復</li>
+          <li>新建專案分類頁持續 Loading 無法顯示修復</li>
+          <li>無資料分類樹無法顯示、分類筆數顯示異常修復</li>
+          <li>需點擊兩次才切換至目標節點清單問題修復</li>
+          <li>點擊空白處未高亮所選分類樹修復</li>
+          <li>跨樹移動誤高亮相同 Node ID 節點修復</li>
         </ul>
       </TechCard>
 
@@ -29,11 +29,11 @@
           <TechBadge color="amber">其他功能維護</TechBadge>
         </div>
         <ul class="text-xs text-zinc-300 space-y-1.5 list-disc list-inside leading-relaxed">
-          <li>列表內刪除專利、未分類節點異常修復</li>
-          <li>產品公告選「不再提示並關閉」後重複彈窗修復</li>
-          <li>專案下載專利進度條回報穩定性改善</li>
-          <li>檢視頁首圖模式新增放大鏡預覽功能</li>
-          <li>修正帳號修改密碼功能異常</li>
+          <li>清單內刪除專利、未分類節點重複異常修復</li>
+          <li>公告「不再提示」狀態由 Cookie 改存 localStorage，修復重複彈窗</li>
+          <li>專案下載專利進度條回報穩定性改善（測試站台）</li>
+          <li>檢視頁首圖模式新增放大顯示</li>
+          <li>帳號修改密碼功能異常修復</li>
         </ul>
       </TechCard>
     </div>

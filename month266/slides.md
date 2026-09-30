@@ -18,6 +18,12 @@ layout: full
 layout: full
 ---
 
+<AgendaSlide />
+
+---
+layout: full
+---
+
 <Slide2MultiClassTree />
 
 ---
@@ -49,6 +55,12 @@ layout: full
 ---
 
 <Slide7IptechFixes />
+
+---
+layout: full
+---
+
+<OpsSlide />
 
 ---
 layout: full

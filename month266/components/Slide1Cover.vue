@@ -15,7 +15,7 @@
         <span class="text-emerald-400"> 工作報告</span>
       </h1>
       <p class="text-lg font-light text-zinc-300 mb-6 max-w-3xl leading-snug">
-        IPTECH 多分類樹 · 魚骨通 · AI 模組升級 · Patent Embedding 研究
+        IPTECH（專利分析平台）多分類樹 · AI 助手模組升級 · Patent Embedding 研究
       </p>
       <div class="flex items-center gap-6 text-[10px] text-zinc-500 font-mono">
         <div class="flex items-center gap-2">
