@@ -18,6 +18,12 @@ layout: full
 layout: full
 ---
 
+<AgendaSlide />
+
+---
+layout: full
+---
+
 <Slide2AiFeatures />
 
 ---
@@ -25,6 +31,12 @@ layout: full
 ---
 
 <Slide3DifyAndData />
+
+---
+layout: full
+---
+
+<OpsSlide />
 
 ---
 layout: full

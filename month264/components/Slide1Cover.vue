@@ -15,7 +15,7 @@
         <span class="text-emerald-400"> 工作報告</span>
       </h1>
       <p class="text-lg font-light text-zinc-300 mb-6 max-w-3xl leading-snug">
-        分類通 · 微分通 · 魚骨通 · Dify API 整合與架構調整
+        IPTECH / WEBPAT（專利檢索與 AI 分析平台）工具修正 · Dify（開源 LLM 工作流平台）串接 · 音樂版權系統年度資轉
       </p>
       <div class="flex items-center gap-6 text-[10px] text-zinc-500 font-mono">
         <div class="flex items-center gap-2">
