@@ -15,7 +15,7 @@
         <span class="text-emerald-400"> 工作報告</span>
       </h1>
       <p class="text-lg font-light text-zinc-300 mb-6 max-w-3xl leading-snug">
-        分類通＆微分通 · 相似度篩選 · AI 暖場回應 · Dify Prompt 工作流
+        分類通 · 微分通 · 相似度篩選 · AI 暖場回應 · Dify 工作流 · 修正與維運
       </p>
       <div class="flex items-center gap-6 text-[10px] text-zinc-500 font-mono">
         <div class="flex items-center gap-2">

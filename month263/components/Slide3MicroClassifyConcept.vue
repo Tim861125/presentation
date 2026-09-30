@@ -4,9 +4,9 @@
 <template>
   <SlideShell px="px-14">
     <SlideHeader
-      eyebrow="IPTECH / WEBPAT · QUALITY TUNING"
-      title="新增微分通功能"
-      subtitle="調節節點分類純淨度，精準移除非相關專利"
+      eyebrow="WEBPAT · NEW MODULE"
+      title="微分通：分類品質微調模組"
+      subtitle="微分通（針對已分類專利做品質微調的新模組）：相似度門檻回流＋流程改造"
     />
 
     <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mt-6">
@@ -15,21 +15,21 @@
           <TechBadge color="amber">功能概念</TechBadge>
           <span class="text-xs font-mono text-zinc-400">CORE VALUE</span>
         </div>
-        <h3 class="text-lg font-semibold text-white mb-2">專利品質微調</h3>
+        <h3 class="text-lg font-semibold text-white mb-2">節點純淨度調節</h3>
         <p class="text-sm text-zinc-300 leading-relaxed">
-          「微分通」專門用於調整分類品質。使用者可針對選取的分類節點設定「相似度門檻」，將不夠相似的雜訊專利批次移回「未分類」。
+          針對選取的分類節點設定相似度門檻，將不夠相似的雜訊專利批次移回未分類；第二頁採雙分類樹對照版面，即時顯示節點專利比例（如 37/70）。
         </p>
       </TechCard>
 
       <TechCard accent="purple" class="p-5">
         <div class="flex items-center gap-2 mb-3">
-          <TechBadge color="purple">操作流程</TechBadge>
-          <span class="text-xs font-mono text-zinc-400">INTERACTIVE FLOW</span>
+          <TechBadge color="purple">流程改造</TechBadge>
+          <span class="text-xs font-mono text-zinc-400">REFACTORING</span>
         </div>
-        <h3 class="text-lg font-semibold text-white mb-2">直覺式篩選與確認</h3>
+        <h3 class="text-lg font-semibold text-white mb-2">單一 dialog 與邏輯複用</h3>
         <ul class="text-sm text-zinc-300 space-y-2 list-disc list-inside leading-relaxed">
-          <li>選取目標節點 ➔ 調節相似度閥值 ➔ 即時預覽受影響專利</li>
-          <li>確認後自動批次重置分類狀態，避免人工逐一核對</li>
+          <li>進入分類改為開啟分類通 dialog，移除獨立第三頁、複用既有分類邏輯</li>
+          <li>dialog 內 AI 氣泡改串流呈現＋打字機效果，支援節點展開收合與 RWD</li>
         </ul>
       </TechCard>
     </div>

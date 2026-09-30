@@ -18,6 +18,12 @@ layout: full
 layout: full
 ---
 
+<AgendaSlide />
+
+---
+layout: full
+---
+
 <Slide2ClassifyFeatures />
 
 ---
@@ -37,6 +43,12 @@ layout: full
 ---
 
 <Slide5DifyPromptWorkflow />
+
+---
+layout: full
+---
+
+<MaintenanceSlide />
 
 ---
 layout: full
