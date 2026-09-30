@@ -15,7 +15,7 @@
         <span class="text-emerald-400"> 工作報告</span>
       </h1>
       <p class="text-lg font-light text-zinc-300 mb-6 max-w-3xl leading-snug">
-        TipoMusic · 資料轉置排障 · IPTECH & WEBPAT 檢索通與 Upat MCP
+        TipoMusic 修正 · 資料轉置 · WEBPAT & IPTECH 檢索通流程重建與 Upat MCP 串接
       </p>
       <div class="flex items-center gap-6 text-[10px] text-zinc-500 font-mono">
         <div class="flex items-center gap-2">

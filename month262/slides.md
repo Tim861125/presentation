@@ -18,6 +18,12 @@ layout: full
 layout: full
 ---
 
+<AgendaSlide />
+
+---
+layout: full
+---
+
 <Slide2ValueAndSearch />
 
 ---
@@ -25,6 +31,12 @@ layout: full
 ---
 
 <Slide3IssueFixesAndEtl />
+
+---
+layout: full
+---
+
+<MaintenanceSlide />
 
 ---
 layout: full

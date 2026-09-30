@@ -15,7 +15,7 @@
         <span class="text-emerald-400"> 工作報告</span>
       </h1>
       <p class="text-lg font-light text-zinc-300 mb-6 max-w-3xl leading-snug">
-        新增價值通 · 調整檢索通 · 洞察通 Token 調整 · 系統與資轉問題處理
+        WEBPAT / IPTECH 專利 AI 平台 · 新增價值通 · 檢索通流程修正 · 系統修正與維運
       </p>
       <div class="flex items-center gap-6 text-[10px] text-zinc-500 font-mono">
         <div class="flex items-center gap-2">

@@ -18,6 +18,12 @@ layout: full
 layout: full
 ---
 
+<AgendaSlide />
+
+---
+layout: full
+---
+
 <Slide2TipoMusicAndEtl />
 
 ---
@@ -25,6 +31,12 @@ layout: full
 ---
 
 <Slide3IptechWebpat />
+
+---
+layout: full
+---
+
+<OpsSlide />
 
 ---
 layout: full
