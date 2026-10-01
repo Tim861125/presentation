@@ -81,12 +81,15 @@ month25a = Oct 2025; 25b = Nov; 25c = Dec
 ```bash
 TEMPLATE_BASE="/home/tim/githubRepo/presentation/.agents/skills/create-monthly/templates/monthly"
 cp -r $TEMPLATE_BASE ./<new-deck>
-rm -rf ./<new-deck>/node_modules ./<new-deck>/dist ./<new-deck>/components ./<new-deck>/pages ./<new-deck>/snippets
-# Replace <deck-name> in package.json with <new-deck>
+rm -rf ./<new-deck>/node_modules ./<new-deck>/dist ./<new-deck>/pages ./<new-deck>/snippets
 bun install
 ```
 
-Replace the `<deck-name>` placeholder string in `package.json` with the actual deck directory name.
+Decks need **no `package.json`** — `scripts/dev.js` discovers a deck by the presence of `slides.md`, and all deps live at the repo root.
+
+**Keep `components/`** — the template ships starting-point slide components (`Slide1Cover`, `AgendaSlide`, `Slide2Overview`, `TopicSlide`, `SlideEnd`). Rename/duplicate `TopicSlide.vue` per topic (`Slide3Xxx.vue` ...) and fill in real content; replace `YYYY-MM` placeholders everywhere.
+
+Replace the `YYYY-MM` placeholder in `slides.md` and `components/` with the actual month (e.g. `2026-10`).
 
 **Note:** All commands run from the repo root (`/home/tim/githubRepo/presentation`). Do NOT `cd` into the deck directory. `bun install` must run at the root.
 
@@ -120,53 +123,58 @@ Organize content and write it into the deck's `spec.md`.
 
 ## Step 3: Distill slides.md from spec
 
+**Style baseline — read first:** open the most recent month deck (e.g. `month268/components/`) before writing. Every monthly deck in this repo is **component-heavy**: `layout: full` + Vue SFCs built from `SlideShell` / `SlideHeader` / `TechCard` / `TechBadge`. Do NOT present monthly content as markdown bullet pages. Fixed page order: `Slide1Cover` → `AgendaSlide` (目錄頁，必加) → `Slide2Overview` (TechCard 主線卡) → 主題頁×N（雙欄 TechCard，可選 footer bar）→ `SlideEnd`.
+
 ### Monthly slides.md skeleton (with `theme: tech`)
+
+> **Slidev v52 parser traps (verified against @slidev/parser):**
+>
+> 1. **Slide 1 lives INSIDE the deck headmatter block** — the first frontmatter block doubles as headmatter + slide 1, so the first component (`<Slide1Cover />`) goes directly after the headmatter-closing `---`. Adding a bare `---` + frontmatter block for slide 1 renders an extra empty first page.
+> 2. **Each content slide = `---` + frontmatter + `---` + content + one `---` separator.** Never two consecutive `---` lines (creates an empty slide). Don't put slide body text in YAML `left: |` / `right: |` blocks — a blank line before the closing `---` makes the next slide's frontmatter leak into content.
+> 3. **Slot splitting in markdown uses `::right::`** (v52 slot sugar, for `tech-two-cols`). The old MDC `<div slots="right" />` does NOT work.
 
 ```markdown
 ---
 theme: tech
 colorSchema: dark
 highlighter: shiki
-title: YYYY-MM
----
-
----
-layout: tech-cover
+css: unocss
 title: YYYY-MM 工作報告
-highlight: 月度總結
-subtitle: 產品研發與系統維護進度
-author: 丁吾心
-date: YYYY-MM
-tags: [IPTECH, WEBPAT, AI]
+info: |
+  YYYY-MM 工作報告
+  丁吾心
+transition: fade
+mdc: true
+layout: full
 ---
 
----
-layout: tech-content
-eyebrow: Summary
-title: 本月概覽
-subtitle: 核心產出與重大更新
----
-
-- **Patent Embedding Search** — 研究到正式站台上線
-- **快檢通** — WEBPAT 上線與點數機制
-- **TipoMusic** — 比對欄位擴充
+<Slide1Cover />
 
 ---
-layout: tech-content
-eyebrow: WEBPAT / IPTECH
-title: 核心系統維護
-subtitle: 功能更新與優化
+layout: full
 ---
 
-- 重點工作一
-- 重點工作二
+<AgendaSlide />
 
 ---
-layout: center
-class: text-center
+layout: full
 ---
 
-# End
+<Slide2Overview />
+
+---
+layout: full
+---
+
+<TopicSlide />
+
+<!-- 每個主題複製 TopicSlide.vue 改名（如 Slide3Xxx.vue），在此追加 --- layout: full --- 區塊 -->
+
+---
+layout: full
+---
+
+<SlideEnd />
 ```
 
 Replace `YYYY-MM` with the actual month.
@@ -175,12 +183,13 @@ Replace `YYYY-MM` with the actual month.
 
 ## Slide Writing Conventions
 
+- **Agenda page is mandatory** — right after the cover: two-column numbered list (`01`…`NN` mono index + semibold title + one-line mono summary); the closing item may span both columns (`md:col-span-2`).
+- **Topic pages are TechCard components, not markdown bullets** — each slide: `SlideHeader` (eyebrow `產品線 · 英文代號`, title, subtitle) + two `TechCard`s (`h3` + ≤4 `text-sm` bullets each) + optional full-width footer bar (`border-white/10 bg-white/5`,次要工作以「·」分隔).
 - **Group by product/topic** — Monthly decks group by `IPTECH`, `WEBPAT`, `TipoMusic`, `AI`.
-- **Title + subtitle + bullets** — Keep 3–8 bullets per slide.
-- **One topic per slide, no overflow** — Split pages or use `layout: tech-two-cols` when content is lengthy.
+- **One topic per slide, no overflow** — canvas is ~551px tall: keep each card ≤4 bullets; move extras into the footer bar or a second slide instead of shrinking text.
 - **No icons** — Only use checkmarks / crosses to indicate done / pending.
 - **Distill, don't copy** — The spec is the full list; slides keep only key highlights.
-- **Closing slide** — Always `layout: center` + `class: text-center` + `# End` or `# Thanks`.
+- **Closing slide** — Always `<SlideEnd />` (THANK YOU pill + `工作報告結束` + `YYYY-MM · 丁吾心`).
 
 ---
 
@@ -228,7 +237,6 @@ Defenses:
 ## Common Mistakes
 
 - **Page cut off at bottom** — skipped overflow check before claiming done.
-- Forgot to update `package.json` `name` (stays same as template deck).
 - Copy-pasted spec verbatim into slides → page overflow.
 - Named 10/11/12 months as `month2610` etc. — should be `month25a`/`b`/`c`.
 - Added icons to slides (not allowed in this repo).
@@ -250,9 +258,7 @@ bun run dev <deck>        # dev server with live reload, opens browser
 ├── SKILL.md
 └── templates/
     └── monthly/          # Monthly report template (theme: tech, dark tech cover & layouts)
-        ├── slides.md
+        ├── slides.md     # component-heavy shell: Slide1Cover → Agenda → Overview → TopicSlide×N → End
         ├── spec.md
-        ├── package.json
-        ├── netlify.toml
-        └── vercel.json
+        └── components/   # Slide1Cover / AgendaSlide / Slide2Overview / TopicSlide / SlideEnd 起手元件
 ```

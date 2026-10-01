@@ -2,43 +2,40 @@
 theme: tech
 colorSchema: dark
 highlighter: shiki
-title: YYYY-MM
----
-
----
-layout: tech-cover
+css: unocss
 title: YYYY-MM 工作報告
-highlight: 月度總結
-subtitle: 產品研發與系統維護進度
-author: 丁吾心
-date: YYYY-MM
-tags: [IPTECH, WEBPAT, AI]
+info: |
+  YYYY-MM 工作報告
+  丁吾心
+transition: fade
+mdc: true
+layout: full
 ---
 
----
-layout: tech-content
-eyebrow: Summary
-title: 本月概覽
-subtitle: 核心產出與重大更新
----
-
-- **重點項目一** — 核心功能上線
-- **重點項目二** — 效能調優與優化
-- **重點項目三** — 系統維護與問題修復
+<Slide1Cover />
 
 ---
-layout: tech-content
-eyebrow: WEBPAT / IPTECH
-title: 核心系統維護
-subtitle: 功能更新與優化
+layout: full
 ---
 
-- 重點工作一
-- 重點工作二
+<AgendaSlide />
 
 ---
-layout: center
-class: text-center
+layout: full
 ---
 
-# End
+<Slide2Overview />
+
+---
+layout: full
+---
+
+<TopicSlide />
+
+<!-- 每個主題複製 TopicSlide.vue 改名（如 Slide3Xxx.vue），在此追加 --- layout: full --- 區塊 -->
+
+---
+layout: full
+---
+
+<SlideEnd />

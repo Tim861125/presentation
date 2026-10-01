@@ -13,6 +13,16 @@
   font-family: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
 }
 
+/* Tech layouts nest their content container inside <SlideShell>;
+   keep the solid slide background on the shell only, not on the inner container. */
+.slidev-layout.tech-cover,
+.slidev-layout.tech-content,
+.slidev-layout.tech-two-cols,
+.slidev-layout.tech-section,
+.slidev-layout.tech-end {
+  background-color: transparent;
+}
+
 /* full layout: zero padding so components control their own bleed */
 .slidev-layout.full {
   padding: 0;
