@@ -18,6 +18,12 @@ layout: full
 layout: full
 ---
 
+<AgendaSlide />
+
+---
+layout: full
+---
+
 <Slide2Overview />
 
 ---
@@ -48,7 +54,19 @@ layout: full
 layout: full
 ---
 
+<DataPipelineSlide />
+
+---
+layout: full
+---
+
 <Slide7QuickSearch />
+
+---
+layout: full
+---
+
+<SepToolSlide />
 
 ---
 layout: full
@@ -61,6 +79,12 @@ layout: full
 ---
 
 <Slide9WebpatOther />
+
+---
+layout: full
+---
+
+<OpsSlide />
 
 ---
 layout: full

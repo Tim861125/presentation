@@ -17,8 +17,9 @@
         </div>
         <h3 class="text-lg font-semibold text-white mb-2">WEBPAT 快檢通</h3>
         <ul class="text-sm text-zinc-300 space-y-2 list-disc list-inside leading-relaxed">
-          <li>WEBPAT 正式新增「快檢通」檢索模組</li>
-          <li>依據使用者回饋持續修正介面與操作流暢度</li>
+          <li>WEBPAT 新增「快檢通」快速檢索模式，入口經 SSO token 驗證進入</li>
+          <li>檢索結果改由 OpenSearch kNN 相似度排序，國家選項可勾選</li>
+          <li>快速模式下停用一級篩選、離開時自動還原原設定</li>
         </ul>
       </TechCard>
 
@@ -29,7 +30,7 @@
         </div>
         <h3 class="text-lg font-semibold text-white mb-2">點數機制更新</h3>
         <ul class="text-sm text-zinc-300 space-y-2 list-disc list-inside leading-relaxed">
-          <li>快檢通扣點機制更新與異常處理修復</li>
+          <li>快檢通扣點機制更新與異常修正</li>
           <li>IPTECH 點數標準設定：單次查詢扣抵 10 點</li>
         </ul>
       </TechCard>

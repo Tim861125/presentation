@@ -17,7 +17,7 @@
         </div>
         <h3 class="text-lg font-semibold text-white mb-2">匯出信件下載網址處理</h3>
         <p class="text-sm text-zinc-300 leading-relaxed">
-          解決匯出郵件中下載連結過期或因網址編碼導致使用者無法正常下載專利檔案之問題。
+          匯出完成通知郵件中的下載網址因 URL 編碼問題無法開啟，修正郵件服務編碼邏輯後重新發送。
         </p>
       </TechCard>
 
@@ -28,8 +28,8 @@
         </div>
         <h3 class="text-lg font-semibold text-white mb-2">正式站台版本發布</h3>
         <ul class="text-sm text-zinc-300 space-y-2 list-disc list-inside leading-relaxed">
-          <li>IPTECH 正式站台同步更新完成</li>
-          <li>WEBPAT 正式站台同步更新完成</li>
+          <li>IPTECH 正式站台更新（v8.0.156）</li>
+          <li>WEBPAT 隨功能迭代連續發版至 v8.0.212</li>
         </ul>
       </TechCard>
     </div>

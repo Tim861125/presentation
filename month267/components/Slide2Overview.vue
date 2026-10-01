@@ -15,7 +15,7 @@
           <TechBadge color="sky">重點成果 01</TechBadge>
         </div>
         <h4 class="text-base font-semibold text-white mb-1">Patent Embedding Search</h4>
-        <p class="text-xs text-zinc-300">完成一專利多向量研究至正式站台建置與上線。</p>
+        <p class="text-xs text-zinc-300">語意搜尋功能：從多向量策略研究到正式站台完整建置上線。</p>
       </TechCard>
 
       <TechCard accent="emerald" class="p-4">
@@ -23,7 +23,7 @@
           <TechBadge color="emerald">重點成果 02</TechBadge>
         </div>
         <h4 class="text-base font-semibold text-white mb-1">快檢通</h4>
-        <p class="text-xs text-zinc-300">WEBPAT 正式上線與全站點數扣抵機制整合。</p>
+        <p class="text-xs text-zinc-300">WEBPAT（專利搜尋平台）新功能上線，整合全站點數扣抵機制。</p>
       </TechCard>
 
       <TechCard accent="purple" class="p-4">
@@ -31,7 +31,7 @@
           <TechBadge color="purple">重點成果 03</TechBadge>
         </div>
         <h4 class="text-base font-semibold text-white mb-1">多國專利資料管線</h4>
-        <p class="text-xs text-zinc-300">新增 EP / KR / CN 資料流：File → RAW → L1 → L3 → OS。</p>
+        <p class="text-xs text-zinc-300">CN／EPO／KR 新增匯入管線：File → RAW → L1 → L3 → OpenSearch。</p>
       </TechCard>
 
       <TechCard accent="amber" class="p-4">
@@ -39,7 +39,7 @@
           <TechBadge color="amber">重點成果 04</TechBadge>
         </div>
         <h4 class="text-base font-semibold text-white mb-1">工具與維護</h4>
-        <p class="text-xs text-zinc-300">SEP diff tool 規格推進與 TipoMusic 欄位擴充比對。</p>
+        <p class="text-xs text-zinc-300">SEP（標準必要專利）差速工具實裝上線與 TipoMusic 欄位擴充。</p>
       </TechCard>
     </div>
   </SlideShell>

@@ -15,7 +15,7 @@
         <span class="text-cyan-400"> 工作報告</span>
       </h1>
       <p class="text-lg font-light text-zinc-300 mb-6 max-w-3xl leading-snug">
-        Patent Embedding Search · 快檢通 · 站台建置與 CI/CD · SEP diff tool
+        Patent Embedding Search 語意搜尋 · 快檢通 · 多國資料管線 · CI/CD · SEP diff tool
       </p>
       <div class="flex items-center gap-6 text-[10px] text-zinc-500 font-mono">
         <div class="flex items-center gap-2">

@@ -17,9 +17,9 @@
         </div>
         <h3 class="text-lg font-semibold text-white mb-2">站台建置與資料搬移</h3>
         <ul class="text-sm text-zinc-300 space-y-2 list-disc list-inside leading-relaxed">
-          <li>完成獨立站台建置，順利對接 WEBPAT 檢索結果</li>
-          <li>IPTECH 首頁新增 Patent Embedding Search 入口</li>
-          <li>Embedding 向量資料安全搬移至 Server 並建置 CI/CD</li>
+          <li>完成獨立站台並對接 WEBPAT 檢索結果，IPTECH（專利分析與專案管理平台）首頁新增功能入口</li>
+          <li>Embedding 向量資料搬至正式伺服器，Dockerfile 部署上線</li>
+          <li>新增 health check 端點與 CI／CD 管線</li>
         </ul>
       </TechCard>
 
@@ -30,8 +30,9 @@
         </div>
         <h3 class="text-lg font-semibold text-white mb-2">登入與點數全站更新</h3>
         <ul class="text-sm text-zinc-300 space-y-2 list-disc list-inside leading-relaxed">
-          <li>登入保護：無登入不可使用，限定由 IPTECH 授權登入</li>
-          <li>點數機制：WEBPAT / IPTECH / PatentPilot-service / Dify 全站同步更新</li>
+          <li>登入門禁三件套：Middleware 攔截受保護 API、未登入阻擋畫面、全站登入狀態機</li>
+          <li>Dify 呼叫改經 PatentPilot-service（公司 AI 服務閘道）統一管理金鑰與呼叫權限</li>
+          <li>點數機制於 WEBPAT／IPTECH／PatentPilot-service／Embedding Search／Dify 五站同步更新</li>
         </ul>
       </TechCard>
     </div>
