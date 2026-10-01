@@ -3,13 +3,13 @@
     <SlideHeader
       eyebrow="SEP TOOL / TIPO MUSIC"
       title="SEP 差速工具收斂與 TipoMusic 排查"
-      subtitle="工具職責回歸規格產出；使用者問題追到根因"
+      subtitle="SEP（標準必要專利）比對工具職責回歸規格產出；TipoMusic（音樂版權管理系統）使用者問題追到根因"
     />
 
     <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mt-5">
       <TechCard variant="blue" class="p-5">
         <div class="flex items-center gap-2 mb-3">
-          <TechBadge color="sky" label="169454 / 169460" />
+          <TechBadge color="sky" label="SEP TOOL" />
         </div>
         <h3 class="text-base font-semibold text-white mb-2">sep-tool</h3>
         <ul class="text-sm text-zinc-300 space-y-2 list-disc list-inside leading-relaxed">
@@ -20,11 +20,11 @@
 
       <TechCard variant="emerald" class="p-5">
         <div class="flex items-center gap-2 mb-3">
-          <TechBadge color="emerald" label="169657 / 172979" />
+          <TechBadge color="emerald" label="排查看護流程" />
         </div>
         <h3 class="text-base font-semibold text-white mb-2">TipoMusic</h3>
         <ul class="text-sm text-zinc-300 space-y-2 list-disc list-inside leading-relaxed">
-          <li>語言分析未顯示 ACMA / TMCA：歌曲數量為 0 依規則不顯示欄位，非 bug</li>
+          <li>語言分析未顯示 ACMA / TMCA（版權集管團體）：歌曲數量為 0 依規則不顯示欄位，確認資料庫實數一致，非 bug</li>
           <li>確認通知失敗：Owner 錯誤信箱 + 正式機 SMTP DNS 解析到錯誤 IP，皆已修正</li>
           <li>站點網址變更 → 恢復原網址，同步 KM 文件</li>
         </ul>

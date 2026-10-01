@@ -3,7 +3,7 @@
     <SlideHeader
       eyebrow="PATENT EMBEDDING SEARCH · ARCHITECTURE"
       title="多國家檢索註冊表"
-      subtitle="by-text 同案合併由寫死 twa/twb 改為可擴充設計（169359）"
+      subtitle="by-text 同案合併由寫死 twa/twb 改為可擴充設計"
     />
 
     <div class="grid grid-cols-1 md:grid-cols-2 gap-5 mt-5">
@@ -12,8 +12,8 @@
           <TechBadge color="sky" label="問題" />
         </div>
         <ul class="text-sm text-zinc-300 space-y-2 list-disc list-inside leading-relaxed">
-          <li>合併以全域 <code>apnRaw</code> 分組、代表偏好寫死 <code>"twb"</code></li>
-          <li>跨國 apnRaw 字面相同會誤併成一筆</li>
+          <li>合併以全域申請號 <code>apnRaw</code> 分組、代表文獻偏好寫死 <code>"twb"</code>（台灣公告）</li>
+          <li>跨國申請號字面相同會誤併成一筆</li>
         </ul>
       </TechCard>
 
@@ -22,8 +22,8 @@
           <TechBadge color="emerald" label="作法" />
         </div>
         <ul class="text-sm text-zinc-300 space-y-2 list-disc list-inside leading-relaxed">
-          <li><code>INDEXES</code> 註冊表宣告 <code>country / kind</code> 決定分組與代表偏好</li>
-          <li>合併鍵改為 country + apnRaw，合併僅限國家內</li>
+          <li><code>INDEXES</code> 註冊表宣告 <code>country / kind</code>，決定分組與代表文獻偏好</li>
+          <li>合併鍵改為 country + apnRaw，合併僅限國家內、不跨國併同族</li>
           <li>前端來源改為「國家多選 × 種類」，標籤由註冊表提供</li>
         </ul>
       </TechCard>

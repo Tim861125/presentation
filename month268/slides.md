@@ -18,6 +18,12 @@ layout: full
 layout: full
 ---
 
+<AgendaSlide />
+
+---
+layout: full
+---
+
 <Slide2Overview />
 
 ---
@@ -85,6 +91,12 @@ layout: full
 ---
 
 <Slide13Sharing />
+
+---
+layout: full
+---
+
+<OpsSlide />
 
 ---
 layout: full

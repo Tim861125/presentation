@@ -12,7 +12,7 @@
           <TechBadge color="sky" label="主線 01" />
         </div>
         <h4 class="text-base font-semibold text-white mb-1">Patent Embedding Search</h4>
-        <p class="text-xs text-zinc-300">多國家註冊表、全面改接 UPat、API 命名改造。</p>
+        <p class="text-xs text-zinc-300">多國家註冊表、檢索全面改接 UPat（內部專利資料 Middleware）、API 命名改造。</p>
       </TechCard>
 
       <TechCard variant="emerald" class="p-4">
@@ -28,7 +28,7 @@
           <TechBadge color="rose" label="主線 03" />
         </div>
         <h4 class="text-base font-semibold text-white mb-1">即期資轉管線</h4>
-        <p class="text-xs text-zinc-300">依 ADR 0008/0009/0010 重整 14 國案別更新鏈。</p>
+        <p class="text-xs text-zinc-300">新公告專利逐期轉檔的管線，依 ADR（架構決策紀錄）0008/0009/0010 重整 14 國案別更新鏈。</p>
       </TechCard>
 
       <TechCard variant="amber" class="p-4">
@@ -36,7 +36,7 @@
           <TechBadge color="amber" label="主線 04" />
         </div>
         <h4 class="text-base font-semibold text-white mb-1">es-to-citus 回填</h4>
-        <p class="text-xs text-zinc-300">legacy ES mapping 溯源，六國 + WOA 回填全數上線。</p>
+        <p class="text-xs text-zinc-300">legacy ES mapping 溯源，六國 + WOA 歷史資料全數回填至 Citus（PostgreSQL 分散式擴充）。</p>
       </TechCard>
     </div>
   </SlideShell>

@@ -3,17 +3,17 @@
     <SlideHeader
       eyebrow="DATA-IMPORTER · ADR 0008 / 0009 / 0010"
       title="即期資轉統一更新鏈"
-      subtitle="L2 待更新清單驅動 L3 重建，不再以卷期重掃全部 L1"
+      subtitle="L1 來源正規化 / L2 中間層 / L3 搜尋文件三層管線：由 L2 待更新清單驅動 L3 重建，不再以卷期重掃全部 L1"
     />
 
     <div class="grid grid-cols-3 gap-4 mt-4">
       <div class="rounded-lg border border-cyan-400/30 bg-cyan-400/5 px-4 py-3">
         <p class="text-[11px] font-mono text-cyan-400 mb-1">ADR 0008</p>
-        <p class="text-xs text-zinc-300">L2 待更新清單：以身分三元組（格式化專利號 + 申請號 + Kind Code）記錄待重建案件</p>
+        <p class="text-xs text-zinc-300">L2 待更新清單：以身分三元組（格式化專利號 + 格式化申請號 + Kind Code）記錄待重建案件</p>
       </div>
       <div class="rounded-lg border border-cyan-400/30 bg-cyan-400/5 px-4 py-3">
         <p class="text-[11px] font-mono text-cyan-400 mb-1">ADR 0009</p>
-        <p class="text-xs text-zinc-300">目標檔案路徑線索：volumeDir / caseDir / sourceBuckets 一路帶入搜尋文件，可反推 RAW XML 位置</p>
+        <p class="text-xs text-zinc-300">目標檔案路徑線索：<code>volumeDir</code> / <code>caseDir</code> / <code>sourceBuckets</code> 一路帶入搜尋文件，可反推 RAW XML 位置</p>
       </div>
       <div class="rounded-lg border border-cyan-400/30 bg-cyan-400/5 px-4 py-3">
         <p class="text-[11px] font-mono text-cyan-400 mb-1">ADR 0010</p>

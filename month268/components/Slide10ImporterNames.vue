@@ -9,8 +9,7 @@
     <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mt-5">
       <TechCard variant="blue" class="p-5">
         <div class="flex items-center gap-2 mb-3">
-          <TechBadge color="sky" label="170634" />
-          <span class="text-xs font-mono text-zinc-400">TW EMBEDDING</span>
+          <TechBadge color="sky" label="TW EMBEDDING" />
         </div>
         <h3 class="text-base font-semibold text-white mb-2">TWA / TWB L2 embedding jobs</h3>
         <ul class="text-sm text-zinc-300 space-y-2 list-disc list-inside leading-relaxed">
@@ -21,7 +20,7 @@
 
       <TechCard variant="emerald" class="p-5">
         <div class="flex items-center gap-2 mb-3">
-          <TechBadge color="emerald" label="171512 / 171662 / 171663 / 171665" />
+          <TechBadge color="emerald" label="TW · JP · CN · KR" />
         </div>
         <h3 class="text-base font-semibold text-white mb-2">四國 L2 name jobs</h3>
         <ul class="text-sm text-zinc-300 space-y-2 list-disc list-inside leading-relaxed">
@@ -32,7 +31,7 @@
     </div>
 
     <div class="rounded-lg border border-white/10 bg-white/5 px-4 py-3 mt-4">
-      <p class="text-xs text-zinc-400">輸出重構（171666）：陣列資料列轉換抽至 <code>factories/output/postgres.ts</code> 共用，四國 job 行為一致 · twa 即期 embedding 排查（170919）</p>
+      <p class="text-xs text-zinc-400">輸出重構：陣列資料列轉換抽至 <code>factories/output/postgres.ts</code> 共用，四國 job 行為一致 · TWA 即期 embedding 問題排查</p>
     </div>
   </SlideShell>
 </template>
