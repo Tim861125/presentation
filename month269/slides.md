@@ -44,13 +44,13 @@ layout: full
 
 <Slide5DomainUiOps />
 
----
+<!-- ---
 layout: full
 ---
 
-<Slide6EsToCitusYearly />
+<Slide6EsToCitusYearly /> -->
 
----
+<!-- ---
 layout: full
 ---
 
@@ -60,7 +60,7 @@ layout: full
 layout: full
 ---
 
-<Slide8CurrentL3 />
+<Slide8CurrentL3 /> -->
 
 ---
 layout: full
