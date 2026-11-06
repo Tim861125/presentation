@@ -1,6 +1,6 @@
 ---
 name: create-monthly
-description: Use when creating a new monthly work report Slidev deck in the presentation monorepo — `create-monthly [YYYY-MM] <spec-source>`. Supports spec sources: a file path containing notes/tasks, a URL, or raw text. Covers scaffold from monthly template, spec.md → slides.md distillation, slidev-theme-tech dark tech styling, verification, and common pitfalls.
+description: Use when creating a new monthly work report Slidev deck in the presentation monorepo — `create-monthly [YYYY-MM] <spec-source>`. Supports spec sources: a file path containing notes/tasks, a URL, or raw text. Covers scaffold from the hand-drawn (rough.js) sketch template, spec.md → slides.md distillation, verification, and common pitfalls.
 ---
 
 # Create Monthly Work Report Slidev Deck
@@ -11,7 +11,7 @@ Slides in the `presentation` monorepo are **Slidev decks**, one directory per de
 
 1. **Read & organize** source content → refined spec
 2. Write refined content → `spec.md` (source of truth)
-3. **Distill** spec into a concise `slides.md`
+3. **Distill** spec into a concise `slides.md` in the **hand-drawn style**
 4. Verify no page overflow
 
 Slides are the distilled highlights, not a verbatim copy of the spec.
@@ -39,29 +39,10 @@ Example: `create-monthly 2026-08 /path/to/spec.md`
 
 **Before writing spec.md, always read the source content and distill it.**
 
-Workflow:
-
-1. **Fetch/resolve source** — `spec/*.md`, file path, URL, or raw text
+1. **Fetch/resolve source** — `spec/*.md` (resolves to `<repo>/spec/<filename>`), file path, URL (if SPA, fetch the GitHub raw version), or raw text
 2. **Read the content fully** — understand all material before distilling
-3. **Organize & refine** — structure, rephrase, remove noise, keep key points
+3. **Organize & refine** — group related items, remove redundancy and noise, keep essential details, preserve source links
 4. **Write organized content** into the deck's `spec.md`
-
-```
-Source ──→ Fetch/organize → Edit/Refine ──→ spec.md (stored in deck directory)
-```
-
-- **spec/\*.md** — resolve to `<repo>/spec/<filename>` (e.g. `create-monthly dify-backend dify-backend.md` reads `spec/dify-backend.md`)
-- **File path** — read directly, organize, format
-- **URL** — fetch via `webfetch` (if SPA, fetch the GitHub raw version instead)
-- **Raw text** — structure the text into organized content
-
-**Organizing principles:**
-
-- Group related items together
-- Remove redundancy and noise
-- Keep essential details, rephrase clearly
-- Preserve source links / references
-- Use consistent structure and formatting
 
 ---
 
@@ -69,7 +50,7 @@ Source ──→ Fetch/organize → Edit/Refine ──→ spec.md (stored in dec
 
 **Never** run `npx slidev create` — it produces a standalone project that conflicts with the workspace. Use the built-in template instead.
 
-Template location: `.claude/skills/create-monthly/templates/monthly/`
+Template location: `.claude/skills/create-monthly/templates/sketch/`
 
 ### Determine deck name
 
@@ -79,14 +60,26 @@ month25a = Oct 2025; 25b = Nov; 25c = Dec
 ```
 
 ```bash
-TEMPLATE_BASE="/home/tim/githubRepo/presentation/.claude/skills/create-monthly/templates/monthly"
+TEMPLATE_BASE="/home/tim/githubRepo/presentation/.claude/skills/create-monthly/templates/sketch"
 cp -r $TEMPLATE_BASE ./<new-deck>
-rm -rf ./<new-deck>/node_modules ./<new-deck>/dist ./<new-deck>/components ./<new-deck>/pages ./<new-deck>/snippets
-# Replace <deck-name> in package.json with <new-deck>
 bun install
 ```
 
-Replace the `<deck-name>` placeholder string in `package.json` with the actual deck directory name.
+Decks need **no `package.json`** — `scripts/dev.js` discovers a deck by the presence of `slides.md`, and all deps (including `roughjs`) live at the repo root.
+
+**Keep every template file** — the hand-drawn look depends on all of them; Slidev picks them up from the deck root by convention:
+
+| File | Role |
+| --- | --- |
+| `style.css` | 白底、藍 `#4f61ab` + 琥珀 `#f5a700` 調色盤（`--sk-*`）、h1 琥珀底線、`.callout` / `.big-quote` / `.scene-caption` / `.code-sm` |
+| `layouts/cover.vue`, `layouts/section.vue` | navy 點陣漸層的封面（預設 slot + `::art::`）與章節頁（`.eyebrow` + `# 標題`） |
+| `global-bottom.vue` | 每頁頁尾：`YYYY-MM 工作報告 · 丁吾心` + 頁碼（封面不顯示） |
+| `utils/rough-scene.ts` | rough.js 手繪引擎：`Scene`（`layer` / `box` / `arrow` / `curve` / `pill` / `text`…）+ `useRoughScene`，跟著 `$clicks` 一筆筆「畫出來」 |
+| `setup/shiki.ts` | `github-light` 程式碼配色 |
+| `components/TitleSketch.vue` | 封面右側手繪：本月主線節點＋箭頭（改 `nodes` / `edges` / `tagline`） |
+| `components/FlowScene.vue` | 通用手繪流程圖：props `steps` / `notes` / `result`，每 click 畫一格 |
+
+Replace the `YYYY-MM` placeholder in `slides.md`, `global-bottom.vue`, and `components/` with the actual month (e.g. `2026-10`).
 
 **Note:** All commands run from the repo root (`/home/tim/githubRepo/presentation`). Do NOT `cd` into the deck directory. `bun install` must run at the root.
 
@@ -94,93 +87,54 @@ Replace the `<deck-name>` placeholder string in `package.json` with the actual d
 
 ## Step 2: Write spec.md
 
-Organize content and write it into the deck's `spec.md`.
-
-**Monthly deck spec** must include this header:
-
-```markdown
-# YYYY-MM 月工作內容
-
-此專案為 slidev 的專案，將內容寫在 slides.md 裡面
-
-# 注意
-
-- 不要使用 icon, 只在必要時用打勾或叉叉讓版面清晰，不需要的話就不用
-- 注意每一頁的高度不要超過螢幕高度
-- 科技感（使用 slidev-theme-tech 或深色漸層）
-- 完成後要確認畫面，確認沒有頁面下方被切掉
-- 用繁體中文
-
-# 以下為本月工作內容
-
-<貼上整理後的 task 清單 / 條列規格>
-```
+The template's `spec.md` already carries the required header (注意事項：手寫風格、不用 icon、不超出頁高、繁體中文). Paste the organized task list under `# 以下為本月工作內容`.
 
 ---
 
-## Step 3: Distill slides.md from spec
+## Step 3: Distill slides.md from spec — hand-drawn style
 
-### Monthly slides.md skeleton (with `theme: tech`)
+**Style baseline — read first:** the hand-drawn style comes from `/home/tim/githubRepo/context-propagation-slides` (`slides.md`, `components/*Scene.vue`). Open it before writing to see how pages mix markdown with rough.js scenes. The template's `slides.md` is the page skeleton to fill.
 
-```markdown
----
-theme: tech
-colorSchema: dark
-highlighter: shiki
-title: YYYY-MM
----
+Monthly decks are **markdown-heavy with hand-drawn scenes**: plain `# 標題` + markdown on a white page, and each topic gets at least one rough.js scene that sketches itself in click by click.
 
----
-layout: tech-cover
-title: YYYY-MM 工作報告
-highlight: 月度總結
-subtitle: 產品研發與系統維護進度
-author: 丁吾心
-date: YYYY-MM
-tags: [IPTECH, WEBPAT, AI]
----
+Fixed page order:
 
----
-layout: tech-content
-eyebrow: Summary
-title: 本月概覽
-subtitle: 核心產出與重大更新
----
+1. **Cover** (`layout: cover`, lives in the headmatter) — `# YYYY-MM 工作報告` + 一句主軸 + `丁吾心 · YYYY-MM`, `::art::` → `<TitleSketch />`
+2. **目錄** — two-column numbered list (`01`…`NN` in `--sk-orange-dark` mono + bold title + one-line grey summary)
+3. **本月總結** (`layout: center`) — `.big-quote` one-sentence summary with `<em>` highlights + two `.callout` cards (`.callout.blue` + `.callout`)
+4. **Per topic, repeat:**
+   - `layout: section` — `<div class="eyebrow">產品線 · NN</div>` + `# 主題` + 一句副標
+   - **Scene page** — `# 標題` + a rough.js scene (`<FlowScene … />` or a new `components/<Topic>Scene.vue`) + `.scene-caption`; set `clicks:` in frontmatter and write one `[click]` presenter note per step
+   - **Detail page** (optional) — `### 完成項目` / `### 待辦 / 風險` in `grid grid-cols-2 gap-8` with `v-click`, plus a `.callout` for 次要工作（以「·」分隔）
+5. **Closing** (`layout: section`) — eyebrow `Thanks` + `# 工作報告結束` + `YYYY-MM · 丁吾心`
 
-- **Patent Embedding Search** — 研究到正式站台上線
-- **快檢通** — WEBPAT 上線與點數機制
-- **TipoMusic** — 比對欄位擴充
+### Writing a new scene
 
----
-layout: tech-content
-eyebrow: WEBPAT / IPTECH
-title: 核心系統維護
-subtitle: 功能更新與優化
----
+Copy `FlowScene.vue` (or a scene from the reference deck, e.g. `IslandsScene.vue`, `WaterfallScene.vue`) to `components/<Topic>Scene.vue` and draw in `useRoughScene(svg, s => { … })`:
 
-- 重點工作一
-- 重點工作二
+- `s.layer(n)` = group shown from click `n` on (`{ to }` hides it later, `{ delay, duration }` paces the sketch-in). Layer 0 is visible on enter, so **frontmatter `clicks:` = highest layer index**.
+- Colors come from `C` (`blue`, `blueLight`, `navy`, `orange`, `orangeDark`, `grey`, `red`, `green`): primary boxes `fill: C.blueLight, fillStyle: 'hachure', stroke: C.blue`; highlights / results in `C.orange`; problems in `C.red`.
+- Use a fixed `viewBox` (width 900, height ≤ 330) with `class="w-full"` so the scene fits the canvas under the h1.
+- Static decorative scenes (cover) pass `() => 0` as the step function.
 
----
-layout: center
-class: text-center
----
+### Slidev v52 parser traps (verified against @slidev/parser)
 
-# End
-```
-
-Replace `YYYY-MM` with the actual month.
+1. **Slide 1 lives INSIDE the deck headmatter block** — the first frontmatter block doubles as headmatter + cover, so cover content goes directly after the headmatter-closing `---`. Adding a bare `---` + frontmatter block for slide 1 renders an extra empty first page.
+2. **Each slide = `---` + frontmatter + `---` + content + one `---` separator.** Never two consecutive `---` lines (creates an empty slide).
+3. **Named slots in markdown use `::art::`** (v52 slot sugar). The old MDC `<div slots="art" />` does NOT work.
+4. **Blank lines around markdown inside HTML** — inside `<div class="callout">` / `<div v-click>`, leave a blank line after the opening tag and before the closing tag, or the markdown renders as raw text.
 
 ---
 
 ## Slide Writing Conventions
 
-- **Group by product/topic** — Monthly decks group by `IPTECH`, `WEBPAT`, `TipoMusic`, `AI`.
-- **Title + subtitle + bullets** — Keep 3–8 bullets per slide.
-- **One topic per slide, no overflow** — Split pages or use `layout: tech-two-cols` when content is lengthy.
-- **No icons** — Only use checkmarks / crosses to indicate done / pending.
-- **Distill, don't copy** — The spec is the full list; slides keep only key highlights.
-- **Closing slide** — Always `layout: center` + `class: text-center` + `# End` or `# Thanks`.
+- **Hand-drawn first** — every topic shows its story as a rough.js scene (flow, before/after, architecture, timeline); text pages support the scenes, not the other way round.
+- **Group by product/topic** — monthly decks group by `IPTECH`, `WEBPAT`, `TipoMusic`, `AI`; the product line goes in the section `.eyebrow`.
+- **One idea per page, no overflow** — canvas is ~551px tall: ≤4 bullets per column, scene height ≤ 330 viewBox units; split into another page instead of shrinking text.
+- **Reveal with clicks** — scenes step via `clicks:` + layers; text blocks via `v-click` / `<v-clicks>`.
+- **No icons** — only checkmarks / crosses to indicate done / pending.
+- **Distill, don't copy** — the spec is the full list; slides keep only key highlights.
+- **Stay in the palette** — use `--sk-*` / `C.*` colors and the existing classes; skip `theme: tech` components (`SlideShell`, `TechCard`…), which belong to the old dark tech style.
 
 ---
 
@@ -188,47 +142,30 @@ Replace `YYYY-MM` with the actual month.
 
 Slidev renders each slide on a **fixed-size canvas** (~980×551px, 16:9). Content that exceeds it is hidden by `overflow: hidden`.
 
-### Method 1: Chrome DevTools MCP
-
-1. Start dev server (run from repo root): `bun run dev --root <deck>` (default `http://localhost:3030`, auto-rotates if in use).
-2. Open `/export/` route — stacks all slides into a scrollable view:
-   `navigate_page` → `http://localhost:<port>/export/`
+1. Start dev server (from repo root): `bun run dev <deck>` (default `http://localhost:3030`, auto-rotates if in use).
+2. Open `/export/` (Chrome DevTools MCP `navigate_page`, or Playwright if MCP is not connected) — it stacks all slides.
 3. Run overflow check:
 
     ```js
     () =>
       Array.from(document.querySelectorAll(".slidev-page"))
-        .map((el, i) => ({
-          slide: i + 1,
-          overflowPx: el.scrollHeight - el.clientHeight,
-        }))
+        .map((el, i) => ({ slide: i + 1, overflowPx: el.scrollHeight - el.clientHeight }))
         .filter((s) => s.overflowPx > 2);
     ```
 
-    Empty array = OK. Any value = that many pixels of overflow on that slide.
+    Empty array = OK.
 
-4. Fix overflows: split pages, reduce bullets, reduce text size, or switch `layout: tech-two-cols`.
-5. End with `take_screenshot` for visual confirmation on suspicious slides.
-
----
-
-## Canvas-height Trap (Most Common Bug)
-
-Slidev renders on a fixed **~980×551 unit canvas** (16:9), not the browser window. Only ~551px is available after padding.
-
-Defenses:
-
-- Keep padding modest (`py-5`, `p-4`), tight `gap`
-- Use `justify-start` instead of `justify-center` for tall content
-- Move a bulky side note into a full-width footer bar to shorten column height
-- If still overflowing, cut content — don't just shrink text
+4. Screenshot every scene page at its **last click** (`http://localhost:<port>/<n>?clicks=<N>`) — confirms every layer draws and nothing collides with the footer. A missing final layer means `clicks:` is lower than the highest layer index.
+5. Fix overflows: split pages, cut bullets, or lower the scene's viewBox height. The `Failed to patch FloatingVue` console error comes from Slidev itself and is harmless.
 
 ---
 
 ## Common Mistakes
 
 - **Page cut off at bottom** — skipped overflow check before claiming done.
-- Forgot to update `package.json` `name` (stays same as template deck).
+- **Last scene step never shows** — `clicks:` set to the step count instead of the highest layer index.
+- Deleted `style.css` / `layouts/` / `global-bottom.vue` / `utils/` from the new deck → plain default-theme look.
+- Left `YYYY-MM` in `global-bottom.vue` or `TitleSketch.vue`.
 - Copy-pasted spec verbatim into slides → page overflow.
 - Named 10/11/12 months as `month2610` etc. — should be `month25a`/`b`/`c`.
 - Added icons to slides (not allowed in this repo).
@@ -249,10 +186,13 @@ bun run dev <deck>        # dev server with live reload, opens browser
 .claude/skills/create-monthly/
 ├── SKILL.md
 └── templates/
-    └── monthly/          # Monthly report template (theme: tech, dark tech cover & layouts)
-        ├── slides.md
-        ├── spec.md
-        ├── package.json
-        ├── netlify.toml
-        └── vercel.json
+    ├── sketch/           # 現行：手寫風格月報模板
+    │   ├── slides.md     # cover → 目錄 → 總結 → (section → scene → detail)×N → 結束
+    │   ├── spec.md
+    │   ├── style.css  global-bottom.vue
+    │   ├── layouts/      # cover.vue / section.vue
+    │   ├── utils/        # rough-scene.ts
+    │   ├── setup/        # shiki.ts
+    │   └── components/   # TitleSketch.vue / FlowScene.vue
+    └── monthly/          # 舊：dark tech（theme: tech）模板，僅供舊 deck 參考
 ```
