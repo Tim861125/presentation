@@ -1,6 +1,6 @@
 ---
 name: create-tech
-description: Use when creating a tech deep-dive or general presentation Slidev deck in the presentation monorepo — `create-tech <topic> <spec-source>`. Supports spec sources: a file path containing notes/tasks, a URL, or raw text. Covers scaffold from topic template, spec.md → slides.md distillation, slidev-theme-tech dark tech styling, verification, and common pitfalls.
+description: Use when creating a tech deep-dive or general presentation Slidev deck in the presentation monorepo — `create-tech <topic> <spec-source>`. Supports spec sources: a file path containing notes/tasks, a URL, or raw text. Covers scaffold from the hand-drawn (rough.js) sketch template, spec.md → slides.md distillation, verification, and common pitfalls.
 ---
 
 # Create Tech Deep-Dive Slidev Deck
@@ -11,7 +11,7 @@ Slides in the `presentation` monorepo are **Slidev decks**, one directory per de
 
 1. **Read & organize** source content → refined spec
 2. Write refined content → `spec.md` (source of truth)
-3. **Distill** spec into a concise `slides.md`
+3. **Distill** spec into a concise `slides.md` in the **hand-drawn style**
 4. Verify no page overflow
 
 Slides are the distilled highlights, not a verbatim copy of the spec.
@@ -29,7 +29,8 @@ Example: `create-tech dify-backend spec/dify-backend.md`
 **`<spec-source>`** accepts:
 
 - **File path** — a `.md` file containing notes/tasks
-- **URL** — Google Doc / Azure DevOps / any online content (fetch via `webfetch` / GitHub raw)
+- **`spec/*.md`** — resolves to `<repo>/spec/<filename>`
+- **URL** — fetch via `webfetch`; doc sites are often SPAs that return only the nav, so fetch the GitHub raw markdown (`raw.githubusercontent.com/<org>/<repo>/main/<path>.md`) instead
 - **Raw text** — provided directly in the conversation; the skill will auto-generate the spec
 
 ---
@@ -38,29 +39,10 @@ Example: `create-tech dify-backend spec/dify-backend.md`
 
 **Before writing spec.md, always read the source content and distill it.**
 
-Workflow:
-
-1. **Fetch/resolve source** — `spec/*.md`, file path, URL, or raw text
+1. **Fetch/resolve source**
 2. **Read the content fully** — understand all material before distilling
-3. **Organize & refine** — structure, rephrase, remove noise, keep key points
+3. **Organize & refine** — group related items, remove noise, keep essential details, preserve source links; quote JSON / config **verbatim**
 4. **Write organized content** into the deck's `spec.md`
-
-```
-Source ──→ Fetch/organize → Edit/Refine ──→ spec.md (stored in deck directory)
-```
-
-- **spec/\*.md** — resolve to `<repo>/spec/<filename>` (e.g. `create-tech dify-backend dify-backend.md` reads `spec/dify-backend.md`)
-- **File path** — read directly, organize, format
-- **URL** — fetch via `webfetch` (if SPA, fetch the GitHub raw version instead)
-- **Raw text** — structure the text into organized content
-
-**Organizing principles:**
-
-- Group related items together
-- Remove redundancy and noise
-- Keep essential details, rephrase clearly
-- Preserve source links / references
-- Use consistent structure and formatting
 
 ---
 
@@ -68,17 +50,29 @@ Source ──→ Fetch/organize → Edit/Refine ──→ spec.md (stored in dec
 
 **Never** run `npx slidev create` — it produces a standalone project that conflicts with the workspace. Use the built-in template instead.
 
-Template location: `.agents/skills/create-tech/templates/topic/`
+Template location: `.agents/skills/create-tech/templates/sketch/`
 
 ```bash
-TEMPLATE_BASE="/home/tim/githubRepo/presentation/.agents/skills/create-tech/templates/topic"
+TEMPLATE_BASE="/home/tim/githubRepo/presentation/.agents/skills/create-tech/templates/sketch"
 cp -r $TEMPLATE_BASE ./<topic>
-rm -rf ./<topic>/node_modules ./<topic>/dist ./<topic>/components ./<topic>/pages ./<topic>/snippets
-# Replace <deck-name> in package.json with <topic>
 bun install
 ```
 
-Replace the `<deck-name>` placeholder string in `package.json` with the actual deck directory name.
+Decks need **no `package.json`** — `scripts/dev.js` discovers a deck by the presence of `slides.md`, and all deps (including `roughjs`) live at the repo root.
+
+**Keep every template file** — the hand-drawn look depends on all of them; Slidev picks them up from the deck root by convention:
+
+| File | Role |
+| --- | --- |
+| `style.css` | 白底、藍 `#4f61ab` + 琥珀 `#f5a700` 調色盤（`--sk-*`）、h1 琥珀底線、`.callout` / `.big-quote` / `.scene-caption` / `.code-sm` |
+| `layouts/cover.vue`, `layouts/section.vue` | navy 點陣漸層的封面（預設 slot + `::brand::` + `::art::`）與章節頁（`.eyebrow` + `# 標題`） |
+| `global-bottom.vue` | 每頁頁尾：`TOPIC · RD 技術分享` + 頁碼（封面不顯示） |
+| `utils/rough-scene.ts` | rough.js 手繪引擎：`Scene`（`layer` / `box` / `arrow` / `curve` / `pill` / `text`…）+ `useRoughScene`，跟著 `$clicks` 一筆筆「畫出來」 |
+| `setup/shiki.ts` | `github-light` 程式碼配色 |
+| `components/TitleSketch.vue` | 封面右側手繪：核心元件節點＋資料流箭頭（改 `nodes` / `edges` / `tagline`） |
+| `components/FlowScene.vue` | 通用手繪流程圖：props `steps` / `notes` / `result`，每 click 畫一格 |
+
+Replace the `TOPIC` placeholder in `slides.md`, `spec.md`, `global-bottom.vue`, and `components/` with the real topic name. Keep placeholders out of angle brackets: a `<topic>` in the `title:` frontmatter is parsed as an HTML tag and fails the build.
 
 **Note:** All commands run from the repo root (`/home/tim/githubRepo/presentation`). Do NOT `cd` into the deck directory. `bun install` must run at the root.
 
@@ -86,178 +80,55 @@ Replace the `<deck-name>` placeholder string in `package.json` with the actual d
 
 ## Step 2: Write spec.md
 
-Organize content and write it into the deck's `spec.md`.
-
-**Topic deck spec** format:
-
-```markdown
-# <topic> 技術深剖
-
-## 來源文件 / 參考連結
-
-- <link 1>
-- <link 2>
-
-## 摘要
-
-<簡短技術摘要>
-
-## 大綱 (Slide Plan)
-
-1. ...
-2. ...
-```
+The template's `spec.md` carries the format: 注意事項 → 來源文件 / 參考連結 → 摘要 → 大綱 (Slide Plan). Fill every section; the slide plan names the scene for each part.
 
 ---
 
-## Step 3: Distill slides.md from spec
+## Step 3: Distill slides.md from spec — hand-drawn style
 
-### Shared Theme: `slidev-theme-tech` (`theme: tech`)
+**Style baseline — read first:** the hand-drawn style comes from `/home/tim/githubRepo/context-propagation-slides` (`slides.md`, `components/*Scene.vue`). Open it before writing — it is a tech deep-dive in exactly this style, so its page rhythm is the model. The template's `slides.md` is the page skeleton to fill.
 
-The repository provides a shared Dark Tech Theme at `packages/slidev-theme-tech` (registered as `slidev-theme-tech` in workspace).
+Pick **one running example** and carry it through every scene and code page.
 
-- **Theme identifier:** `theme: tech` (or `theme: slidev-theme-tech`)
-- **Auto-registered Components (no manual imports needed):**
-  - `<SlideShell center? px? py?>` — Universal dark container with 40px grid and corner glows
-  - `<SlideHeader eyebrow? title subtitle? dotColor?>` — Header with status dot, mono eyebrow, bold title, and subtitle
-  - `<JsonCard method? path? title? code>` — Code/JSON payload card
-  - `<TechCard variant? title? tag?>` — Glassmorphism dark card (variants: default, emerald, blue, rose, amber)
-  - `<TechBadge label color? dot? pulse?>` — Tech pill badge
-  - `<ReferenceCard href title index?>` — Glassmorphic external-link card for References slides (mono index + URL, cyan hover)
-- **Available Layouts:**
-  - `layout: full` — Full-bleed zero-padding container for custom Vue SFC slide components
-  - `layout: tech-cover` — Rich tech cover with tags, author, date, and keyword highlights
-  - `layout: tech-content` — Content slide layout with auto header (`eyebrow`, `title`, `subtitle`)
-  - `layout: tech-two-cols` — 2-column layout with left/right slots
-  - `layout: tech-section` — Chapter/section break slide
-  - `layout: default` — Default tech slide wrapped in `<SlideShell>`
+Page rhythm:
 
----
+1. **Cover** (`layout: cover`, lives in the headmatter) — `# 主題` + 一句價值 + `丁吾心 · RD 技術分享`, `::brand::` → `RD Tech Talk`, `::art::` → `<TitleSketch />`
+2. **Problem scene** — `# 問題` + a rough.js scene showing the pain (before/after, broken flow) with `clicks:` + `[click]` presenter notes
+3. **Definition** (`layout: center`) — `.big-quote` one-sentence definition with `<em>` highlights + two `.callout` cards
+4. **Per part, repeat:**
+   - `layout: section` — `<div class="eyebrow">Part N</div>` + `# 標題` + 一句副標
+   - **Scene page** — the concept as a rough.js scene (`<FlowScene … />` or a new `components/<Concept>Scene.vue`) + `.scene-caption`
+   - **Code / table page** — `.code-sm` two-column code, or a markdown table (header gets the amber underline), plus a `.callout` gotcha with `v-click`
+5. **Takeaways** (`layout: section`) — eyebrow `Takeaways` + `# 一句話總結` + numbered list (3–4 items)
+6. **參考資料** — markdown link list from spec.md 的「來源文件 / 參考連結」
 
-### Topic slides.md skeleton (Markdown-heavy)
+### Writing a new scene
 
-```markdown
----
-theme: tech
-colorSchema: dark
-highlighter: shiki
-title: <topic>
----
+Copy `FlowScene.vue` (or a scene from the reference deck: `IslandsScene` problem framing, `InjectExtractScene` two-party exchange, `WaterfallScene` timeline, `BrokenChainScene` failure mode, `SpanContextCard` field-by-field anatomy) to `components/<Concept>Scene.vue` and draw in `useRoughScene(svg, s => { … })`:
 
----
-layout: tech-cover
-title: <topic>
-highlight: 核心架構
-subtitle: 深度技術分享
-tag: RD 技術分享 · 2026
-author: 丁吾心
-date: 2026
-tags: [架構設計, 效能優化, 實戰落地]
----
+- `s.layer(n)` = group shown from click `n` on (`{ to }` hides it later, `{ delay, duration }` paces the sketch-in). Layer 0 is visible on enter, so **frontmatter `clicks:` = highest layer index**.
+- `s.mover([[step, x, y], …])` slides a group between positions per click — use it for a token / request travelling along the flow.
+- Colors come from `C` (`blue`, `blueLight`, `blueTint`, `navy`, `orange`, `orangeDark`, `grey`, `red`, `green`): components `fill: C.blueTint, fillStyle: 'solid', stroke: C.blue`. **Never fill boxes with `fillStyle: 'hachure'`** (diagonal-line fill) — the user dislikes it; the hand-drawn feel comes from the rough strokes, not the fill; the thing being traced / the answer in `C.orange`; failures in `C.red`; ids and code in `font: MONO`.
+- Use a fixed `viewBox` (width 900, height ≤ 330) with `class="w-full"` so the scene fits the canvas under the h1.
+- Static decorative scenes (cover) pass `() => 0` as the step function.
 
----
-layout: tech-content
-eyebrow: Background
-title: 背景與核心目標
-subtitle: 為什麼需要重新設計或引入？
----
+### Slidev v52 parser traps (verified against @slidev/parser)
 
-- 現有架構瓶頸與限制
-- 業務需求與核心改進目標
-
----
-layout: tech-two-cols
-eyebrow: Architecture
-title: 架構方案比較
----
-
-### 方案 A
-- 實作簡便但擴展性受限
-- 資源佔用偏高
-
-::right::
-
-### 方案 B (推薦)
-- 模組化且支援水平擴展
-- 查詢吞吐量提升
-
----
-layout: tech-section
-section: "02"
-title: 核心實作細節
-subtitle: 關鍵流程與設定調校
----
-
----
-layout: tech-content
-eyebrow: Summary
-title: 總結與後續規劃
-subtitle: 關鍵收穫與落地指引
----
-
-- 重點總結一
-- 重點總結二
-
----
-layout: tech-content
-eyebrow: References
-title: 參考文獻
----
-
-<div class="grid grid-cols-2 gap-3">
-  <ReferenceCard index="1" title="來源標題一" href="https://example.com/first" />
-  <ReferenceCard index="2" title="來源標題二" href="https://example.com/second" />
-</div>
-
----
-layout: center
-class: text-center
----
-
-# End
-```
-
----
-
-### Component-heavy Deck Structure (e.g. `opensearch-hybrid-search`)
-
-`slides.md` is a thin shell; each slide is implemented as a Vue SFC in `components/` named `<Topic>Slide.vue` and referenced with `layout: full`:
-
-```markdown
----
-theme: tech
-colorSchema: dark
-highlighter: shiki
-title: <topic>
-layout: full
----
-
-<TitleSlide />
-
----
-layout: full
----
-
-<ConceptSlide />
-
----
-layout: full
----
-
-<SummarySlide />
-```
+1. **Slide 1 lives INSIDE the deck headmatter block** — cover content goes directly after the headmatter-closing `---`. Adding a bare `---` + frontmatter block for slide 1 renders an extra empty first page.
+2. **Each slide = `---` + frontmatter + `---` + content + one `---` separator.** Never two consecutive `---` lines (creates an empty slide).
+3. **Named slots in markdown use `::brand::` / `::art::`** (v52 slot sugar). The old MDC `<div slots="art" />` does NOT work.
+4. **Blank lines around markdown inside HTML** — inside `<div class="callout">` / `<div v-click>`, leave a blank line after the opening tag and before the closing tag, or the markdown renders as raw text.
 
 ---
 
 ## Slide Writing Conventions
 
-- **Group by product/topic** — Topic decks group by technical sub-topics.
-- **Title + subtitle + bullets** — Keep 3–8 bullets per slide.
-- **One topic per slide, no overflow** — Split pages or use `layout: tech-two-cols` when content is lengthy.
-- **No icons** — Only use checkmarks / crosses to indicate done / pending.
-- **Distill, don't copy** — The spec is the full list; slides keep only key highlights.
-- **Closing slide** — Always `layout: center` + `class: text-center` + `# End` or `# Thanks`.
-- **References page** — 在 End 前加一頁 `layout: tech-content`（`eyebrow: References`、`title: 參考文獻`），內容用 `<div class="grid grid-cols-2 gap-3">` 包 `<ReferenceCard index title href />`；來源取自 spec.md 的「來源文件 / 參考連結」。不要手刻裸 `<a>` 連結清單或自創 slate/cyan 樣式。
+- **Hand-drawn first** — every part explains its concept with a rough.js scene; code and tables back the scene up.
+- **One idea per page, no overflow** — canvas is ~551px tall: ≤5 bullets or one table per page, scene height ≤ 330 viewBox units; split into another page instead of shrinking text.
+- **Reveal with clicks** — scenes step via `clicks:` + layers; text blocks via `v-click` / `<v-clicks>`; code via line highlights (`` ```ts {all|4|12|all} ``).
+- **No icons** — only checkmarks / crosses to indicate done / pending.
+- **Distill, don't copy** — the spec is the full research; slides keep only key highlights.
+- **Stay in the palette** — use `--sk-*` / `C.*` colors and the existing classes; skip `theme: tech` components (`SlideShell`, `TechCard`, `ReferenceCard`…), which belong to the old dark tech style.
 
 ---
 
@@ -265,53 +136,35 @@ layout: full
 
 Slidev renders each slide on a **fixed-size canvas** (~980×551px, 16:9). Content that exceeds it is hidden by `overflow: hidden`.
 
-### Method 1: Chrome DevTools MCP
-
-1. Start dev server (run from repo root): `bun run dev --root <deck>` (default `http://localhost:3030`, auto-rotates if in use).
-2. Open `/export/` route — stacks all slides into a scrollable view:
-   `navigate_page` → `http://localhost:<port>/export/`
+1. Start dev server (from repo root): `bun run dev <deck>` (default `http://localhost:3030`, auto-rotates if in use).
+2. Open `/export/` (Chrome DevTools MCP `navigate_page`, or Playwright if MCP is not connected) — it stacks all slides.
 3. Run overflow check:
 
     ```js
     () =>
       Array.from(document.querySelectorAll(".slidev-page"))
-        .map((el, i) => ({
-          slide: i + 1,
-          overflowPx: el.scrollHeight - el.clientHeight,
-        }))
+        .map((el, i) => ({ slide: i + 1, overflowPx: el.scrollHeight - el.clientHeight }))
         .filter((s) => s.overflowPx > 2);
     ```
 
-    Empty array = OK. Any value = that many pixels of overflow on that slide.
+    Empty array = OK.
 
-4. Fix overflows: split pages, reduce bullets, reduce text size, or switch `layout: tech-two-cols`.
-5. End with `take_screenshot` for visual confirmation on suspicious slides.
-
----
-
-## Canvas-height Trap (Most Common Bug)
-
-Slidev renders on a fixed **~980×551 unit canvas** (16:9), not the browser window. Only ~551px is available after padding.
-
-Defenses:
-
-- Keep padding modest (`py-5`, `p-4`), tight `gap`
-- Use `justify-start` instead of `justify-center` for tall content
-- Move a bulky side note into a full-width footer bar to shorten column height
-- If still overflowing, cut content — don't just shrink text
+4. Screenshot every scene page at its **last click** (`http://localhost:<port>/<n>?clicks=<N>`) — confirms every layer draws and nothing collides with the footer. A missing final layer means `clicks:` is lower than the highest layer index.
+5. Fix overflows: split pages, cut bullets, or lower the scene's viewBox height. The `Failed to patch FloatingVue` console error comes from Slidev itself and is harmless.
 
 ---
 
 ## Common Mistakes
 
 - **Page cut off at bottom** — skipped overflow check before claiming done.
-- Forgot to update `package.json` `name` (stays same as template deck).
+- **Last scene step never shows** — `clicks:` set to the step count instead of the highest layer index.
+- **Build fails with `Element is missing end tag`** — an angle-bracket placeholder (`<topic>`) left in frontmatter `title:`.
+- Deleted `style.css` / `layouts/` / `global-bottom.vue` / `utils/` from the new deck → plain default-theme look.
 - Copy-pasted spec verbatim into slides → page overflow.
 - Added icons to slides (not allowed in this repo).
 - Added real Tailwind (`@tailwindcss/vite`) → build breaks.
 - Dynamic class names (`bg-${x}`) → UnoCSS static scan produces nothing.
 - Writing slides without a spec.md first (always produce spec → distill).
-- Hand-rolling the References page with raw `<a>` links / ad-hoc slate styles → clashes with the theme; always use `ReferenceCard`.
 
 ## Local Preview
 
@@ -326,9 +179,13 @@ bun run dev <deck>        # dev server with live reload, opens browser
 .agents/skills/create-tech/
 ├── SKILL.md
 └── templates/
-    └── topic/            # General topic template (theme: tech, dark tech cover & layouts)
-        ├── slides.md
-        ├── package.json
-        ├── netlify.toml
-        └── vercel.json
+    ├── sketch/           # 現行：手寫風格技術分享模板
+    │   ├── slides.md     # cover → 問題 scene → 定義 → (section → scene → code)×N → takeaways → 參考資料
+    │   ├── spec.md
+    │   ├── style.css  global-bottom.vue
+    │   ├── layouts/      # cover.vue / section.vue
+    │   ├── utils/        # rough-scene.ts
+    │   ├── setup/        # shiki.ts
+    │   └── components/   # TitleSketch.vue / FlowScene.vue
+    └── topic/            # 舊：dark tech（theme: tech）模板，僅供舊 deck 參考
 ```

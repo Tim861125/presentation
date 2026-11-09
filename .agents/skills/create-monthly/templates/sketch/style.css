@@ -75,6 +75,7 @@
 
 .sk-cover { display: flex; flex-direction: column; padding: 2.5rem 3.5rem; }
 .sk-cover__brand { color: var(--sk-orange); text-transform: uppercase; letter-spacing: 0.18em; font-weight: 700; font-size: 0.85rem; }
+.sk-cover__brand p { color: inherit; margin: 0; }
 .sk-cover__grid { flex: 1; display: grid; grid-template-columns: 1.2fr 1fr; gap: 2rem; align-items: center; }
 .sk-cover h1 { font-size: 2.9rem; line-height: 1.1; margin-bottom: 1.2rem; }
 .sk-cover h1::after { width: 5rem; height: 5px; margin-top: 1rem; }

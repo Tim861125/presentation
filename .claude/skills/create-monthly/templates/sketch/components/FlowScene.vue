@@ -23,7 +23,7 @@ useRoughScene(svg, (s) => {
   props.steps.forEach((label, i) => {
     const x = 10 + i * (W + GAP)
     const g = s.layer(i)
-    s.box(g, x, 40, W, 90, label, { fill: C.blueLight, fillStyle: 'hachure', hachureGap: 7, stroke: C.blue, strokeWidth: 2 }, { color: C.navy, size: 18 })
+    s.box(g, x, 40, W, 90, label, { fill: C.blueTint, fillStyle: 'solid', stroke: C.blue, strokeWidth: 2 }, { color: C.navy, size: 18 })
     if (props.notes?.[i])
       s.text(g, x + W / 2, 160, props.notes[i], { anchor: 'middle', size: 13, color: C.grey, italic: true })
     if (i > 0)

@@ -113,7 +113,7 @@ Fixed page order:
 Copy `FlowScene.vue` (or a scene from the reference deck, e.g. `IslandsScene.vue`, `WaterfallScene.vue`) to `components/<Topic>Scene.vue` and draw in `useRoughScene(svg, s => { … })`:
 
 - `s.layer(n)` = group shown from click `n` on (`{ to }` hides it later, `{ delay, duration }` paces the sketch-in). Layer 0 is visible on enter, so **frontmatter `clicks:` = highest layer index**.
-- Colors come from `C` (`blue`, `blueLight`, `navy`, `orange`, `orangeDark`, `grey`, `red`, `green`): primary boxes `fill: C.blueLight, fillStyle: 'hachure', stroke: C.blue`; highlights / results in `C.orange`; problems in `C.red`.
+- Colors come from `C` (`blue`, `blueLight`, `blueTint`, `navy`, `orange`, `orangeDark`, `grey`, `red`, `green`): primary boxes `fill: C.blueTint, fillStyle: 'solid', stroke: C.blue`. **Never fill boxes with `fillStyle: 'hachure'`** (diagonal-line fill) — the user dislikes it; the hand-drawn feel comes from the rough strokes, not the fill; highlights / results in `C.orange`; problems in `C.red`.
 - Use a fixed `viewBox` (width 900, height ≤ 330) with `class="w-full"` so the scene fits the canvas under the h1.
 - Static decorative scenes (cover) pass `() => 0` as the step function.
 

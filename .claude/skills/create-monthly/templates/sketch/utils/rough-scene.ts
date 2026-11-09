@@ -8,6 +8,8 @@ import { onSlideEnter, useSlideContext } from '@slidev/client'
 export const C = {
   blue: '#4f61ab',
   blueLight: '#95a0cd',
+  /** 方框的淡藍實心底色。方框一律用 fillStyle: 'solid'，不要用 hachure 斜線填滿 */
+  blueTint: '#e4e8f5',
   navy: '#1e2a5a',
   orange: '#f5a700',
   orangeDark: '#b57a00',

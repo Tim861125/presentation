@@ -50,9 +50,13 @@ Optional per-deck directories:
 - `snippets/` — external code files imported into slides via Slidev's `<<< @/snippets/...` syntax
 - `spec.md` or `<topic>-notes.md` — background research and source material the deck was built from. **Read this first** when editing a deck's content; it's the source of truth, slides are the distillation.
 
-## Shared Theme (slidev-theme-tech)
+## Hand-drawn Style (new decks)
 
-The repository provides a shared Dark Tech Theme at `packages/slidev-theme-tech` (linked as `slidev-theme-tech` in workspace).
+New decks use the **hand-drawn sketch style** from `../context-propagation-slides`: rough.js scenes that sketch in per click, white background with blue `#4f61ab` + amber `#f5a700`, navy cover/section pages. Each deck carries its own `style.css`, `layouts/`, `global-bottom.vue`, `utils/rough-scene.ts` (root dep `roughjs`), copied from the `templates/sketch/` of the `create-monthly` / `create-tech` skills — scaffold through those skills.
+
+## Shared Theme (slidev-theme-tech, existing decks)
+
+Older decks use the shared Dark Tech Theme at `packages/slidev-theme-tech` (linked as `slidev-theme-tech` in workspace).
 
 - **Theme identifier:** `theme: tech` (or `theme: slidev-theme-tech`)
 - **Auto-registered Components:** `<SlideShell>`, `<SlideHeader>`, `<CoverSlide>`, `<TechCover>`, `<EndSlide>`, `<TechEnd>`, `<JsonCard>`, `<TechCard>`, `<TechBadge>`, `<StatCard>`, `<InfoCard>`, `<Callout>`, `<DiagramNode>`, `<IssueCard>`, `<SectionSlide>`, `<ReferenceCard>` (no manual imports needed in slide Vue components).
@@ -65,7 +69,7 @@ The repository provides a shared Dark Tech Theme at `packages/slidev-theme-tech`
   - `layout: tech-section` — Chapter/section break slide
   - `layout: default` — Default tech slide wrapped in `<SlideShell>`
 
-**Styling:** UnoCSS (Tailwind-compatible utility classes used directly inline in `.vue` files and markdown). Dark `colorSchema` is the common default.
+**Styling:** UnoCSS (Tailwind-compatible utility classes used directly inline in `.vue` files and markdown). New decks use `colorSchema: light` (hand-drawn style); older decks use dark.
 
 **Stack:** Slidev + Vue 3 + UnoCSS + Shiki (syntax highlighting).
 

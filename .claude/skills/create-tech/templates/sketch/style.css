@@ -1,0 +1,113 @@
+/* 手寫風格（源自 ../context-propagation-slides）：白底、藍 #4f61ab + 琥珀 #f5a700、navy 封面/章節頁 */
+:root {
+  --sk-blue: #4f61ab;
+  --sk-blue-light: #95a0cd;
+  --sk-navy: #1e2a5a;
+  --sk-orange: #f5a700;
+  --sk-orange-dark: #b57a00;
+  --sk-ink: #212529;
+  --sk-grey: #6c757d;
+  --sk-paper: #f8f9fa;
+  --slidev-theme-primary: var(--sk-blue);
+}
+
+.slidev-layout {
+  font-family: system-ui, -apple-system, 'Segoe UI', 'Noto Sans TC', 'PingFang TC', 'Microsoft JhengHei', sans-serif;
+  color: var(--sk-ink);
+  background: #fff;
+  padding: 2.25rem 3.25rem 3rem;
+}
+
+.slidev-layout h1 {
+  color: var(--sk-navy);
+  font-weight: 750;
+  font-size: 2.15rem;
+  letter-spacing: -0.01em;
+  margin-bottom: 1.4rem;
+  position: relative;
+}
+.slidev-layout h1::after {
+  content: '';
+  display: block;
+  width: 3.5rem;
+  height: 4px;
+  margin-top: 0.45rem;
+  border-radius: 2px;
+  background: var(--sk-orange);
+}
+.slidev-layout h1 + p {
+  opacity: 1;
+  color: var(--sk-grey);
+  margin-top: -0.6rem;
+}
+.slidev-layout h3 {
+  color: var(--sk-blue);
+  font-weight: 700;
+  font-size: 1.15rem;
+  margin-bottom: 0.4rem;
+}
+.slidev-layout strong { color: var(--sk-navy); }
+.slidev-layout a { color: var(--sk-blue); border-bottom: 1px dashed var(--sk-blue-light); }
+.slidev-layout li { margin: 0.25rem 0; }
+.slidev-layout ul li::marker { color: var(--sk-orange); }
+.slidev-layout :not(pre) > code {
+  font-size: 0.85em;
+  color: var(--sk-navy);
+  background: #eef0f8;
+  border-radius: 4px;
+  padding: 0.1em 0.35em;
+}
+.slidev-layout pre.shiki { border: 1px solid #e3e6f0; border-radius: 8px; background: var(--sk-paper) !important; }
+.slidev-layout table { font-size: 0.9rem; }
+.slidev-layout th { color: var(--sk-blue); border-bottom: 2px solid var(--sk-orange); }
+
+/* dark (hero) slides: cover / section */
+.sk-dark {
+  color: #fff;
+  background:
+    radial-gradient(circle at 1px 1px, rgba(255, 255, 255, 0.08) 1px, transparent 0) 0 0 / 22px 22px,
+    radial-gradient(ellipse at 85% 110%, rgba(245, 167, 0, 0.22), transparent 55%),
+    linear-gradient(135deg, #172150 0%, #26346e 55%, #4f61ab 130%);
+}
+.sk-dark h1, .sk-dark h2, .sk-dark strong { color: #fff; }
+.sk-dark p { color: rgba(255, 255, 255, 0.82); }
+.sk-dark h1 + p { color: rgba(255, 255, 255, 0.78); }
+
+.sk-cover { display: flex; flex-direction: column; padding: 2.5rem 3.5rem; }
+.sk-cover__brand { color: var(--sk-orange); text-transform: uppercase; letter-spacing: 0.18em; font-weight: 700; font-size: 0.85rem; }
+.sk-cover__brand p { color: inherit; margin: 0; }
+.sk-cover__grid { flex: 1; display: grid; grid-template-columns: 1.2fr 1fr; gap: 2rem; align-items: center; }
+.sk-cover h1 { font-size: 2.9rem; line-height: 1.1; margin-bottom: 1.2rem; }
+.sk-cover h1::after { width: 5rem; height: 5px; margin-top: 1rem; }
+.sk-cover p { font-size: 1.2rem; line-height: 1.5; }
+.sk-cover__art { height: 21rem; }
+
+.sk-section { display: grid; place-items: center; text-align: center; }
+.sk-section h1 { font-size: 3rem; }
+.sk-section h1::after { margin: 0.9rem auto 0; }
+.sk-section .eyebrow { color: var(--sk-orange); text-transform: uppercase; letter-spacing: 0.18em; font-weight: 700; font-size: 0.9rem; margin-bottom: 0.6rem; }
+
+/* footer (global-bottom.vue) */
+.sk-footer {
+  position: absolute; left: 0; right: 0; bottom: 0; z-index: 10;
+  display: flex; align-items: center; gap: 0.6rem;
+  padding: 0.6rem 3.25rem 0.75rem;
+  font-size: 0.72rem; color: var(--sk-grey);
+}
+.sk-footer--dark { color: rgba(255, 255, 255, 0.6); }
+.sk-footer__dot { width: 0.55rem; height: 0.55rem; border-radius: 999px; background: var(--sk-orange); }
+
+/* reusable bits */
+.callout {
+  border-left: 4px solid var(--sk-orange);
+  background: #fff8e6;
+  padding: 0.6rem 1rem;
+  border-radius: 0 6px 6px 0;
+  font-size: 0.95rem;
+}
+.callout.blue { border-color: var(--sk-blue); background: #eef0f8; }
+.callout p { margin: 0; }
+.big-quote { font-size: 1.9rem; line-height: 1.35; font-weight: 650; color: var(--sk-navy); }
+.big-quote em { font-style: normal; color: var(--sk-orange-dark); }
+.scene-caption { color: var(--sk-grey); font-size: 0.95rem; margin-top: 0.4rem; }
+.code-sm { --slidev-code-font-size: 11px; --slidev-code-line-height: 17px; }
