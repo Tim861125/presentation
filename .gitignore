@@ -28,3 +28,6 @@ Thumbs.db
 
 # Logs
 *.log
+
+# Rendered videos / preview stills (regenerate with each video's scripts/)
+*-video/out/
