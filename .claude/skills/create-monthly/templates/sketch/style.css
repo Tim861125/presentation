@@ -108,6 +108,8 @@
 .callout.blue { border-color: var(--sk-blue); background: #eef0f8; }
 .callout p { margin: 0; }
 .big-quote { font-size: 1.9rem; line-height: 1.35; font-weight: 650; color: var(--sk-navy); }
+/* Slidev 預設 `.slidev-layout p { line-height: 1.5rem }` 是固定值，放大字級時內層 p 也要改，否則多行會重疊 */
+.big-quote p { line-height: inherit; }
 .big-quote em { font-style: normal; color: var(--sk-orange-dark); }
 .scene-caption { color: var(--sk-grey); font-size: 0.95rem; margin-top: 0.4rem; }
 .code-sm { --slidev-code-font-size: 11px; --slidev-code-line-height: 17px; }

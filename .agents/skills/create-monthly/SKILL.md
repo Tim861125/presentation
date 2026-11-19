@@ -164,6 +164,7 @@ Slidev renders each slide on a **fixed-size canvas** (~980×551px, 16:9). Conten
 
 - **Page cut off at bottom** — skipped overflow check before claiming done.
 - **Last scene step never shows** — `clicks:` set to the step count instead of the highest layer index.
+- **Multi-line big text overlaps** — Slidev's default `.slidev-layout p { line-height: 1.5rem }` is a fixed 24px, so markdown inside an enlarged-font block (`.big-quote`, custom `text-3xl` divs) keeps 24px line-height and wraps on top of itself. The template's `style.css` sets `.big-quote p { line-height: inherit; }`; do the same for any new large-text class. The overflow check does **not** catch this — screenshot the `layout: center` definition page too.
 - Deleted `style.css` / `layouts/` / `global-bottom.vue` / `utils/` from the new deck → plain default-theme look.
 - Left `YYYY-MM` in `global-bottom.vue` or `TitleSketch.vue`.
 - Copy-pasted spec verbatim into slides → page overflow.
