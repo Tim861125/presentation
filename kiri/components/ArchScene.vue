@@ -2,33 +2,31 @@
 import { ref } from 'vue'
 import { C, MONO, useRoughScene } from 'slidev-theme-sketch/utils/rough-scene'
 
-// Mac 上的架構：各種 client 都講 Docker Engine API → kiri daemon → vsock → VM 裡的 agent → clone3。
+// Linux host 上的架構：各種 client 都講 Docker Engine API → kiri daemon（systemd）→ kiri-init agent → clone3。沒有 VM。
 const svg = ref<SVGSVGElement>()
 
 const clients = ['docker CLI', 'compose', 'buildx', 'kiri UI']
 const box = { fill: C.blueTint, fillStyle: 'solid', stroke: C.blue, strokeWidth: 2 }
 
 useRoughScene(svg, (s) => {
-  // layer 0：host 端的 client
+  // layer 0：整台 Linux host 與 client
   const g0 = s.layer(0)
-  s.rect(g0, 2, 4, 400, 316, { stroke: C.greyLight, strokeWidth: 1.4, strokeLineDash: [6, 6], roughness: 0.6 })
-  s.text(g0, 14, 22, 'macOS host', { size: 14, weight: 700, color: C.grey })
+  s.rect(g0, 2, 4, 894, 316, { stroke: C.greyLight, strokeWidth: 1.4, strokeLineDash: [6, 6], roughness: 0.6 })
+  s.text(g0, 14, 22, 'Linux host · 主機 kernel（沒有 VM）', { size: 14, weight: 700, color: C.grey })
   clients.forEach((c, i) => s.box(g0, 20, 45 + i * 66, 130, 46, c, box, { color: C.navy, size: 15 }))
 
-  // layer 1：全部匯到 kiri daemon（Docker Engine API）
+  // layer 1：全部匯到 kiri daemon（Docker Engine API on /run/kiri/docker.sock）
   const g1 = s.layer(1)
   clients.forEach((_, i) => s.arrow(g1, 154, 68 + i * 66, 222, 160, { stroke: C.ink, strokeWidth: 1.6 }, 8))
   s.box(g1, 226, 110, 156, 100, 'kiri daemon', { ...box, strokeWidth: 2.4 }, { color: C.navy, size: 17 })
-  s.text(g1, 304, 192, 'Docker Engine API', { anchor: 'middle', size: 12, color: C.grey, font: MONO })
-  s.text(g1, 304, 238, '常駐 ≈ 10 MB', { anchor: 'middle', size: 13, color: C.grey, italic: true })
+  s.text(g1, 304, 192, '/run/kiri/docker.sock', { anchor: 'middle', size: 11, color: C.grey, font: MONO })
+  s.text(g1, 304, 238, 'systemd kiri.service', { anchor: 'middle', size: 13, color: C.grey, italic: true, font: MONO })
 
-  // layer 2：vsock 進 VM，PID 1 是 Rust agent
+  // layer 2：daemon 直接啟動 kiri-init agent，同一個 kernel
   const g2 = s.layer(2)
-  s.rect(g2, 450, 4, 446, 316, { stroke: C.blue, strokeWidth: 1.6, strokeLineDash: [6, 6], roughness: 0.6 })
-  s.text(g2, 462, 22, 'Linux VM · 自製 10 MB kernel', { size: 14, weight: 700, color: C.blue })
   s.arrow(g2, 386, 160, 486, 160, { stroke: C.orange, strokeWidth: 3 }, 12)
-  s.text(g2, 436, 142, 'vsock', { anchor: 'middle', size: 14, weight: 700, color: C.orangeDark, font: MONO })
-  s.box(g2, 490, 118, 140, 84, 'agent\nPID 1 · < 1 MB', box, { color: C.navy, size: 15 })
+  s.text(g2, 436, 142, '啟動', { anchor: 'middle', size: 14, weight: 700, color: C.orangeDark })
+  s.box(g2, 490, 118, 140, 84, 'kiri-init\nRust agent', box, { color: C.navy, size: 15 })
 
   // layer 3：agent clone3 出每個 container
   const g3 = s.layer(3)

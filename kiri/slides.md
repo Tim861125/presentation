@@ -1,6 +1,6 @@
 ---
 theme: sketch
-title: Kiri
+title: Kiri 快在哪
 footer: Kiri · RD 技術分享
 info: |
   Kiri 技術分享：用 Rust 寫的輕量容器 runtime
@@ -10,7 +10,7 @@ layout: cover
 
 # Kiri
 
-用 Rust 寫、開源的 Docker Desktop 替代品：`docker` 指令照用，容器 **22 ms** 就跑完。
+用 Rust 寫、開源的容器 runtime：`docker` 指令照用，在 Ubuntu 上跑一個容器 **188 ms**，比 Docker Engine 快約 3.4 倍。
 
 丁吾心 · RD 技術分享
 
@@ -34,13 +34,14 @@ clicks: 3
 
 <ProblemScene />
 
-<div class="scene-caption">同一個 <code>docker run --rm alpine true</code>，官網量測（2 CPU／8 GB、M3 Max）的中位數。</div>
+<div class="scene-caption">來源：Ubuntu（Docker Engine）<a href="https://github.com/libracoder/kiri/blob/main/bench/ubuntu-2026-10-26.md">bench/ubuntu-2026-10-26.md</a>；Mac（M3 Max，Docker Desktop）<a href="https://runkiri.com/benchmarks/">runkiri.com/benchmarks</a></div>
 
 <!--
-Docker Desktop：CLI → dockerd → containerd → shim → runc，最後才有 container。
-[click] 一路往下，中位數約 178 ms。
-[click] Kiri：CLI → kiri daemon → VM 裡的 agent，一次 clone3 就把容器建起來，22 ms。
+Docker：CLI → dockerd → containerd → shim → runc，最後才有 container。
+[click] 一路往下，中位數 Ubuntu 約 697 ms（Docker Engine）、Mac 約 178 ms（Docker Desktop）。
+[click] Kiri：CLI → kiri daemon → agent，一次 clone3 就把容器建起來，Ubuntu 188 ms、Mac 22 ms。
 [click] 中間四層全部不需要，這就是快的主因。
+兩組數字的機器和環境都不同，不能互相比：697／188 是 repo 裡的 Ubuntu 量測（跑在 VM 裡的 Ubuntu）；178／22 是官網 runkiri.com/benchmarks 在 M3 Max Mac 上量的，比的是 Docker Desktop。
 -->
 
 ---
@@ -56,18 +57,20 @@ Kiri 是一個 <em>實作 Docker Engine API</em> 的輕量容器 runtime：你�
 <div class="grid grid-cols-2 gap-6 mt-10 max-w-3xl">
 <div class="callout blue">
 
-**相容。** `docker` CLI、Compose、buildx、Testcontainers 直接用；Apple silicon 上 amd64 走 Rosetta。
+**相容。** `docker` CLI、Compose、buildx、Testcontainers 直接用；`.deb`／`.rpm` 套件內附 docker CLI。
 
 </div>
 <div class="callout">
 
-**輕。** engine 常駐約 10 MB；沒有容器在跑 60 秒就休眠，約 0.1 秒喚醒。
+**輕。** Linux 上沒有 VM，agent 直接跑在主機 kernel；每個容器的 shim 記憶體是 0。
 
 </div>
 </div>
 
 <!--
-Mac / Windows 跑在一台很小的 Linux VM，Linux 直接用主機 kernel。Apache-2.0。
+docker 指令本身不會建容器，它只是把指令變成 HTTP 請求送給 engine。Kiri 寫了一個新的 engine，對外講同一套 Docker Engine API，所以 docker、Compose、buildx、Testcontainers 都不用改。
+差別在 API 底下：Docker 要經過 dockerd、containerd、shim、runc；Kiri 只有一支 Rust agent，一次 clone3 就把容器建好。在 Linux 上它直接用主機 kernel，也沒有 shim。
+補充：Linux 上由 systemd 的 kiri.service 跑 engine，socket 在 /run/kiri/docker.sock。Apache-2.0。
 -->
 
 ---
@@ -78,7 +81,7 @@ layout: section
 
 # 為什麼這麼快
 
-拿掉中間層，連 kernel 都自己裁
+拿掉中間層，容器直接從 agent 長出來
 
 ---
 clicks: 4
@@ -88,52 +91,142 @@ clicks: 4
 
 <ArchScene />
 
-<div class="scene-caption">macOS 為例。Windows 經 named pipe 進 WSL2；Linux 沒有 VM，agent 直接跑在主機 kernel。</div>
+<div class="scene-caption">Linux host：沒有 VM，engine 由 systemd 的 <code>kiri.service</code> 啟動。</div>
 
 <!--
 所有 client 都只認得 Docker Engine API。
-[click] kiri daemon 在 host 上實作這套 API，並擁有 VM。
-[click] daemon 經 vsock 和 VM 溝通（來回 p50 31 µs）。VM 用自製 10 MB kernel，PID 1 就是 Rust agent。
-[click] agent 一次 clone3（CLONE_INTO_CGROUP）建 namespaces + cgroup，容器是 agent 的直接子行程。
+[click] kiri daemon 以 root 跑在 systemd 的 kiri.service，在 /run/kiri/docker.sock 實作這套 API。
+[click] daemon 直接啟動 kiri-init 這支 Rust agent，跑在主機 kernel 上，中間沒有 VM。
+[click] agent 一次 clone3（CLONE_INTO_CGROUP）建 namespaces + cgroup，容器是 agent 的直接子行程。unit 設了 Delegate=yes，cgroup 由 daemon 自己建。
 [click] 所以沒有 runc、shim、dockerd，每個容器的 shim 記憶體是 0。
+-->
+
+---
+
+# 快在哪？不是 `clone3` 本身
+
+<div class="grid grid-cols-2 gap-6 mt-6">
+<div class="callout blue">
+
+**最後一步，兩邊一樣。** runc 最後也是請 kernel 建 namespaces 和 cgroup。這一步本身很快：建 namespaces 再 exec 0.78 ms，cgroup 1.23 ms。
+
+</div>
+<div class="callout">
+
+**差在中間轉手幾次。** Docker 要經過 dockerd → containerd → 啟動一個 shim → 再執行 runc，每一層都是一次行程啟動或跨行程溝通。Kiri 把請求交給早就在跑的 agent，agent 直接 `clone3`。
+
+</div>
+</div>
+
+<div class="big-quote mt-10" v-click>
+
+像寄包裹：Docker 要經過 <em>四個窗口</em> 轉手，<br>Kiri <em>櫃檯收件後直接進倉庫</em>。
+
+</div>
+
+<!--
+常見的誤會是「Kiri 快是因為用了 clone3」。其實 runc 最後也是請 kernel 做同一件事，這一步本身只要幾 ms，數字來自 bench/results.json 的 kernel_primitives。
+Docker 慢在前面：dockerd 用 gRPC 交給 containerd，containerd 為這個容器啟動一個 shim，shim 再執行 runc。每一層都是一次行程啟動或跨行程溝通。
+[click] Kiri 把這四層合成兩個早就在跑的行程：kiri daemon 收請求，kiri-init 直接 clone3。clone3 的好處是一次就把容器放進 cgroup（CLONE_INTO_CGROUP），不用另外起一支 runc。
+所以快在「少了中間層」，不是快在 clone3。
+-->
+
+---
+
+# 時間花在哪：拆開 697 ms 和 188 ms
+
+<div class="mt-8 space-y-5 text-sm">
+<div>
+<div class="font-bold mb-1">Docker Engine　697 ms</div>
+<div class="flex h-10 rounded overflow-hidden">
+<div class="flex items-center justify-center text-white" style="width:28.7%;background:#8a8fa8">docker CLI 約 200 ms</div>
+<div class="flex items-center justify-center text-white font-bold" style="width:71.3%;background:#c2413a">引擎 約 500 ms</div>
+</div>
+</div>
+<div>
+<div class="font-bold mb-1">Kiri　188 ms</div>
+<div class="flex h-10 rounded overflow-hidden">
+<div class="flex items-center justify-center text-white" style="width:25.5%;background:#8a8fa8">docker CLI 約 180 ms</div>
+<div style="width:1.5%;background:#f5a700"></div>
+<div class="flex items-center pl-2 font-bold" style="color:#b47a00">← 引擎 約 10 ms</div>
+</div>
+</div>
+</div>
+
+<div class="grid grid-cols-2 gap-6 mt-8" v-click>
+<div class="callout">
+
+**差距幾乎全在引擎。** 不經過 docker CLI、直接打 API：Docker Engine 跑完一個容器約 500 ms，Kiri 約 10 ms。
+
+</div>
+<div class="callout blue">
+
+**Kiri 剩下的大多是 CLI。** docker CLI 那約 180 ms 兩邊都要付。Kiri 的 10 ms 裡，kernel 建容器只佔幾 ms，`--rm` 也不等刪網卡（18.9 ms）。
+
+</div>
+</div>
+
+<div class="scene-caption">來源：<a href="https://github.com/libracoder/kiri/blob/main/bench/ubuntu-2026-10-26.md">bench/ubuntu-2026-10-26.md</a>「Engine-only latency」。引擎時間是扣掉 curl 成本（約 35 ms）後的估算。</div>
+
+<!--
+上一頁說快在少了中間層，這一頁拆開看時間到底花在哪。
+作者另外用 curl 直接打 Docker API，不經過 docker CLI，跑一次 create、start、wait、delete。Docker Engine 531 ms，Kiri 33 到 47 ms，裡面約 35 ms 是 curl 和 jq 自己的成本。扣掉之後，Docker Engine 的引擎約 500 ms，Kiri 的引擎約 10 ms。
+所以 697 ms 減 500 ms，Docker 這邊 CLI 大約 200 ms；Kiri 188 減 10，CLI 大約 180 ms。兩邊 CLI 差不多，差距幾乎全部在引擎裡。
+[click] 換句話說，Kiri 已經把引擎壓到 10 ms，現在 188 ms 裡大部分是 docker CLI 自己的時間。
+引擎那 10 ms 裡，真正建容器的 kernel 動作（namespaces、cgroup、overlay、veth）只要幾 ms；另外 --rm 時 Docker 會等刪 veth（18.9 ms）才回傳，Kiri 先回報結束、之後才清。
+exec 也一樣：直接打 API，Docker Engine 50 ms、Kiri 17 ms（引擎約 1 ms）。但經過 CLI 後，Kiri 是 187 ms，反而比 nerdctl 的 57 ms 慢，因為 nerdctl 不走 docker CLI，直接跟 containerd 講話。
+這些估算是用兩組不同的量測相減，只看數量級，不要當成精確值。
+-->
+
+---
+
+# 對照表：Kiri 換掉了誰
+
+<div class="[&_td]:py-1.5 [&_th]:py-1.5">
+
+| Docker 的元件 | 白話：它在做什麼 | Kiri |
+|---|---|---|
+| `docker` CLI、Compose、buildx | 你打指令的工具 | **不換**，套件直接內附 |
+| Docker Engine API | 工具和引擎之間的「語言」 | **不換**，Kiri 講同一套 |
+| dockerd | 接請求、管網路和 volume | **kiri daemon** |
+| containerd | 管容器的一生、拉映像 | kiri daemon + **kiri-init** 分攤 |
+| containerd-shim | 每個容器配一個看門的行程 | **不需要**：容器直接掛在 kiri-init 底下 |
+| runc | 呼叫 kernel 把容器建出來 | kiri-init 一次 **`clone3`** |
+| dockerd 內建的 BuildKit | 處理 `docker build` | BuildKit 跑在一個 Kiri 容器裡 |
+
+</div>
+
+<div class="callout mt-4" v-click>
+
+**一句話：** 上面兩層不動；dockerd、containerd、shim、runc 四層，合成 kiri daemon + kiri-init 兩個行程。
+
+</div>
+
+<!--
+前兩列是「相容」：工具和 API 都沒換，所以使用者無感。
+中間四列是「輕」：Docker 的四層，在 Kiri 變成兩個行程。containerd-shim 這一列最關鍵，容器是 kiri-init 的直接子行程，由它的 poll() 迴圈收輸出、回收行程，所以每個容器的 shim 記憶體是 0。
+最後一列：docker build 走的是跑在 Kiri 容器裡的 BuildKit（buildx 的 docker-container driver），閒置 5 分鐘先暫停。
+[click] 網路、seccomp 這些細節在後面的「實作細節」那頁。
 -->
 
 ---
 
 # 效能數字：要看量測條件
 
-`alpine true` 跑完即刪，中位數。官網 2026-11-02 量測，每個引擎都限制 2 CPU／8 GB：
+Ubuntu 24.04、16 核 x86-64、32 GB，同一支 docker CLI，30 次取中位數（2026-10-26）：
 
-| 引擎 | `docker run --rm` | Docker Engine API |
-|---|---:|---:|
-| **Kiri** | **22 ms** | **3.1 ms** |
-| Docker Desktop | 178 ms | 163 ms |
-| OrbStack | 279 ms | 238 ms |
-| Colima | 152 ms | 88 ms |
+| 引擎 | `run --rm alpine true` | `exec … true` | 1 GB bind mount 讀 |
+|---|---:|---:|---:|
+| **Kiri** | **188 ms** | 187 ms | **3851 MB/s** |
+| Docker Engine | 697 ms | 224 ms | 1307 MB/s |
+| Podman | 1105 ms | 274 ms | 907 MB/s |
+| nerdctl | 631 ms | **57 ms** | 1485 MB/s |
 
 <div class="callout mt-6" v-click>
 
-**README 寫的「2.5 ms、80 倍」是較早的量測**：當時 OrbStack 機器上還跑著 86 個容器加 k8s。簡報與比較請用官網這組，約 **8 倍**。
+**條件要講清楚：** 這台不是 bare metal，作者註明腳本可原封不動在原生 Ubuntu 重跑。啟動快約 **3.4 倍**，但 `exec` 比 nerdctl 慢約 3 倍。
 
 </div>
-
----
-clicks: 4
----
-
-# 開機最佳化：810 → 112 ms
-
-<BootScene />
-
-<div class="scene-caption">VM 冷開機到 agent ready 的中位數（<code>bench/results.json</code> 的 <code>boot_journey</code>）。kernel 從 32 MB 裁到 10 MB。</div>
-
-<!--
-從 stock defconfig 的 810 ms 開始。
-[click] 改從 allnoconfig 往上加，只留需要的驅動：175 ms。
-[click] expedited RCU 讓 cgroup2 mount 從 23 ms 降到 0.1 ms：140 ms。
-[click] 再 patch virtio-pci reset，改用 hrtimer 輪詢：112 ms。
-[click] kernel 開到 PID 1 本身只要 8 ms。
--->
 
 ---
 
@@ -149,7 +242,7 @@ clicks: 4
 
 <div class="callout mt-6" v-click>
 
-**安全邊界：** 就算 `--privileged`，容器也拿不到 `AF_VSOCK` 和 io_uring，碰不到和 host 溝通的通道。
+**安全邊界：** 就算 `--privileged`，seccomp 仍會擋掉 `AF_VSOCK` socket 和 io_uring。
 
 </div>
 
@@ -161,7 +254,7 @@ layout: section
 
 # 安裝與上手
 
-裝完就有 `kiri` context
+裝套件、授權使用者，就能用 docker 指令
 
 ---
 clicks: 4
@@ -170,33 +263,35 @@ clicks: 4
 # 第一次啟動做了什麼
 
 <FlowScene
-  :steps="['下載安裝檔\n.dmg / .msi / .deb', 'kiri setup\n建 kiri context', 'docker --context\nkiri run …', '打開\nweb.kiri.local']"
-  :notes="['runkiri.com/releases', '+ LaunchAgent、builder', '原本的指令照打', '不用記 port']"
+  :steps="['sudo apt install\n./kiri_*.deb', 'sudo kiri\nhost-access $USER', 'docker run …', '打開 web.\nkiri.localhost']"
+  :notes="['裝完不啟動任何東西', '加入 kiri 群組、啟動 engine', '套件的 docker 預設連 Kiri', '不用記 port']"
   result="docker 指令一個字都不用改"
 />
 
-<div class="scene-caption">macOS 流程。Kiri 版內附 docker CLI、Compose、buildx；Kiri Lite 只有 engine。</div>
+<div class="scene-caption">Ubuntu 流程（Fedora 用 <code>.rpm</code>）。<code>kiri</code> 套件內附 docker CLI、Compose、buildx；<code>kiri-lite</code> 只有 engine。</div>
 
 <!--
-[click] 打開 Kiri.app 會執行 kiri setup：建 docker context、LaunchAgent、build 用的 builder。
-[click] 之後 docker --context kiri，或 docker context use kiri。
-[click] 第一次會問要不要啟用 *.kiri.local 網域。
-[click] 結論：工作流程不用改。
+[click] 裝 .deb：放好 /usr/bin/kiri、kiri-init、kiri.service，但不啟動任何東西。
+[click] sudo kiri host-access $USER：建 kiri 群組、把你加進去、啟動並設成開機啟動 engine。
+[click] 套件的 docker（update-alternatives，只在 /usr/bin/docker 不存在時）預設就連 /run/kiri/docker.sock。
+[click] 容器用 <name>.kiri.localhost 開。結論：工作流程不用改。
 -->
 
 ---
 
-# 三個平台，三種跑法
+# 裝在 Linux 上的東西
 
-| 平台 | 容器跑在哪 | API 入口 | 第一次啟用 |
-|---|---|---|---|
-| **macOS 14+** | 自製 kernel 的小 VM | `~/.kiri/run/docker.sock` | 打開 `Kiri.app` |
-| **Windows 10/11** | WSL2 裡的 Kiri distro | named pipe `//./pipe/kiri` | MSI（per-user） |
-| **Linux** | 直接用主機 kernel | `/run/kiri/docker.sock` | `sudo kiri host-access $USER` |
+| 項目 | 位置 |
+|---|---|
+| engine | systemd `kiri.service`（`kiri daemon`，以 root 執行） |
+| API socket | `/run/kiri/docker.sock`（0660 root:kiri） |
+| 映像與容器 | `/var/lib/kiri`；狀態在 `/var/lib/kiri-daemon` |
+| docker CLI | `/usr/libexec/kiri/docker`，`/usr/bin/docker` 沒被占用才接上 |
+| 更新／移除 | apt／dnf 簽章套件庫；`apt remove` 保留資料，`apt purge` 才刪 |
 
 <div class="callout mt-6" v-click>
 
-**Linux：** 裝套件本身不啟動任何東西。被授權的使用者會加進 `kiri` 群組，這**等同 root**，和 `docker` 群組一樣。
+**權限：** 被授權的使用者會加進 `kiri` 群組，這**等同 root**，和 `docker` 群組一樣。
 
 </div>
 
@@ -210,6 +305,10 @@ clicks: 4
 ### 透過 docker context
 
 ```sh
+# Linux 套件不會自動建 context，先建一次
+docker context create kiri \
+  --docker host=unix:///run/kiri/docker.sock
+
 # 每次指定
 docker --context kiri run --rm alpine true
 docker --context kiri compose up -d
@@ -237,7 +336,7 @@ kiri logs -f web
 
 <div class="callout mt-6" v-click>
 
-**Gotcha：** `kiri update` 只有 macOS 有。Linux／Windows 上打 `kiri update` 會變成 `docker update`（改容器設定）。Linux 請用 apt／dnf 更新。
+**Gotcha：** Linux 上沒有 `kiri update`，打了會變成 `docker update`（改容器設定）。更新請用 `sudo apt upgrade` 或 `sudo dnf upgrade`。
 
 </div>
 
@@ -249,29 +348,29 @@ layout: section
 
 # 開發體驗
 
-用名字連容器，還有 HTTPS
+用名字連容器，不用記 port
 
 ---
 clicks: 4
 ---
 
-# `http://web.kiri.local` 怎麼找到容器
+# `http://web.kiri.localhost` 怎麼找到容器
 
 <DomainScene />
 
-<div class="scene-caption">整條路都不需要 root：DNS 在高 port，router 依網址挑容器。</div>
+<div class="scene-caption">不用另外架 DNS：<code>*.localhost</code> 本來就指向 127.0.0.1，router 只聽 loopback。</div>
 
 <!--
-瀏覽器打 http://web.kiri.local。
-[click] macOS 透過 /etc/resolver/kiri.local 問 daemon 的小 DNS（127.0.0.1:53535），所有 *.kiri.local 都回 127.0.0.1。
-[click] 連到 daemon 監聽 80/443 的 router，HTTP 看 Host header，HTTPS 看 SNI。
+瀏覽器打 http://web.kiri.localhost。
+[click] *.localhost 由瀏覽器或 systemd-resolved 直接解析成 127.0.0.1，Kiri 不用動系統 DNS 設定。
+[click] 連到 daemon 在 127.0.0.1:80 的 router，看 Host header。Linux 上 router 只聽 loopback，只服務本機。
 [click] 挑到名為 web 的容器。
-[click] HTTPS 憑證由 Kiri 自己的 CA 簽，CA 有 name constraints，就算被信任也冒充不了其他網站。
+[click] Linux 目前只有 HTTP：原始碼寫明「HTTPS for containers isn't on Linux yet」（daemon/tls.rs）。
 -->
 
 ---
 
-# 網域、Build 與 Mac 整合
+# 網域、Build 與 Linux 整合
 
 <div class="grid grid-cols-2 gap-6 code-sm">
 <div>
@@ -284,20 +383,20 @@ services:
     image: my-api
     labels:
       dev.kiri.domain: api.myapp
-      # → http://api.myapp.kiri.local
+      # → http://api.myapp.kiri.localhost
 ```
 
-Compose service 預設是 `<service>.<project>.kiri.local`。
+Compose service 預設是 `<service>.<project>.kiri.localhost`。
 
 </div>
 <div class="text-sm">
 
-### Mac 整合
+### Linux 整合
 
-- `~/Kiri`：Finder 直接看容器檔案（daemon 自己寫的唯讀 NFSv3 server）
+- 視窗是原生 GTK + WebKitGTK，不是 Electron（只有 x86-64 的 `kiri` 套件有）
 - 容器內 SSH agent：`/run/host-services/ssh-auth.sock`
-- 視窗是原生 AppKit + WebKit，不是 Electron
-- 記憶體 balloon 把用不到的還給 macOS；休眠時整台 VM 釋放
+- `/var/run/docker.sock` 沒被占用時也接到 Kiri，Testcontainers、docker-py 直接能用
+- k8s 的 LoadBalancer 發佈在 `localhost`
 
 </div>
 </div>
@@ -316,7 +415,7 @@ layout: section
 
 # 一行指令的附加功能
 
-k8s、Linux 機器、搬家、分享、USB
+k8s、Linux 機器、分享、USB
 
 ---
 
@@ -326,9 +425,8 @@ k8s、Linux 機器、搬家、分享、USB
 |---|---|---|
 | `kiri k8s start --use` | 單節點 k3s，約 20 秒就緒 | LoadBalancer 發佈在 `localhost` |
 | `kiri machine create dev` | 持續執行的 distro，帶你的使用者和 sudo | ubuntu / debian / fedora / arch… |
-| `kiri import orbstack` | 搬 images、volumes、containers | 來源唯讀；只有 macOS |
 | `kiri 3000` | 本機 port 變成公開 HTTPS 網址 | 類似 ngrok |
-| `kiri usb attach <DEVICE>` | USB 裝置交給容器（beta） | Mac 走 USB/IP |
+| `kiri usb attach <DEVICE>` | USB 裝置交給容器（beta） | Linux 主機原生看得到裝置 |
 
 ---
 clicks: 4
@@ -350,7 +448,7 @@ clicks: 4
 
 ---
 
-# k8s、machine、import
+# k8s 與 machine
 
 <div class="grid grid-cols-2 gap-6 code-sm">
 <div>
@@ -362,13 +460,6 @@ kiri k8s start --use     # 寫入 kubectl context: kiri
 kubectl get nodes
 kiri k8s set --lan on    # API server 開到區網
 kiri k8s delete          # 連狀態 volume 一起刪
-```
-
-### 從別的引擎搬家（macOS）
-
-```sh
-kiri import --list
-kiri import desktop-linux
 ```
 
 </div>
@@ -389,7 +480,7 @@ kiri machine delete dev
 
 <div class="callout mt-6" v-click>
 
-**Gotcha：** import 搬過來的容器是**停止狀態**，要自己啟動。machine 掛載家目錄：Mac 是 `/Users`，Linux 是 `/home`。
+**Gotcha：** machine 會帶著你的使用者和 sudo，並把主機的 `/home` 掛在同一個路徑；`stop`／`start`／`restart` 都要帶 NAME。
 
 </div>
 
@@ -411,14 +502,14 @@ layout: section
 |---|---|
 | BuildKit `--add-host x:host-gateway` | 會失敗；寫死 IP 或 `DOCKER_BUILDKIT=0`，內建 builder 在 roadmap |
 | published port 吞吐量 | 約 Docker Engine 的 **1/10**（user-space relay） |
-| Mac bind mount 讀取 | 1724 MB/s，落後 Colima、OrbStack |
-| Windows 安裝檔 | 尚未簽章，SmartScreen 會警告 |
+| `exec` 延遲 | 187 ms，比 nerdctl（57 ms）慢約 3 倍 |
+| 容器 HTTPS 網域 | Linux 還沒有，只能用 HTTP |
 | `kiri share` | 服務直接公開到網路，edge 不開源 |
 | 成熟度 | v0.2.1、官網標 Beta，repo 2026-11-02 才公開 |
 
 <div class="callout mt-4" v-click>
 
-**一句話：** 啟動延遲很強，但吞吐量型的工作負載（大量網路、Mac 上大量讀檔）要自己量。
+**一句話：** 啟動延遲很強，但吞吐量型的工作負載（大量走 published port 的網路傳輸）要自己量。
 
 </div>
 
@@ -433,9 +524,9 @@ layout: section
 <div class="text-left max-w-2xl mx-auto mt-8 text-lg leading-relaxed">
 
 1. **相容：** 實作 Docker Engine API，`docker`、Compose、buildx 照用
-2. **快的原因：** agent 一次 `clone3`，沒有 runc／shim／dockerd，kernel 自己裁到 112 ms 開機
-3. **開發體驗：** `*.kiri.local` + HTTPS，k8s、machine、share 都是一行指令
-4. **看條件：** 官網公平量測約 8 倍；吞吐量和成熟度還要觀察
+2. **快的原因：** agent 一次 `clone3`，沒有 runc／shim／dockerd；Linux 上連 VM 都沒有
+3. **開發體驗：** `*.kiri.localhost` 用名字連容器，k8s、machine、share 都是一行指令
+4. **看條件：** Ubuntu 上啟動比 Docker Engine 快約 3.4 倍；吞吐量和成熟度還要觀察
 
 </div>
 
@@ -445,8 +536,8 @@ layout: section
 
 - Kiri GitHub repo：[github.com/libracoder/kiri](https://github.com/libracoder/kiri)（查證時 HEAD `36923b2`）
 - 官網與下載：[runkiri.com/releases](https://runkiri.com/releases/)
-- 官方 benchmark：[runkiri.com/benchmarks](https://runkiri.com/benchmarks/)
+- Ubuntu 量測：[bench/ubuntu-2026-10-26.md](https://github.com/libracoder/kiri/blob/main/bench/ubuntu-2026-10-26.md)
+- Linux 套件說明：[packaging/README.md](https://github.com/libracoder/kiri/blob/main/packaging/README.md)
 - 功能清單：[docs/features.md](https://github.com/libracoder/kiri/blob/main/docs/features.md)
 - 架構與開發說明：[docs/development.md](https://github.com/libracoder/kiri/blob/main/docs/development.md)
-- 量測原始資料：[bench/results.json](https://github.com/libracoder/kiri/blob/main/bench/results.json)
 - Kiri Share：[runkiri.com/share](https://runkiri.com/share/)

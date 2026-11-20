@@ -12,15 +12,22 @@
 - 每一頁的高度不能超過螢幕
 - 繁體中文（技術名詞保留原文）
 - 貫穿全場的例子：`docker run --rm alpine true`，以及一個叫 `web` 的 nginx 容器
+- **所有例子都用 Linux（Ubuntu）舉例，不用 macOS**。Linux 上和 Mac 不同的地方（2026-11-20 對照 HEAD `36923b2` 原始碼）：
+  - 沒有 VM：systemd `kiri.service` 跑 `kiri daemon`（root），daemon 直接啟動同機的 `kiri-init` agent（`guest.rs` `agent_binary()`）
+  - 效能數字用 `bench/ubuntu-2026-10-26.md`：Ubuntu 24.04、16 核 x86-64，非 bare metal。`run --rm alpine true` Kiri 188 ms、Docker Engine 697 ms、Podman 1105 ms、nerdctl 631 ms；`exec` 比 nerdctl 慢約 3 倍
+  - 網域是 `*.kiri.localhost`（`/etc/resolver` 只有 Mac 有），router 只聽 loopback（`daemon/domains.rs`）
+  - **Linux 還沒有容器 HTTPS**（`daemon/tls.rs:258`「HTTPS for containers isn't on Linux yet」）
+  - 套件不會自動建 `kiri` docker context；完整版的 docker wrapper 預設連 `/run/kiri/docker.sock`，engine-only 要自己 `docker context create kiri --docker host=unix:///run/kiri/docker.sock`（`packaging/linux/deb/postinst`）
+  - 開機最佳化（VM kernel 810 → 112 ms）只跟 Mac 的 VM 有關，簡報不放
 
 ---
 
 ## 1. Kiri 是什麼
 
-**Kiri 是一個用 Rust 寫的輕量容器 runtime**，定位是 **Docker Desktop / OrbStack 的替代品**，支援 macOS、Windows、Linux。
+**Kiri 是一個用 Rust 寫的輕量容器 runtime**，定位是 **Docker Desktop / OrbStack 的替代品**，支援 macOS、Linux（本簡報不涵蓋 Windows）。
 
 - 它**實作 Docker Engine API**，所以你原本的 `docker` CLI、Docker Compose、buildx、Testcontainers 都能直接用，不用改指令。
-- macOS / Windows 上把容器跑在**一台很小的 Linux VM** 裡；Linux 上則**直接跑在主機 kernel**，不需要 VM。
+- macOS 上把容器跑在**一台很小的 Linux VM** 裡；Linux 上則**直接跑在主機 kernel**，不需要 VM。
 - 名稱來自伊博語（Igbo）的 *ntakịrị*，意思是「小」。
 - 授權：Apache-2.0（guest kernel 為 Linux GPL-2.0）。
 
@@ -97,7 +104,6 @@ kernel 開到 PID 1 只要 **8 ms**，PID 1 到 agent ready 只要 0.4 ms。
 - seccomp 是**手寫的 BPF deny list**（Docker 用 allow list），程式更短，每次 syscall 跑的指令更少。
 - 容器拆成 kernel 原語的耗時：namespaces + exec 0.78 ms、cgroup v2 1.23 ms、overlay 0.36 ms、veth 2.2 ms；**刪除 veth 要 18.9 ms**。Docker 在 `--rm` 回傳前會等這一步，Kiri 先回報結束，之後才清理。
 - VM 當掉時，`always`／`unless-stopped` 的容器會自動在新 VM 重啟。
-- Windows：`kiri-win.exe` 在 named pipe `npipe:////./pipe/kiri` 提供 API，透過一條 `wsl.exe … kiri bridge` 送進 WSL2，不需要改 WSL 或 Windows 的網路設定。
 - Linux：同一支 `kiri`，agent 直接跑在主機 kernel 上（systemd 的 `kiri.service`）。
 
 ---
@@ -107,7 +113,6 @@ kernel 開到 PID 1 只要 **8 ms**，PID 1 到 agent ready 只要 0.4 ms。
 | 平台 | 安裝檔 |
 |---|---|
 | macOS 14+（Apple silicon / Intel） | `.dmg`（`Kiri-<ver>-arm64.dmg` / `-x86_64.dmg`） |
-| Windows 10 / 11（x86-64 / Arm，透過 WSL 2） | `.msi`（`Kiri-<ver>-x86_64.msi` / `-arm64.msi`） |
 | Linux（Ubuntu、Fedora 等） | `.deb` / `.rpm` |
 
 全部從 <https://runkiri.com/releases/> 下載。
@@ -137,8 +142,6 @@ sudo kiri host-access $USER
 
 Linux 套件會把 `docker` 透過 `update-alternatives`（priority 10）放上 PATH，但**只在 `/usr/bin/docker` 不存在，或本來就是 alternatives 連結時**；若已裝 Docker 官方 CLI，Docker 的會優先。資料位置：`/var/lib/kiri`（映像、容器）、`/var/lib/kiri-daemon`（狀態）；`apt remove` 會保留，`apt purge` 才會刪除。
 
-**Windows**：MSI 是 per-user 安裝，會在 WSL2 裡建一個 Kiri 的 distro，並設定 `kiri` docker context。目前**安裝檔沒有 Authenticode 簽章**，SmartScreen 會跳警告。
-
 ### 更新
 
 App 會自動更新，下載後先檢查 **SHA-256 與簽章**。Mac 也可以手動更新：
@@ -148,7 +151,7 @@ kiri update --check   # 只檢查（只有 macOS）
 kiri update           # 安裝新版（只有 macOS）
 ```
 
-> ⚠️ Linux／Windows 上打 `kiri update`，實際跑的是 `docker update`（改容器資源設定），不會更新 Kiri。Linux 請用 apt／dnf 簽章套件庫更新（0.1.15 起）。
+> ⚠️ Linux 上打 `kiri update`，實際跑的是 `docker update`（改容器資源設定），不會更新 Kiri。Linux 請用 apt／dnf 簽章套件庫更新（0.1.15 起）。
 
 ---
 
@@ -279,7 +282,7 @@ kiri k8s set --port 7443               # 換 port
 
 ### 5.6 Linux 機器：`kiri machine`
 
-類似 OrbStack 的 machines：一個持續執行的 distro 容器，帶著你的使用者和 sudo，並把主機家目錄掛在同樣路徑（Mac 掛 `/Users`，Linux 掛 `/home`；Windows 上的使用者是 root）。
+類似 OrbStack 的 machines：一個持續執行的 distro 容器，帶著你的使用者和 sudo，並把主機家目錄掛在同樣路徑（Mac 掛 `/Users`，Linux 掛 `/home`）。
 
 ```sh
 kiri machine create dev --distro ubuntu   # 預設 ubuntu
@@ -305,7 +308,7 @@ kiri import desktop-linux    # 從 Docker Desktop
 - 透過各引擎自己的 docker CLI 複製 **images、volumes、containers**。
 - 來源**只讀不改**：image 用 `docker save`、container 用 `inspect`，volume 用一個唯讀掛載的臨時 helper 容器複製（保留檔案擁有者）。
 - 搬過來的容器是**停止狀態**，需要自己啟動。
-- CLI 只有 macOS 有。Windows 改在視窗的 Settings → Import 操作。
+- CLI 只有 macOS 有。
 
 ### 5.8 分享到網際網路：`kiri share`
 
@@ -329,7 +332,7 @@ kiri share logout
 
 ### 5.9 USB 裝置（beta）：`kiri usb`
 
-把序列轉接器、Zigbee 棒、開發板交給容器使用（Mac / Windows / Linux）：
+把序列轉接器、Zigbee 棒、開發板交給容器使用（Mac / Linux）：
 
 ```sh
 kiri usb list
@@ -345,13 +348,13 @@ kiri run --rm -it --device /dev/ttyACM0 my-flasher
 
 Mac 上裝置斷線（開發板重開、Mac 睡眠）回來後會自動重新 attach。
 
-實作方式：Mac 的 VM 沒有 USB controller。root helper 從 macOS 搶下裝置，再用 **USB/IP** 協定交給 guest 的 `vhci_hcd`。不支援 isochronous 傳輸，所以 webcam、音訊這類裝置大概不能用。Windows 透過 usbipd-win 交給 WSL 2。
+實作方式：Mac 的 VM 沒有 USB controller。root helper 從 macOS 搶下裝置，再用 **USB/IP** 協定交給 guest 的 `vhci_hcd`。不支援 isochronous 傳輸，所以 webcam、音訊這類裝置大概不能用。
 
 ### 5.10 Mac 整合
 
 - **Finder**：容器內的檔案出現在 `~/Kiri`（唯讀，即時更新）。daemon 自己實作一個 **NFSv3 server**，掛在 Unix socket 上，用 macOS 內建的 `mount_nfs`，不需要 kext 或 admin
 - **`*.kiri.local` 怎麼做到的**：daemon 在 127.0.0.1:53535 跑一個小型 DNS（透過 `/etc/resolver/kiri.local`），再由監聽 80/443 的 router 依 Host header 或 SNI 挑容器
-- **原生視窗，不是 Electron**：Mac 用 AppKit + WebKit，Linux 用 GTK + WebKitGTK，Windows 用 Win32 + WebView2
+- **原生視窗，不是 Electron**：Mac 用 AppKit + WebKit，Linux 用 GTK + WebKitGTK
 - **SSH agent forwarding**：容器內可用 `/run/host-services/ssh-auth.sock`
 - **記憶體 balloon**：執行中會把用不到的記憶體還給 macOS
 - **選單列**：關掉視窗後 Kiri 留在選單列，可看 VM 狀態、執行中的容器、Start / Stop
@@ -390,7 +393,7 @@ kiri setup --uninstall           # macOS：移除 context、LaunchAgent 等設�
 
 1. **`docker build --add-host name:host-gateway` 用 BuildKit 會失敗**
    buildx 只允許 Docker 內建 builder 使用 `host-gateway`。暫時解法：
-   - 直接寫 IP：Mac 用 `198.19.248.254`；Windows / Linux 用預設 bridge 的 gateway（文件寫 `172.18.0.1`，實際以 `docker network inspect bridge` 為準）
+   - 直接寫 IP：Mac 用 `198.19.248.254`；Linux 用預設 bridge 的 gateway（文件寫 `172.18.0.1`，實際以 `docker network inspect bridge` 為準）
    - 或用 `DOCKER_BUILDKIT=0`，讓 Kiri 自己處理 `host-gateway`
    - 官方 Roadmap 下一步就是**內建 builder**，會解決此問題
 2. **Mac 睡眠時 USB 裝置會暫時離開容器**
@@ -422,7 +425,7 @@ kiri setup --uninstall           # macOS：移除 context、LaunchAgent 等設�
 4. **安裝即用**：裝完自動建立 `kiri` context，`docker --context kiri ...` 或 `kiri run ...`。
 5. **開發體驗**：`*.kiri.local` + HTTPS、Compose 分組、Finder 看容器檔案。
 6. **一行指令的附加功能**：`kiri k8s start`、`kiri machine create`、`kiri import`、`kiri 3000`。
-7. **限制與注意**：BuildKit `host-gateway`、`kiri` 群組 = root、`share` 會公開到網路（edge 不開源）、Windows 安裝檔未簽章、port 吞吐量與 Mac bind mount 讀取落後、專案仍在 0.x Beta（repo 2026-11-02 才公開）。
+7. **限制與注意**：BuildKit `host-gateway`、`kiri` 群組 = root、`share` 會公開到網路（edge 不開源）、port 吞吐量與 Mac bind mount 讀取落後、專案仍在 0.x Beta（repo 2026-11-02 才公開）。
 
 ---
 
@@ -432,13 +435,15 @@ kiri setup --uninstall           # macOS：移除 context、LaunchAgent 等設�
 2. **問題**（ProblemScene）：Docker Desktop 跑一次 `docker run` 要經過 dockerd → containerd → shim → runc，Kiri 只要 daemon → agent `clone3`；178 ms vs 22 ms
 3. **定義**：開源、Rust 寫、實作 Docker Engine API 的輕量容器 runtime；callout：相容（docker 指令照用）／輕（休眠、10 MB）
 4. **Part 1 為什麼快**
-   - ArchScene：CLI / Compose / buildx / UI → Engine API → daemon（host）→ vsock → VM（10 MB kernel、PID 1 agent）→ `clone3` → container
-   - 效能表：官網公平量測 + README 舊數字，callout 說明量測條件
-   - BootScene：開機最佳化長條圖 810 → 175 → 140 → 112 ms
+   - ArchScene（Linux）：CLI / Compose / buildx / UI → Engine API → kiri daemon（systemd）→ kiri-init → `clone3` → container
+   - 快在哪：不是 `clone3` 本身（runc 最後也請 kernel 建 namespaces／cgroup，只要幾 ms），而是少了 dockerd → containerd → shim → runc 的轉手；比喻：寄包裹四個窗口轉手 vs 櫃檯收件後直接進倉庫
+   - 時間花在哪（`bench/ubuntu-2026-10-26.md`「Engine-only latency」，curl 直接打 API）：Docker Engine lifecycle 531 ms、Kiri 33–47 ms，各含約 35 ms curl+jq 成本 → 引擎約 500 ms vs 約 10 ms；CLI 剩約 200 ms vs 約 180 ms。差距幾乎全在引擎，Kiri 的 188 ms 大多是 docker CLI。exec：API Docker 50 ms、Kiri 17 ms（引擎約 1 ms）
+   - 對照表：CLI／API 不換；dockerd → kiri daemon；containerd → daemon + kiri-init；shim → 不需要；runc → 一次 `clone3`；BuildKit → 跑在 Kiri 容器裡
+   - 效能表：Ubuntu 量測，callout 說明量測條件（非 bare metal、exec 較慢）
    - 實作細節表：手寫 rtnetlink／nf_tables、seccomp deny list、刪 veth 18.9 ms、shim 記憶體 0
 5. **Part 2 安裝與上手**
    - FlowScene：下載安裝檔 → `kiri setup` 建 context → `docker --context kiri` → `web.kiri.local`
-   - 三平台表：Mac（VM）、Windows（WSL2 + named pipe）、Linux（主機 kernel + `host-access`）
+   - 兩平台表：Mac（VM）、Linux（主機 kernel + `host-access`）
    - 程式碼：docker context 用法 vs `kiri run` 子指令
 6. **Part 3 開發體驗**
    - DomainScene：瀏覽器 → `web.kiri.local` → DNS :53535 → router :80/:443（Host／SNI）→ 容器 `web`；Kiri CA name constraints
@@ -447,6 +452,6 @@ kiri setup --uninstall           # macOS：移除 context、LaunchAgent 等設�
    - 指令表：`k8s`、`machine`、`import`、`share`、`usb`
    - ShareScene：訪客 → `*.runkiri.cloud` edge → 一條多工 TLS → kiri → `localhost:3000`
    - 程式碼：k8s / machine / import
-8. **Part 5 限制與注意**：表格（BuildKit host-gateway、kiri 群組 = root、share 公開、Windows 未簽章、port 吞吐量、Mac bind mount、Beta）
+8. **Part 5 限制與注意**：表格（BuildKit host-gateway、kiri 群組 = root、share 公開、port 吞吐量、Mac bind mount、Beta）
 9. **Takeaways**
 10. **參考資料**
