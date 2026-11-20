@@ -320,6 +320,8 @@ docker CLI 只是 client，它把指令翻成 HTTP 請求，送到 /var/run/dock
 </div>
 
 ---
+hide: true
+---
 
 # Engine API 其實就是 HTTP
 
@@ -365,60 +367,18 @@ export DOCKER_HOST=unix:///...   # 環境變數
 </div>
 
 ---
+hide: true
 layout: section
 ---
 
 <div class="eyebrow">Part 4</div>
-
-# Mac 和 Windows 上的 Docker
-
-沒有 Linux kernel，就先開一台 VM
-
----
-clicks: 4
----
-
-# 容器其實跑在一台 Linux VM 裡
-
-<VmScene />
-
-<div class="scene-caption">以 macOS 上的 Docker Desktop 為例。Windows 用 WSL2 這台 VM；Linux 主機直接用自己的 kernel，不需要 VM。</div>
-
-<!--
-Mac 上的 docker CLI、compose、buildx 都在 macOS 上執行，可是 macOS 沒有 Linux kernel。
-[click] 它們連到 host 上的 docker.sock，由 Docker Desktop 的 host 端程式接手轉發。
-[click] 透過 vsock（VM 專用的 socket）進到 Linux VM，dockerd、containerd、shim、runc 整串都在 VM 裡。
-[click] 容器跑在 VM 的 kernel 上。
-[click] 所以這類產品比的是：VM 開多快、常駐多少記憶體、中間經過幾層。
--->
-
----
-
-# 同一個思路，不同產品
-
-| 產品 | Linux VM | 對外提供 |
-|---|---|---|
-| **Docker Desktop** | Mac：Apple Virtualization；Windows：WSL2 | Docker Engine API（dockerd） |
-| **OrbStack** | 自己的輕量 VM（Mac） | Docker Engine API |
-| **Colima** | Lima 開的 VM（Mac / Linux） | Docker Engine API |
-
-<div class="callout mt-6" v-click>
-
-**共通點：** client 只看 Engine API，所以底下換什麼都行，`docker` 指令不用改。差別在 VM 多輕、開機多快、檔案分享和網路怎麼做。
-
-</div>
-
----
-layout: section
----
-
-<div class="eyebrow">Part 5</div>
 
 # 網路與周邊
 
 port、veth、build、compose
 
 ---
+hide: true
 clicks: 4
 ---
 
@@ -436,6 +396,8 @@ clicks: 4
 [click] 另外還有 docker-proxy 在 user space 轉送；容器刪掉時，veth 和規則都要清掉，這也要花時間。
 -->
 
+---
+hide: true
 ---
 
 # 名詞速查：常見周邊工具
@@ -460,7 +422,6 @@ layout: section
 1. **容器是 process：** 共用主機 kernel，靠 namespaces 隔離、cgroups 限制、seccomp 過濾
 2. **Image 是一疊唯讀 layer：** 容器只在上面加一層可寫層，刪了就沒了
 3. **Docker 是分層的：** CLI → Engine API → dockerd → containerd → shim → runc
-4. **Mac / Windows 要 VM：** 各家產品都在 VM 裡跑 Linux，對外提供同一套 Engine API
 
 </div>
 

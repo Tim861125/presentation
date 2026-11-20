@@ -29,7 +29,7 @@
 
 - VM：每台都有自己的 guest kernel，靠 hypervisor 模擬硬體，開機要秒級。
 - 容器：**所有容器共用主機的 Linux kernel**，容器只是主機上的一個 process，被 kernel 隔離（namespaces）和限制（cgroups）。啟動就是 fork/exec 一個 process，毫秒級。
-- 結論：**容器 = 被隔離、被限制的普通 Linux process**。因為依賴 Linux kernel，Mac / Windows 必須先有一台 Linux VM。
+- 結論：**容器 = 被隔離、被限制的普通 Linux process**。
 
 ### 2. Image 與 Container
 
@@ -81,24 +81,16 @@ dockerd ──gRPC──► containerd ──► containerd-shim-runc-v2 ──�
 | `runc` | OCI runtime。真正呼叫 clone / 設 cgroup / seccomp / pivot_root，然後 exec 你的程式；建完就結束 |
 
 - Engine API 就是 HTTP：`curl --unix-socket /var/run/docker.sock http://localhost/containers/json`。
-- Compose、buildx、Testcontainers、各種 GUI 都是 Engine API 的 client → **只要有人實作 Engine API，這些工具都能用**（OrbStack、Colima 都是這個思路）。
+- Compose、buildx、Testcontainers、各種 GUI 都是 Engine API 的 client → **只要有人實作 Engine API，這些工具都能用**。
 - docker context：CLI 要連哪個 daemon。`docker context ls` / `docker context use` / `docker --context x` / `DOCKER_HOST`。
 - 安全：daemon 以 root 執行，能存取 socket 就等於 root；`docker` group 等同 root。
 
-### 5. Mac / Windows 為什麼要 VM
-
-- 容器要 Linux kernel，macOS / Windows 沒有 → 先開一台輕量 Linux VM，dockerd 跑在 VM 裡。
-- host 上的 docker CLI 透過轉發的 socket 連到 VM 裡的 daemon；host ↔ VM 常見通道是 **vsock**（虛擬機專用 socket）。
-- Docker Desktop（Mac：Apple Virtualization framework；Windows：WSL2）、OrbStack、Colima 都是「Linux VM + Engine API」，差在 VM 多輕、中間多少層、檔案分享和網路怎麼做。
-- 所以「VM 開機多快」「VM 常駐多少記憶體」「閒置能不能休眠」都是這類產品的比較重點。
-- Linux 主機：不需要 VM，直接用主機 kernel。
-
-### 6. 網路、儲存、建置
+### 5. 網路、儲存、建置
 
 - 預設 bridge 網路 `docker0`：每個容器有自己的 net namespace，用一對 **veth** 把容器的 `eth0` 接到主機上的 bridge。
 - `-p 8080:80`（port publishing）：Docker 在主機裝 iptables 規則（DNAT）把 host:8080 轉到容器 :80；另有 user-space 的 `docker-proxy` 補足 iptables 處理不到的情況。
 - 容器刪除時要清掉 veth、規則等網路資源。
-- 儲存：bind mount（把主機資料夾掛進去）、volume（Docker 管理的資料區）。Mac 上 bind mount 要跨 VM 分享檔案，所以比較慢。
+- 儲存：bind mount（把主機資料夾掛進去）、volume（Docker 管理的資料區）。
 - 建置：BuildKit 是建置引擎，`docker buildx` 是它的 CLI。
 - Compose：用 YAML 描述多個容器，也是 Engine API client。
 - Kubernetes：管理大量容器的編排系統；k3s 是輕量版。
@@ -119,11 +111,8 @@ dockerd ──gRPC──► containerd ──► containerd-shim-runc-v2 ──�
    - ChainScene：CLI → socket → dockerd → containerd → shim → runc → clone
    - 表格：每層角色
    - 程式碼頁：Engine API 就是 HTTP；docker context；socket = root
-7. Part 4 Mac / Windows 的 VM
-   - VmScene：host CLI → socket 轉發 → vsock → Linux VM → dockerd → containers
-   - 表格：三平台 + Docker Desktop / OrbStack / Colima
-8. Part 5 網路與周邊
+7. Part 4 網路與周邊
    - NetScene：browser → host:8080 → iptables DNAT → docker0 → veth → 容器 :80
    - 名詞速查：bind mount、volume、BuildKit/buildx、Compose、Testcontainers、k3s
-9. Takeaways
-10. 參考資料
+8. Takeaways
+9. 參考資料
