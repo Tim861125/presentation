@@ -1,16 +1,11 @@
 ---
+theme: sketch
 title: RUM 使用者 IP 全是 Traefik
+footer: RUM 真實 IP · RD 技術分享
 info: |
   OpenObserve pi_prod 前端 RUM 的使用者 IP 為何全是 Traefik 的 IP
   丁吾心
-colorSchema: light
 layout: cover
-transition: slide-left
-fonts:
-  provider: none
-  sans: system-ui, -apple-system, "Segoe UI", "Noto Sans TC", "PingFang TC", "Microsoft JhengHei", sans-serif
-  mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace
-mdc: true
 ---
 
 # RUM 使用者 IP 為何全是 Traefik？

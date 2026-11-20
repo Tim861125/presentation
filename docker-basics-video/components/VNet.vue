@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { ref } from 'vue'
-import { C, MONO, useRoughScene } from '../utils/rough-scene'
+import { C, MONO, useRoughScene } from 'slidev-theme-sketch/utils/rough-scene'
 
 // 直式：-p 8080:80，localhost:8080 經 iptables → docker0 → veth → 容器 :80。
 const svg = ref<SVGSVGElement>()

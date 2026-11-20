@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { ref } from 'vue'
-import { C, MONO, useRoughScene } from '../utils/rough-scene'
+import { C, MONO, useRoughScene } from 'slidev-theme-sketch/utils/rough-scene'
 
 // 組織 → 串流：每個組織有自己的一組串流，組織之間互相隔離。
 const svg = ref<SVGSVGElement>()

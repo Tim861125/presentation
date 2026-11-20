@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { ref } from 'vue'
-import { C, MONO, useRoughScene } from '../utils/rough-scene'
+import { C, MONO, useRoughScene } from 'slidev-theme-sketch/utils/rough-scene'
 
 // 對照組：同一個瀏覽器，RUM 路記到 Traefik IP；API 路（Nuxt OTel）記到真實 IP。
 const svg = ref<SVGSVGElement>()

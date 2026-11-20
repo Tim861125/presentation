@@ -52,7 +52,11 @@ Optional per-deck directories:
 
 ## Hand-drawn Style (new decks)
 
-New decks use the **hand-drawn sketch style** from `../context-propagation-slides`: rough.js scenes that sketch in per click, white background with blue `#4f61ab` + amber `#f5a700`, navy cover/section pages. Each deck carries its own `style.css`, `layouts/`, `global-bottom.vue`, `utils/rough-scene.ts` (root dep `roughjs`), copied from the `templates/sketch/` of the `create-monthly` / `create-tech` skills — scaffold through those skills.
+New decks use the **hand-drawn sketch style** from `../context-propagation-slides`: rough.js scenes that sketch in per click, white background with blue `#4f61ab` + amber `#f5a700`, navy cover/section pages. The look is the shared theme `packages/slidev-theme-sketch` (`theme: sketch`; root dep `roughjs`) — scaffold through the `create-monthly` / `create-tech` skills, whose `templates/sketch/` holds only `slides.md`, `spec.md` and `components/TitleSketch.vue`.
+
+- **Theme provides:** `cover` / `section` layouts, `global-bottom.vue` footer (reads headmatter `footer:`, falls back to `title`), `<FlowScene>`, palette + `.callout` / `.big-quote` / `.scene-caption` / `.code-sm` classes, `github-light` Shiki, and defaults (`colorSchema: light`, `transition: slide-left`, `mdc`, system fonts). Its `styles/index.ts` loads `@slidev/theme-default` styles first, because sketch decks were built on the default theme.
+- **Deck provides:** content, `components/TitleSketch.vue` and its own `*Scene.vue` (import `C` / `useRoughScene` from `slidev-theme-sketch/utils/rough-scene`), and an optional `style.css` holding only deck-specific classes.
+- Change the shared look in the theme, not by copying theme files back into a deck. `docker-basics-video` (vertical video, `vcover` layout) keeps its own `style.css` / `global-bottom.vue` overrides.
 
 ## Shared Theme (slidev-theme-tech, existing decks)
 

@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { ref } from 'vue'
-import { C, MONO, useRoughScene } from '../utils/rough-scene'
+import { C, MONO, useRoughScene } from 'slidev-theme-sketch/utils/rough-scene'
 
 // Mac 沒有 Linux kernel：docker CLI 在 macOS，dockerd 和容器都在一台 Linux VM 裡。
 const svg = ref<SVGSVGElement>()

@@ -1,16 +1,11 @@
 ---
+theme: sketch
 title: OpenObserve 使用教學
+footer: OpenObserve · RD 技術分享
 info: |
   OpenObserve 使用教學：Logs、Traces、RUM、Dashboards 怎麼操作
   丁吾心
-colorSchema: light
 layout: cover
-transition: slide-left
-fonts:
-  provider: none
-  sans: system-ui, -apple-system, "Segoe UI", "Noto Sans TC", "PingFang TC", "Microsoft JhengHei", sans-serif
-  mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace
-mdc: true
 ---
 
 # OpenObserve<br>使用教學

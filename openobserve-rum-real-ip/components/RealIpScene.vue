@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { ref } from 'vue'
-import { C, MONO, useRoughScene } from '../utils/rough-scene'
+import { C, MONO, useRoughScene } from 'slidev-theme-sketch/utils/rough-scene'
 
 // OpenObserve（main 分支）決定 RUM ip 的流程：依序試 header → 退回 TCP 對端 → RealIp → ip + MaxMind geo。
 const svg = ref<SVGSVGElement>()

@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { ref } from 'vue'
-import { C, MONO, useRoughScene } from '../utils/rough-scene'
+import { C, MONO, useRoughScene } from 'slidev-theme-sketch/utils/rough-scene'
 
 // Logs 頁的線框圖：先畫出整個畫面，再每 click 標出一個區塊的用途。
 const svg = ref<SVGSVGElement>()

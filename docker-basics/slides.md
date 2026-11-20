@@ -1,16 +1,11 @@
 ---
+theme: sketch
 title: Docker 底層入門
+footer: Docker 底層入門 · RD 技術分享
 info: |
   Docker 底層入門：docker run 底下發生什麼事
   丁吾心
-colorSchema: light
 layout: cover
-transition: slide-left
-fonts:
-  provider: none
-  sans: system-ui, -apple-system, "Segoe UI", "Noto Sans TC", "PingFang TC", "Microsoft JhengHei", sans-serif
-  mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace
-mdc: true
 ---
 
 # Docker 底層入門

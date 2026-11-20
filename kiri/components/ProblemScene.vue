@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { ref } from 'vue'
-import { C, MONO, useRoughScene } from '../utils/rough-scene'
+import { C, MONO, useRoughScene } from 'slidev-theme-sketch/utils/rough-scene'
 
 // 同一個 `docker run --rm alpine true`：Docker Desktop 要穿過四層，Kiri 一次 clone3。
 const svg = ref<SVGSVGElement>()

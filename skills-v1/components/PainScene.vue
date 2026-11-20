@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { ref } from 'vue'
-import { C, useRoughScene } from '../utils/rough-scene'
+import { C, useRoughScene } from 'slidev-theme-sketch/utils/rough-scene'
 
 // 問題頁：開發週期的三個時間點，各自卡在哪裡；每 click 揭露一個痛點與對應的 skill。
 const svg = ref<SVGSVGElement>()

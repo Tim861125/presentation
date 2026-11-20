@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { ref } from 'vue'
-import { C, MONO, useRoughScene } from '../utils/rough-scene'
+import { C, MONO, useRoughScene } from 'slidev-theme-sketch/utils/rough-scene'
 
 // docker run -d -p 8080:80 --name web nginx：localhost:8080 怎麼走到容器的 :80。
 const svg = ref<SVGSVGElement>()

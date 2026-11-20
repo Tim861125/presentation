@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { ref } from 'vue'
-import { C, MONO, useRoughScene } from '../utils/rough-scene'
+import { C, MONO, useRoughScene } from 'slidev-theme-sketch/utils/rough-scene'
 
 // Mac 上的架構：各種 client 都講 Docker Engine API → kiri daemon → vsock → VM 裡的 agent → clone3。
 const svg = ref<SVGSVGElement>()

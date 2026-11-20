@@ -1,16 +1,11 @@
 ---
+theme: sketch
 title: YYYY-MM 工作報告
+footer: YYYY-MM 工作報告 · 丁吾心
 info: |
   YYYY-MM 工作報告
   丁吾心
-colorSchema: light
 layout: cover
-transition: slide-left
-fonts:
-  provider: none
-  sans: system-ui, -apple-system, "Segoe UI", "Noto Sans TC", "PingFang TC", "Microsoft JhengHei", sans-serif
-  mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace
-mdc: true
 ---
 
 # YYYY-MM 工作報告

@@ -60,19 +60,24 @@ bun install
 
 Decks need **no `package.json`** — `scripts/dev.js` discovers a deck by the presence of `slides.md`, and all deps (including `roughjs`) live at the repo root.
 
-**Keep every template file** — the hand-drawn look depends on all of them; Slidev picks them up from the deck root by convention:
+The look itself lives in the shared theme **`packages/slidev-theme-sketch`** (`theme: sketch` in the headmatter) — the deck only carries its own content:
 
-| File | Role |
-| --- | --- |
-| `style.css` | 白底、藍 `#4f61ab` + 琥珀 `#f5a700` 調色盤（`--sk-*`）、h1 琥珀底線、`.callout` / `.big-quote` / `.scene-caption` / `.code-sm` |
-| `layouts/cover.vue`, `layouts/section.vue` | navy 點陣漸層的封面（預設 slot + `::brand::` + `::art::`）與章節頁（`.eyebrow` + `# 標題`） |
-| `global-bottom.vue` | 每頁頁尾：`TOPIC · RD 技術分享` + 頁碼（封面不顯示） |
-| `utils/rough-scene.ts` | rough.js 手繪引擎：`Scene`（`layer` / `box` / `arrow` / `curve` / `pill` / `text`…）+ `useRoughScene`，跟著 `$clicks` 一筆筆「畫出來」 |
-| `setup/shiki.ts` | `github-light` 程式碼配色 |
-| `components/TitleSketch.vue` | 封面右側手繪：核心元件節點＋資料流箭頭（改 `nodes` / `edges` / `tagline`） |
-| `components/FlowScene.vue` | 通用手繪流程圖：props `steps` / `notes` / `result`，每 click 畫一格 |
+| Where | File | Role |
+| --- | --- | --- |
+| theme | `styles/sketch.css` | 白底、藍 `#4f61ab` + 琥珀 `#f5a700` 調色盤（`--sk-*`）、h1 琥珀底線、`.callout` / `.big-quote` / `.scene-caption` / `.code-sm`（`styles/index.ts` 先載入 `@slidev/theme-default` 的基底樣式） |
+| theme | `layouts/cover.vue`, `layouts/section.vue` | navy 點陣漸層的封面（預設 slot + `::brand::` + `::art::`）與章節頁（`.eyebrow` + `# 標題`） |
+| theme | `global-bottom.vue` | 每頁頁尾：headmatter 的 `footer:`（沒填就用 `title`）+ 頁碼（封面不顯示） |
+| theme | `utils/rough-scene.ts` | rough.js 手繪引擎：`Scene`（`layer` / `box` / `arrow` / `curve` / `pill` / `text`…）+ `useRoughScene`，跟著 `$clicks` 一筆筆「畫出來」。deck 元件從 `slidev-theme-sketch/utils/rough-scene` 匯入 |
+| theme | `setup/shiki.ts` | `github-light` 程式碼配色 |
+| theme | `components/FlowScene.vue` | 通用手繪流程圖：props `steps` / `notes` / `result`，每 click 畫一格（自動註冊，直接 `<FlowScene />`） |
+| theme | `package.json` → `slidev.defaults` | `colorSchema: light`、`transition: slide-left`、`mdc: true`、系統字型，headmatter 不用再寫 |
+| deck | `slides.md`, `spec.md` | 內容 |
+| deck | `components/TitleSketch.vue` | 封面右側手繪：核心元件節點＋資料流箭頭（改 `nodes` / `edges` / `tagline`） |
+| deck | `style.css`（選用） | 只放這個 deck 專屬的 class；Slidev 會疊在 theme 樣式之後 |
 
-Replace the `TOPIC` placeholder in `slides.md`, `spec.md`, `global-bottom.vue`, and `components/` with the real topic name. Keep placeholders out of angle brackets: a `<topic>` in the `title:` frontmatter is parsed as an HTML tag and fails the build.
+To change the shared look (palette, cover, footer, the rough.js engine), edit `packages/slidev-theme-sketch` — every sketch deck picks it up. A deck can override a theme file by putting a same-named file in its own `layouts/` / `components/`.
+
+Replace the `TOPIC` placeholder in `slides.md` (`title:` / `footer:` and content), `spec.md`, and `components/` with the real topic name. Keep placeholders out of angle brackets: a `<topic>` in the `title:` frontmatter is parsed as an HTML tag and fails the build.
 
 **Note:** All commands run from the repo root (`/home/tim/githubRepo/presentation`). Do NOT `cd` into the deck directory. `bun install` must run at the root.
 
@@ -104,7 +109,7 @@ Page rhythm:
 
 ### Writing a new scene
 
-Copy `FlowScene.vue` (or a scene from the reference deck: `IslandsScene` problem framing, `InjectExtractScene` two-party exchange, `WaterfallScene` timeline, `BrokenChainScene` failure mode, `SpanContextCard` field-by-field anatomy) to `components/<Concept>Scene.vue` and draw in `useRoughScene(svg, s => { … })`:
+Copy `packages/slidev-theme-sketch/components/FlowScene.vue` (or a scene from the reference deck: `IslandsScene` problem framing, `InjectExtractScene` two-party exchange, `WaterfallScene` timeline, `BrokenChainScene` failure mode, `SpanContextCard` field-by-field anatomy) to the deck's `components/<Concept>Scene.vue`, import from `'slidev-theme-sketch/utils/rough-scene'`, and draw in `useRoughScene(svg, s => { … })`:
 
 - `s.layer(n)` = group shown from click `n` on (`{ to }` hides it later, `{ delay, duration }` paces the sketch-in). Layer 0 is visible on enter, so **frontmatter `clicks:` = highest layer index**.
 - `s.mover([[step, x, y], …])` slides a group between positions per click — use it for a token / request travelling along the flow.
@@ -158,9 +163,10 @@ Slidev renders each slide on a **fixed-size canvas** (~980×551px, 16:9). Conten
 
 - **Page cut off at bottom** — skipped overflow check before claiming done.
 - **Last scene step never shows** — `clicks:` set to the step count instead of the highest layer index.
-- **Multi-line big text overlaps** — Slidev's default `.slidev-layout p { line-height: 1.5rem }` is a fixed 24px, so markdown inside an enlarged-font block (`.big-quote`, custom `text-3xl` divs) keeps 24px line-height and wraps on top of itself. The template's `style.css` sets `.big-quote p { line-height: inherit; }`; do the same for any new large-text class. The overflow check does **not** catch this — screenshot the `layout: center` definition page too.
+- **Multi-line big text overlaps** — Slidev's default `.slidev-layout p { line-height: 1.5rem }` is a fixed 24px, so markdown inside an enlarged-font block (`.big-quote`, custom `text-3xl` divs) keeps 24px line-height and wraps on top of itself. The theme's `styles/sketch.css` sets `.big-quote p { line-height: inherit; }`; do the same for any new large-text class. The overflow check does **not** catch this — screenshot the `layout: center` definition page too.
 - **Build fails with `Element is missing end tag`** — an angle-bracket placeholder (`<topic>`) left in frontmatter `title:`.
-- Deleted `style.css` / `layouts/` / `global-bottom.vue` / `utils/` from the new deck → plain default-theme look.
+- Missing `theme: sketch` in the headmatter → plain default-theme look.
+- Copied theme files (`layouts/`, `utils/rough-scene.ts`, `global-bottom.vue`) back into a deck — that forks the shared look again; change the theme instead.
 - Copy-pasted spec verbatim into slides → page overflow.
 - Added icons to slides (not allowed in this repo).
 - Added real Tailwind (`@tailwindcss/vite`) → build breaks.
@@ -180,13 +186,9 @@ bun run dev <deck>        # dev server with live reload, opens browser
 .agents/skills/create-tech/
 ├── SKILL.md
 └── templates/
-    ├── sketch/           # 現行：手寫風格技術分享模板
+    ├── sketch/           # 現行：手寫風格技術分享模板（外觀在 packages/slidev-theme-sketch）
     │   ├── slides.md     # cover → 問題 scene → 定義 → (section → scene → code)×N → takeaways → 參考資料
     │   ├── spec.md
-    │   ├── style.css  global-bottom.vue
-    │   ├── layouts/      # cover.vue / section.vue
-    │   ├── utils/        # rough-scene.ts
-    │   ├── setup/        # shiki.ts
-    │   └── components/   # TitleSketch.vue / FlowScene.vue
+    │   └── components/   # TitleSketch.vue
     └── topic/            # 舊：dark tech（theme: tech）模板，僅供舊 deck 參考
 ```

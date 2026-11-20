@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { ref } from 'vue'
-import { C, useRoughScene } from '../utils/rough-scene'
+import { C, useRoughScene } from 'slidev-theme-sketch/utils/rough-scene'
 
 // 封面裝飾手繪：主題的核心元件一個個被畫出來，箭頭串起資料流。
 // 換主題時只改 nodes / edges / tagline。

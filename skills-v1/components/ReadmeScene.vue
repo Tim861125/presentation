@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { ref } from 'vue'
-import { C, MONO, useRoughScene } from '../utils/rough-scene'
+import { C, MONO, useRoughScene } from 'slidev-theme-sketch/utils/rough-scene'
 
 // create-readme：左邊是快檢通現況 README（只有指令），右邊是照 skill 規則改寫後的結構。
 const svg = ref<SVGSVGElement>()

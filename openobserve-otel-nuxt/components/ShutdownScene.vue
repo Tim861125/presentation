@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { ref } from 'vue'
-import { C, MONO, useRoughScene } from '../utils/rough-scene'
+import { C, MONO, useRoughScene } from 'slidev-theme-sketch/utils/rough-scene'
 
 // 關機 flush：Bun preset 正式環境不跑 close hook → 佇列中的 log 掉；改掛 SIGTERM 自己 flush。
 // layer 0 docker stop；1 close hook 不觸發 → log 遺失；2 自掛 SIGTERM → flush → exit；3 5 秒上限 → clicks: 3

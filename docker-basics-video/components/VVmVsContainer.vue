@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { ref } from 'vue'
-import { C, MONO, useRoughScene } from '../utils/rough-scene'
+import { C, MONO, useRoughScene } from 'slidev-theme-sketch/utils/rough-scene'
 
 // 直式：上半 VM（每台自帶 kernel），下半容器（共用一顆 kernel）。
 const svg = ref<SVGSVGElement>()

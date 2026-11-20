@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { ref } from 'vue'
-import { C, useRoughScene } from '../utils/rough-scene'
+import { C, useRoughScene } from 'slidev-theme-sketch/utils/rough-scene'
 
 // 封面裝飾手繪：docker CLI → kiri daemon → agent → container，一次 clone3 就到。
 const svg = ref<SVGSVGElement>()

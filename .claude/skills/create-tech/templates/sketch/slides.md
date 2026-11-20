@@ -1,16 +1,11 @@
 ---
+theme: sketch
 title: TOPIC
+footer: TOPIC · RD 技術分享
 info: |
   TOPIC 技術分享
   丁吾心
-colorSchema: light
 layout: cover
-transition: slide-left
-fonts:
-  provider: none
-  sans: system-ui, -apple-system, "Segoe UI", "Noto Sans TC", "PingFang TC", "Microsoft JhengHei", sans-serif
-  mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace
-mdc: true
 ---
 
 # TOPIC

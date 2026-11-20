@@ -1,16 +1,11 @@
 ---
+theme: sketch
 title: 把 Log 送進 OpenObserve
+footer: OpenObserve Logging · RD 技術分享
 info: |
   前端 browser-rum × 後端 OpenTelemetry Logger，以快檢通為例
   丁吾心
-colorSchema: light
 layout: cover
-transition: slide-left
-fonts:
-  provider: none
-  sans: system-ui, -apple-system, "Segoe UI", "Noto Sans TC", "PingFang TC", "Microsoft JhengHei", sans-serif
-  mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace
-mdc: true
 ---
 
 # 把 Log 送進 OpenObserve

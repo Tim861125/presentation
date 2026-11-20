@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { ref } from 'vue'
-import { C, MONO, useRoughScene } from '../utils/rough-scene'
+import { C, MONO, useRoughScene } from 'slidev-theme-sketch/utils/rough-scene'
 
 // 全貌：前端 RUM 與後端 OTLP 兩條路進同一個 org；中間靠 traceparent / baggage 串成同一條 trace。
 const svg = ref<SVGSVGElement>()

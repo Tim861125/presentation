@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { ref } from 'vue'
-import { C, MONO, useRoughScene } from '../utils/rough-scene'
+import { C, MONO, useRoughScene } from 'slidev-theme-sketch/utils/rough-scene'
 
 // 架構：所有 server log 匯進 writeLog，一份 stdout、一份 OTel record。
 // layer 0 呼叫端→writeLog；1 stdout；2 emit；3 有設 URL → Batch → OpenObserve；4 沒設 → no-op → clicks: 4

@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { ref } from 'vue'
-import { C, MONO, useRoughScene } from '../utils/rough-scene'
+import { C, MONO, useRoughScene } from 'slidev-theme-sketch/utils/rough-scene'
 
 // 前端 fetch /api 帶 traceparent / baggage → 後端 extract → 後端 log 帶同一個 trace_id 與 session_id。
 const svg = ref<SVGSVGElement>()

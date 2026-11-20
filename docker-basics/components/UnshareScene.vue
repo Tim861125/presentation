@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { ref } from 'vue'
-import { C, MONO, useRoughScene } from '../utils/rough-scene'
+import { C, MONO, useRoughScene } from 'slidev-theme-sketch/utils/rough-scene'
 
 // 不用 Docker：左邊是原本的 shell（看得到全部 process），unshare 開出新的 namespaces，裡面的 sh 只看得到自己。
 const svg = ref<SVGSVGElement>()

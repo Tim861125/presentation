@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { ref } from 'vue'
-import { C, MONO, useRoughScene } from '../utils/rough-scene'
+import { C, MONO, useRoughScene } from 'slidev-theme-sketch/utils/rough-scene'
 
 // 通用機制：每過一層代理，TCP 來源就變成上一層；真實 IP 只能靠 header 接力，任何一層覆寫就斷。
 const svg = ref<SVGSVGElement>()

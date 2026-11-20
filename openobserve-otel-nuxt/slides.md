@@ -1,16 +1,11 @@
 ---
+theme: sketch
 title: 快檢通後端 Log 送進 OpenObserve
+footer: 快檢通後端 Log → OpenObserve · RD 技術分享
 info: |
   快檢通（patent-embedding-search，Nuxt 4 + Bun）後端 log 透過 OpenTelemetry Logs SDK 送到 OpenObserve
   丁吾心
-colorSchema: light
 layout: cover
-transition: slide-left
-fonts:
-  provider: none
-  sans: system-ui, -apple-system, "Segoe UI", "Noto Sans TC", "PingFang TC", "Microsoft JhengHei", sans-serif
-  mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace
-mdc: true
 ---
 
 # 快檢通後端 Log<br>送進 OpenObserve

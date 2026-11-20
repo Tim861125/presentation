@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { ref } from 'vue'
-import { C, MONO, useRoughScene } from '../utils/rough-scene'
+import { C, MONO, useRoughScene } from 'slidev-theme-sketch/utils/rough-scene'
 
 // VM 每台自帶 kernel；容器共用主機那一顆 kernel，本身只是 process。
 const svg = ref<SVGSVGElement>()

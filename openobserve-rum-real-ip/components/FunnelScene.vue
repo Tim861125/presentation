@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { ref } from 'vue'
-import { C, MONO, useRoughScene } from '../utils/rough-scene'
+import { C, MONO, useRoughScene } from 'slidev-theme-sketch/utils/rough-scene'
 
 // 問題：545 個使用者各自送 RUM，進了 _rumdata 後 ip 欄位只剩 Traefik 一個值。
 const svg = ref<SVGSVGElement>()

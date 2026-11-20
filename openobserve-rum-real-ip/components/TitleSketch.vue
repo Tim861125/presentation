@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { ref } from 'vue'
-import { C, useRoughScene } from '../utils/rough-scene'
+import { C, useRoughScene } from 'slidev-theme-sketch/utils/rough-scene'
 
 // 封面：瀏覽器 → Traefik → ?（中間層未確認）→ OpenObserve，最後 545 位使用者只剩 1 個 IP。
 const svg = ref<SVGSVGElement>()

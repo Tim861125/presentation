@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { ref } from 'vue'
-import { C, MONO, useRoughScene } from '../utils/rough-scene'
+import { C, MONO, useRoughScene } from 'slidev-theme-sketch/utils/rough-scene'
 
 // 直式：image 是一疊唯讀 layer，每個容器在上面加一層可寫層。
 const svg = ref<SVGSVGElement>()

@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { ref } from 'vue'
-import { C, MONO, useRoughScene } from '../utils/rough-scene'
+import { C, MONO, useRoughScene } from 'slidev-theme-sketch/utils/rough-scene'
 
 // kiri 3000：本機主動連出一條 TLS 到 edge，所有訪客連線都是這條線上的編號 stream。
 const svg = ref<SVGSVGElement>()

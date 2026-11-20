@@ -1,17 +1,13 @@
 ---
+theme: sketch
 title: Docker 底層入門（影片）
+footer: false
 info: |
   Docker 底層入門：直式短影片（詳細版）
-colorSchema: light
 canvasWidth: 540
 aspectRatio: 9/16
 layout: vcover
 transition: fade
-fonts:
-  provider: none
-  sans: system-ui, -apple-system, "Segoe UI", "Noto Sans TC", "PingFang TC", "Microsoft JhengHei", sans-serif
-  mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace
-mdc: true
 ---
 
 # docker run 底下發生什麼事？

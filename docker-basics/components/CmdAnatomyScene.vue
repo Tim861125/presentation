@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { ref } from 'vue'
-import { C, MONO, useRoughScene } from '../utils/rough-scene'
+import { C, MONO, useRoughScene } from 'slidev-theme-sketch/utils/rough-scene'
 
 // 拆解 `sudo unshare --pid --fork --mount-proc --uts sh`：每 click 標出一個零件，下方說明框換成它的全名、用途、沒有它會怎樣。
 // 依據：man unshare(1)、pid_namespaces(7)、uts_namespaces(7)。

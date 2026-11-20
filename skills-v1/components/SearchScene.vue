@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { ref } from 'vue'
-import { C, useRoughScene } from '../utils/rough-scene'
+import { C, useRoughScene } from 'slidev-theme-sketch/utils/rough-scene'
 
 // search-first 流程：Need → 平行搜尋四個管道 → Evaluate → 四種決策；最後圈出本例的決定。
 const svg = ref<SVGSVGElement>()

@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { ref } from 'vue'
-import { C, useRoughScene } from '../utils/rough-scene'
+import { C, useRoughScene } from 'slidev-theme-sketch/utils/rough-scene'
 
 // 封面裝飾手繪：本月的主線（產品線）一個個被畫出來，箭頭串成一條線。
 // 換月時只改 nodes / edges / tagline。

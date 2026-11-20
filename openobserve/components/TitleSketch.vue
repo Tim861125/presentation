@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { ref } from 'vue'
-import { C, useRoughScene } from '../utils/rough-scene'
+import { C, useRoughScene } from 'slidev-theme-sketch/utils/rough-scene'
 
 // 封面裝飾手繪：OpenObserve 的四個頁面，依「搜尋好慢」的追查順序串起來。
 const svg = ref<SVGSVGElement>()

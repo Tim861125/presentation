@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { ref } from 'vue'
-import { C, MONO, useRoughScene } from '../utils/rough-scene'
+import { C, MONO, useRoughScene } from 'slidev-theme-sketch/utils/rough-scene'
 
 // 組織規劃：一個 org quick_pat，stream 區分環境；設定漏了會落到 dev。
 // layer 0 org + 兩個 stream；1 prod；2 dev；3 漏設 → 預設 dev；4 共用 dashboard → clicks: 4

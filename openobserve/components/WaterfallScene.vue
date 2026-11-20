@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { ref } from 'vue'
-import { C, MONO, useRoughScene } from '../utils/rough-scene'
+import { C, MONO, useRoughScene } from 'slidev-theme-sketch/utils/rough-scene'
 
 // 一次慢的 GetPatentByText：span 樹一層層畫出來，最後標出時間幾乎全花在 OpenSearch kNN。
 const svg = ref<SVGSVGElement>()

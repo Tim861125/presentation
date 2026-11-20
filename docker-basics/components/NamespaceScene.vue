@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { ref } from 'vue'
-import { C, MONO, useRoughScene } from '../utils/rough-scene'
+import { C, MONO, useRoughScene } from 'slidev-theme-sketch/utils/rough-scene'
 
 // 同一顆 kernel 上：主機 process、容器 A、容器 B。namespace 隔離視野，cgroup 限制用量，seccomp 過濾 syscall。
 const svg = ref<SVGSVGElement>()

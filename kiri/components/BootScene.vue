@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { ref } from 'vue'
-import { C, MONO, useRoughScene } from '../utils/rough-scene'
+import { C, MONO, useRoughScene } from 'slidev-theme-sketch/utils/rough-scene'
 
 // VM 冷開機到 agent ready 的中位數（bench/results.json boot_journey），每 click 多一刀。
 const svg = ref<SVGSVGElement>()

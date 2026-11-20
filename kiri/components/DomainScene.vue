@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { ref } from 'vue'
-import { C, MONO, useRoughScene } from '../utils/rough-scene'
+import { C, MONO, useRoughScene } from 'slidev-theme-sketch/utils/rough-scene'
 
 // http://web.kiri.local 怎麼找到容器：小 DNS 回 127.0.0.1，再由 :80/:443 router 看 Host / SNI 挑容器。
 const svg = ref<SVGSVGElement>()

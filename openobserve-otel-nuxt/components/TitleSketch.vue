@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { ref } from 'vue'
-import { C, useRoughScene } from '../utils/rough-scene'
+import { C, useRoughScene } from 'slidev-theme-sketch/utils/rough-scene'
 
 // 封面裝飾手繪：writeLog 一行 log 分兩路 —— stdout 與 OTel SDK → OpenObserve。
 const svg = ref<SVGSVGElement>()

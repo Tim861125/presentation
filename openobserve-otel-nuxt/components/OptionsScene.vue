@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { ref } from 'vue'
-import { C, MONO, useRoughScene } from '../utils/rough-scene'
+import { C, MONO, useRoughScene } from 'slidev-theme-sketch/utils/rough-scene'
 
 // 選型：四個候選逐一被打叉（每 click 一個），最後圈出官方 OTel Logs SDK。
 // layer 0 = 需求 + 四個候選；1–4 = 各候選卡關點；5 = 選定方案 → clicks: 5

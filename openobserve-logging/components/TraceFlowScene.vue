@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { ref } from 'vue'
-import { C, MONO, useRoughScene } from '../utils/rough-scene'
+import { C, MONO, useRoughScene } from 'slidev-theme-sketch/utils/rough-scene'
 
 // traceFlow 時間軸：一次文字檢索 = 一個 span + 兩個子 span + 開始／完成兩筆 log。
 // 數字取自測試站 search.completed 平均值（embed ≈ 1099 ms、kNN ≈ 168 ms、total ≈ 1267 ms）。

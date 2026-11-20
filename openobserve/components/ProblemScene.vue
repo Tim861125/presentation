@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { ref } from 'vue'
-import { C, useRoughScene } from '../utils/rough-scene'
+import { C, useRoughScene } from 'slidev-theme-sketch/utils/rough-scene'
 
 // 問題：使用者說「搜尋好慢」。沒有可觀測性只能猜；有了 OpenObserve，三種訊號用同一個 trace_id 串起來。
 const svg = ref<SVGSVGElement>()

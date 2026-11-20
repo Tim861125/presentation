@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { ref } from 'vue'
-import { C, MONO, useRoughScene } from '../utils/rough-scene'
-import type { Scene } from '../utils/rough-scene'
+import { C, MONO, useRoughScene } from 'slidev-theme-sketch/utils/rough-scene'
+import type { Scene } from 'slidev-theme-sketch/utils/rough-scene'
 
 // 直式：同一顆 kernel 上，兩個容器各自一組 namespaces；cgroup 限制用量；seccomp 擋 syscall。
 const svg = ref<SVGSVGElement>()

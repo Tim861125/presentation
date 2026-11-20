@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { ref } from 'vue'
-import { C, MONO, useRoughScene } from '../utils/rough-scene'
+import { C, MONO, useRoughScene } from 'slidev-theme-sketch/utils/rough-scene'
 
 // 猜測（尚未確認）：Traefik 與 OpenObserve 之間可能還有一層 ingress，且它不信任 Traefik 而覆寫 header。
 const svg = ref<SVGSVGElement>()

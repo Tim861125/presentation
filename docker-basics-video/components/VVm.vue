@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { ref } from 'vue'
-import { C, MONO, useRoughScene } from '../utils/rough-scene'
+import { C, MONO, useRoughScene } from 'slidev-theme-sketch/utils/rough-scene'
 
 // 直式：macOS 上的 docker CLI → Docker Desktop → vsock → Linux VM 裡的 dockerd → 容器。
 const svg = ref<SVGSVGElement>()
